@@ -1,0 +1,48 @@
+{
+    "devDependencies": {
+        "browser-sync": "^2.26.3",
+        "cssnano": "^4.1.8",
+        "del": "^3.0.0",
+        "gulp": "^4.0.0",
+        "gulp-gzip": "^1.4.2",
+        "gulp-load-plugins": "^1.5.0",
+        "gulp-postcss": "^8.0.0",
+        "gulp-rename": "^1.4.0",
+        "gulp-replace": "^1.0.0",
+        "gulp-sass": "^4.0.2",
+        "postcss-uncss": "^0.16.1",
+        "sass": "^1.15.2",
+        "uncss": "^0.16.1"
+    },
+    "configuration": {
+        "directories": {
+            "dist": "dist",
+            "src": "src"
+        }
+    },
+    "cssnano": {
+        "preset": [
+            "default",
+            {
+                "discardComments": {
+                    "removeAll": true
+                }
+            }
+        ]
+    },
+    "engines": {
+        "node": ">=10",
+        "npm": ">=6"
+    },
+    "private": true,
+    "scripts": {
+        "build": "gulp build",
+        "serve": "gulp serve",
+        "serve:build": "gulp serve:build",
+        "test": "gulp build"
+    },
+    "version": "0.0.1",
+    "dependencies": {
+        "dev-ip": "^1.0.1"
+    }
+}

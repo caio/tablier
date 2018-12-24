@@ -12,7 +12,8 @@
         "gulp-sass": "^4.0.2",
         "postcss-uncss": "^0.16.1",
         "sass": "^1.15.2",
-        "uncss": "^0.16.1"
+        "uncss": "^0.16.1",
+        "bulma": "^0.7.2"
     },
     "configuration": {
         "directories": {

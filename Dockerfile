@@ -15,4 +15,4 @@ EXPOSE 1313
 EXPOSE 3001
 
 WORKDIR /base/app
-CMD ["bash", "-c", "/usr/local/bin/gulp serve"]
+CMD ["bash"]

@@ -7,8 +7,8 @@
         <link rel="stylesheet" href="css/main.css">
     </head>
     <body>
-        <section class="hero is-fullheight">
 
+        <section class="hero">
             <div class="hero-head">
                 <nav class="navbar" role="navigation">
                     <div class="container">
@@ -35,10 +35,53 @@
                     </div>
                 </nav>
             </div>
+        </section>
 
+        <section class="section">
+            <div class="columns is-multiline is-centered">
+                <div class="column is-full">
+                    <div class="container has-text-centered">
+                        <h1 class="title">
+                            Search Results
+                        </h1>
+                        <h2 class="subtitle">
+                            Your search matched XXX recipes out of 850k
+                        </h2>
+                    </div>
+                </div>
+                <div class="column is-half">
+                    <div class="content">
+                        <h3 class="subtitle">Showing recipes 1 to XX</h3>
+                        <ul>
+                            <li>Recipe 1</li>
+                            <li>Recipe 2</li>
+                            <li>Recipe 3</li>
+                            <li>Recipe 4</li>
+                            <li>Recipe 5</li>
+                            <li>Recipe 6</li>
+                            <li>Recipe 7</li>
+                            <li>Recipe 8</li>
+                            <li>Recipe 9</li>
+                            <li>Recipe 10</li>
+                            <li>Recipe 11</li>
+                            <li>Recipe 12</li>
+                            <li>Recipe 13</li>
+                            <li>Recipe 14</li>
+                            <li>Recipe 15</li>
+                        </ul>
+                        <nav class="pagination" role="navigation">
+                            <a class="pagination-previous" disabled>Previous page</a>
+                            <a class="pagination-next">Next page</a>
+                            <ul class="pagination-list"></ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </section>
 
+        <section class="hero is-info">
             <div class="hero-body">
-                <div class="container has-text-centered">
+                <div class="container">
                     <h1 class="title">
                         Search 850+k Recipes
                     </h1>
@@ -46,21 +89,18 @@
                         Search for recipes, without getting tracked.
                     </h2>
                     <form action="/search" method="get">
-                        <div class="field has-addons has-addons-centered">
+                        <div class="field has-addons">
                             <div class="control">
                                 <input class="input" type="search" name="q" placeholder="Ingredients, diets, brands, etc.">
                             </div>
                             <div class="control">
-                                <button class="button is-primary">
+                                <button class="button is-link">
                                     Search
                                 </button>
                             </div>
                         </div>
                     </form>
                 </div>
-            </div>
-
-            <div class="hero-foot">
             </div>
         </section>
 

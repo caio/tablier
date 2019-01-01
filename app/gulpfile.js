@@ -55,10 +55,15 @@ gulp.task('sass', function() {
 gulp.task('generate:main.css', gulp.series('sass', function () {
     var postConfig = [
         uncss({
-            html: [dirs.src + '/index.html'],
+            html: [
+                dirs.src + '/index.html',
+                dirs.src + '/search.html',
+            ],
             ignore: [
                 /^\.navbar/,
                 /^\.burger/,
+                /^\.columns$/,
+                '.content',
             ],
         }),
         cssnano(),

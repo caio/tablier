@@ -64,9 +64,8 @@ gulp.task('serve', gulp.series('css', function () {
 
     gulp.watch([
         dirs.src + '/template/**/*.mustache',
-        dirs.src + '/css/**/*.css',
-        '!' + dirs.src + '/css/main.css',
-    ], gulp.series('css', reload));
+        dirs.src + '/render_data.json',
+    ], gulp.series('css'));
 
     gulp.watch([
         dirs.src + '/sass/**/*.scss'

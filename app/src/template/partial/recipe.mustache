@@ -1,1 +1,27 @@
-{{ name }}
+<div class="box">
+    <article class="media">
+        <div class="media-content">
+            <div class="content">
+                <p><strong><a title="{{ name }}">{{ name }}</a></strong> <small>{{ site }}</small>
+                <!-- <br> -->
+                <!-- {{ description }} -->
+                <!-- </p> -->
+            </div>
+            <div class="level is-mobile">
+                <div class="level-left">
+                </div>
+                <div class="level-right">
+                    <p class="level-item is-size-7">
+                        {{ num_ingredients }} ingredients
+                    </p>
+                    <p class="level-item is-size-7">
+                        {{ calories }} calories
+                    </p>
+                    <p class="level-item is-size-7">
+                        {{ total_time }} minutes
+                    </p>
+                </div>
+            </div>
+        </div>
+    </article>
+</div>

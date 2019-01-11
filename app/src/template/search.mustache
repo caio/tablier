@@ -10,39 +10,9 @@
         </div>
     </section>
 
-    <section class="section">
-        <div class="columns is-multiline is-centered">
-            <div class="column is-full">
-                <div class="container has-text-centered">
-                    <h1 class="title">
-                        Search Results
-                    </h1>
-                    <h2 class="subtitle">
-                        Your search matched XXX recipes out of 850k
-                    </h2>
-                </div>
-            </div>
-            <div class="column is-half">
-                <div class="content">
-                    <h3 class="subtitle">Showing recipes 1 to XX</h3>
-                    <ul>
-                        {{#recipes}}
-                        <li>{{> partial/recipe }}</li>
-                        {{/recipes}}
-                    </ul>
-                    <nav class="pagination" role="navigation">
-                        <a class="pagination-previous" disabled>Previous page</a>
-                        <a class="pagination-next">Next page</a>
-                        <ul class="pagination-list"></ul>
-                    </nav>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <section class="hero is-info">
         <div class="hero-body">
-            <div class="container">
+            <div class="container has-text-centered">
                 <h1 class="title">
                     Search 850+k Recipes
                 </h1>
@@ -53,6 +23,33 @@
             </div>
         </div>
     </section>
+
+    <section class="section" id="results">
+        <div class="columns is-multiline is-centered">
+            <div class="column is-full">
+                <div class="container has-text-centered">
+                    <h1 class="title">
+                        Search Results
+                    </h1>
+                    <h2 class="subtitle">
+                        Showing recipes {{ pagination_start }} to {{ pagination_end }} (Out of {{ pagination_max }})
+                    </h2>
+                </div>
+            </div>
+            <div class="column is-half">
+                <div class="content">
+                    <!-- <h3 class="subtitle">Showing recipes {{ pagination_start }} to {{ pagination_end }}</h3> -->
+                    {{#recipes}}{{> partial/recipe }}{{/recipes}}
+                    <nav class="pagination" role="navigation">
+                        <a class="pagination-previous" disabled>Previous page</a>
+                        <a class="pagination-next">Next page</a>
+                        <ul class="pagination-list"></ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+
 {{> partial/js_bottom }}
 </body>
 </html>

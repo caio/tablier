@@ -21,7 +21,7 @@
     <build>
         <resources>
             <resource>
-                <directory>${basedir}/target/tablier</directory>
+                <directory>${basedir}/target/webroot</directory>
             </resource>
         </resources>
         <plugins>
@@ -36,7 +36,7 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${basedir}/target/tablier</outputDirectory>
+                            <outputDirectory>${basedir}/target/webroot/tablier</outputDirectory>
                             <resources>
                                 <resource>
                                     <directory>app/src</directory>

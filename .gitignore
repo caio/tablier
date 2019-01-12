@@ -3,3 +3,4 @@ app/package-lock.json
 app/src/css
 app/src/vendor
 app/src/*.html
+target/

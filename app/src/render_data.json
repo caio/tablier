@@ -1,8 +1,27 @@
 {
-    "name": "Caio Romão",
+    "site_title": "gula.recipes",
+    "page_title": "Search Results - gula.recipes",
+
+    "search_title": "Search 950+k Recipes",
+    "search_subtitle": "Search for recipes, not ads",
+    "search_placeholder": "Ingredients, diets, brands, etc.",
+    "search_value": "",
+    "search_text": "Search again",
+
     "pagination_start": 1,
     "pagination_end": 15,
     "pagination_max": 237,
+    "pagination_next_href": "/search?page=2",
+    "pagination_prev_href": "",
+
+    "nav": [
+        {
+            "is_active": false,
+            "text": "About",
+            "href": "/about"
+        }
+    ],
+
     "recipes": [
         {
             "name": "Recipe 1",
@@ -10,7 +29,12 @@
             "description": "hue huehu  euh u ehue huehu euheu heu heu heu ehu e",
             "total_time": 30,
             "num_ingredients": 4,
-            "calories": 300
+            "calories": 300,
+            "meta": [
+                { "name": "ingredients", "value": 4 },
+                { "name": "calories", "value": 300 },
+                { "name": "total time", "value": 30 }
+            ]
         },
         { "name": "Recipe 2" },
         { "name": "Recipe 3" },

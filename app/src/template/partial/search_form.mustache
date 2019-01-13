@@ -1,11 +1,11 @@
 <form action="/search?#results" method="get">
     <div class="field has-addons has-addons-centered">
         <div class="control">
-            <input class="input" type="search" name="q" placeholder="Ingredients, diets, brands, etc.">
+            <input class="input" type="search" name="q" placeholder="{{ search_placeholder }}" {{#search_value}}value="{{ . }}"{{/search_value}}>
         </div>
         <div class="control">
             <button class="button is-primary">
-                Search
+                {{ search_text }}
             </button>
         </div>
     </div>

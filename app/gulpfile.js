@@ -2,6 +2,7 @@
 
 var browserSync = require('browser-sync');
 var gulp = require('gulp');
+var gzip = require('gulp-gzip');
 var postcss = require('gulp-postcss')
 var uncss = require('postcss-uncss')
 var cssnano = require('cssnano')
@@ -53,8 +54,14 @@ gulp.task('css', gulp.series('html', 'sass', function () {
     return gulp.src(dirs.src + '/css/style.css')
             .pipe(postcss(postConfig))
             .pipe(rename('main.css'))
-            .pipe(gulp.dest(dirs.src + '/css/'))
-            .pipe(reload({ stream: true }));
+            .pipe(gulp.dest(dirs.src + '/css/'));
+}));
+
+gulp.task('build', gulp.series('css', function () {
+    return gulp.src(dirs.src + '/css/main.css')
+            .pipe(gzip())
+            .pipe(rename('main.css.gz'))
+            .pipe(gulp.dest(dirs.src + '/css/'));
 }));
 
 gulp.task('serve', gulp.series('css', function () {

@@ -1,6 +1,7 @@
 {
     "site_title": "gula.recipes",
     "page_title": "Search Results - gula.recipes",
+    "page_description": "",
 
     "search_title": "Search 950+k Recipes",
     "search_subtitle": "Search for recipes, not ads",
@@ -26,6 +27,7 @@
         {
             "name": "Recipe 1",
             "site": "something.com",
+            "href": "/recipe/recipe-1",
             "description": "hue huehu  euh u ehue huehu euheu heu heu heu ehu e",
             "total_time": 30,
             "num_ingredients": 4,

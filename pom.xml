@@ -41,6 +41,7 @@
                                 <resource>
                                     <directory>app/src</directory>
                                     <includes>
+                                        <include>css/main.css.gz</include>
                                         <include>css/main.css</include>
                                     </includes>
                                 </resource>
@@ -75,7 +76,7 @@
                         <argument>--rm</argument>
                         <argument>css</argument>
                         <argument>gulp</argument>
-                        <argument>css</argument>
+                        <argument>build</argument>
                     </arguments>
                 </configuration>
             </plugin>

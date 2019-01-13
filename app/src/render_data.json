@@ -29,9 +29,6 @@
             "site": "something.com",
             "href": "/recipe/recipe-1",
             "description": "hue huehu  euh u ehue huehu euheu heu heu heu ehu e",
-            "total_time": 30,
-            "num_ingredients": 4,
-            "calories": 300,
             "meta": [
                 { "name": "ingredients", "value": 4 },
                 { "name": "calories", "value": 300 },

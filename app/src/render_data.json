@@ -15,6 +15,9 @@
     "pagination_next_href": "/search?page=2",
     "pagination_prev_href": "",
 
+    "error_title": "An Error Has Occurred",
+    "error_subtitle": "This is a very brief explanation of the error",
+
     "nav": [
         {
             "is_active": false,

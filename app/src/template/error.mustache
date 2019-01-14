@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{{> partial/head }}
+</head>
+<body>
+    <section class="hero">
+        <div class="hero-head">
+            {{> partial/nav }}
+        </div>
+    </section>
+
+    <section class="hero is-info">
+        <div class="hero-body">
+            <div class="container has-text-centered">
+                <h1 class="title">
+                    {{ search_title }}
+                </h1>
+                <h2 class="subtitle">
+                    {{ search_subtitle }}
+                </h2>
+                {{> partial/search_form }}
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="results">
+        <div class="columns is-multiline is-centered">
+            <div class="column is-full">
+                <div class="container has-text-centered">
+                    <h1 class="title">
+                        {{ error_title }}
+                    </h1>
+                    <h2 class="subtitle">
+                        {{ error_subtitle }}
+                    </h2>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{{> partial/js_bottom }}
+</body>
+</html>

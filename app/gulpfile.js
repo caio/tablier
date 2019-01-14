@@ -39,14 +39,14 @@ gulp.task('css', gulp.series('html', 'sass', function () {
     var postConfig = [
         uncss({
             html: [
-                dirs.src + '/index.html',
-                dirs.src + '/search.html',
+                dirs.src + '/*.html',
             ],
             ignore: [
                 /^\.navbar/,
                 /^\.burger/,
                 /^\.columns$/,
                 '.content',
+                /^\.pagination-next/,
             ],
         }),
         cssnano(),

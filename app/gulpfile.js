@@ -28,12 +28,53 @@ gulp.task('sass', function() {
         .pipe(gulp.dest(dirs.src + '/css/'));
 });
 
-gulp.task('html', function() {
-    return gulp.src(dirs.src + '/template/*.mustache')
-        .pipe(mustache(dirs.src + '/render_data.json'))
+gulp.task('html_basic', function() {
+    return gulp.src([
+            dirs.src + '/template/index.mustache',
+            dirs.src + '/template/error.mustache',
+            dirs.src + '/template/search.mustache',
+            dirs.src + '/template/zero_results.mustache',
+        ]).pipe(mustache(dirs.src + '/render_data.json'))
         .pipe(rename(function(path) { path.extname = ".html"; }))
         .pipe(gulp.dest(dirs.src));
 });
+
+function renderCustomSearch(suffix, cb) {
+    var fs = require('fs');
+    var dataFile = './' + dirs.src + '/render_data.json';
+    var renderData = JSON.parse(fs.readFileSync(dataFile, 'utf8'));
+    cb(renderData);
+    return gulp.src(dirs.src + '/template/search.mustache')
+        .pipe(mustache(renderData))
+        .pipe(rename(function(path) { path.basename += suffix; path.extname = ".html"; }))
+        .pipe(gulp.dest(dirs.src));
+};
+
+gulp.task('html_search_no_next', function() {
+    return renderCustomSearch('_no_next', function(data) {
+        data.pagination_next_href = null;
+    });
+});
+
+gulp.task('html_search_no_prev', function() {
+    return renderCustomSearch('_no_prev', function(data) {
+        data.pagination_prev_href = null;
+    });
+});
+
+gulp.task('html_search_no_both', function() {
+    return renderCustomSearch('_no_both', function(data) {
+        data.pagination_next_href = null;
+        data.pagination_prev_href = null;
+    });
+});
+
+gulp.task('html',
+    gulp.parallel(
+        'html_basic',
+        'html_search_no_next',
+        'html_search_no_prev',
+        'html_search_no_both'));
 
 gulp.task('css', gulp.series('html', 'sass', function () {
     var postConfig = [
@@ -46,7 +87,6 @@ gulp.task('css', gulp.series('html', 'sass', function () {
                 /^\.burger/,
                 /^\.columns$/,
                 '.content',
-                /^\.pagination-next/,
             ],
         }),
         cssnano(),

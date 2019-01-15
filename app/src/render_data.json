@@ -1,7 +1,7 @@
 {
     "site_title": "gula.recipes",
     "page_title": "Search Results - gula.recipes",
-    "page_description": "",
+    "page_description": "this page has a description",
 
     "search_title": "Search 950+k Recipes",
     "search_subtitle": "Search for recipes, not ads",
@@ -12,8 +12,8 @@
     "pagination_start": 1,
     "pagination_end": 15,
     "pagination_max": 237,
-    "pagination_next_href": "/search?page=2",
-    "pagination_prev_href": "",
+    "pagination_next_href": "/search?page=3",
+    "pagination_prev_href": "/search?page=1",
 
     "error_title": "An Error Has Occurred",
     "error_subtitle": "This is a very brief explanation of the error",
@@ -23,6 +23,11 @@
             "is_active": false,
             "text": "About",
             "href": "/about"
+        },
+        {
+            "is_active": true,
+            "text": "Research",
+            "href": "/research"
         }
     ],
 

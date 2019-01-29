@@ -39,14 +39,14 @@
                             <outputDirectory>${basedir}/target/webroot/tablier</outputDirectory>
                             <resources>
                                 <resource>
-                                    <directory>app/src</directory>
+                                    <directory>src</directory>
                                     <includes>
                                         <include>css/main.css.gz</include>
                                         <include>css/main.css</include>
                                     </includes>
                                 </resource>
                                 <resource>
-                                    <directory>app/src</directory>
+                                    <directory>src</directory>
                                     <includes>
                                         <include>template/</include>
                                     </includes>

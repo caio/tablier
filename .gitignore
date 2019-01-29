@@ -1,6 +1,6 @@
-app/node_modules
-app/package-lock.json
-app/src/css
-app/src/vendor
-app/src/*.html
+node_modules
+package-lock.json
+src/css
+src/vendor
+src/*.html
 target/

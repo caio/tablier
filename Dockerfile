@@ -1,18 +1,20 @@
-FROM node:latest
+FROM node:latest as build
+
+ENV DEBIAN_FRONTEND noninteractive
+ENV LC_ALL C.UTF-8
+ENV LANG C.UTF-8
 
 RUN apt-get update -qq && apt-get install -y build-essential
-RUN apt-get install -y ruby ruby-dev
-RUN gem install sass
-RUN npm install gulp -g
+RUN npm install -g gulp
 
-RUN mkdir /base
-WORKDIR /base
-ADD app/package.json /base/package.json
+WORKDIR /
+ADD package.json /
 
 RUN npm install
+
+WORKDIR /app
 
 EXPOSE 1313
 EXPOSE 3001
 
-WORKDIR /base/app
 CMD ["bash"]

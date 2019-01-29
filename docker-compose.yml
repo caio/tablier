@@ -3,7 +3,7 @@ services:
     css:
         build: .
         volumes:
-            - ./app:/base/app
+            - ./:/app/
         ports:
             - 1313:1313
             - 3001:3001

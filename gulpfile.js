@@ -9,6 +9,7 @@ var cssnano = require('cssnano')
 var rename = require('gulp-rename');
 var sass = require('gulp-sass');
 var mustache = require('gulp-mustache');
+var fs = require('fs');
 
 var pkg = require('./package.json');
 var dirs = pkg['configuration'].directories;
@@ -39,16 +40,30 @@ gulp.task('html_basic', function() {
         .pipe(gulp.dest(dirs.src));
 });
 
-function renderCustomSearch(suffix, cb) {
-    var fs = require('fs');
+function getRenderDataSync() {
     var dataFile = './' + dirs.src + '/render_data.json';
     var renderData = JSON.parse(fs.readFileSync(dataFile, 'utf8'));
+    return renderData;
+}
+
+function renderCustomSearch(suffix, cb) {
+    var renderData = getRenderDataSync();
     cb(renderData);
     return gulp.src(dirs.src + '/template/search.mustache')
         .pipe(mustache(renderData))
         .pipe(rename(function(path) { path.basename += suffix; path.extname = ".html"; }))
         .pipe(gulp.dest(dirs.src));
 };
+
+gulp.task('html_index_unstable', function() {
+    var renderData = getRenderDataSync();
+    renderData.show_unstable_warning = true;
+    renderData.search_is_disabled = true;
+    return gulp.src(dirs.src + '/template/index.mustache')
+        .pipe(mustache(renderData))
+        .pipe(rename(function(path) { path.basename += "_unstable"; path.extname = ".html"; }))
+        .pipe(gulp.dest(dirs.src));
+});
 
 gulp.task('html_search_no_next', function() {
     return renderCustomSearch('_no_next', function(data) {
@@ -72,6 +87,7 @@ gulp.task('html_search_no_both', function() {
 gulp.task('html',
     gulp.parallel(
         'html_basic',
+        'html_index_unstable',
         'html_search_no_next',
         'html_search_no_prev',
         'html_search_no_both'));

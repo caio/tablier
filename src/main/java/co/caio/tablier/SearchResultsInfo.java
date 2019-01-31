@@ -5,18 +5,23 @@ import org.immutables.value.Value.Style.ImplementationVisibility;
 
 @Value.Style(visibility = ImplementationVisibility.PACKAGE, overshadowImplementation = true)
 @Value.Immutable
-public interface PageInfo {
-  String title();
+public interface SearchResultsInfo {
+
+  int paginationStart();
+
+  int paginationEnd();
+
+  int numMatching();
 
   @Value.Default
-  default boolean showUnstableWarning() {
-    return false;
-  }
-
-  @Value.Default
-  default String description() {
+  default String previousPageHref() {
     return "";
   }
 
-  class Builder extends ImmutablePageInfo.Builder {}
+  @Value.Default
+  default String nextPageHref() {
+    return "";
+  }
+
+  class Builder extends ImmutableSearchResultsInfo.Builder {}
 }

@@ -1,0 +1,51 @@
+@import co.caio.tablier.*
+
+@args (SiteInfo site, PageInfo page, SearchFormInfo searchForm, SearchResultsInfo sr)
+
+@views.base.template(site, page) -> {
+    <section class="hero">
+        <div class="hero-head">
+            @views.nav.template(site)
+        </div>
+    </section>
+
+    <section class="hero is-info">
+        <div class="hero-body">
+            <div class="container has-text-centered">
+                <h1 class="title">
+                    @searchForm.title()
+                </h1>
+                <h2 class="subtitle">
+                    @searchForm.subtitle()
+                </h2>
+                @views.searchform.template(searchForm)
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="results">
+        <div class="columns is-multiline is-centered">
+            <div class="column is-full">
+                <div class="container has-text-centered">
+                    <h1 class="title">
+                        Search Results
+                    </h1>
+                    <h2 class="subtitle">
+                        Showing recipes @sr.paginationStart() to @sr.paginationEnd() (Out of @sr.numMatching())
+                    </h2>
+                </div>
+            </div>
+            <div class="column is-half">
+                <div class="content">
+                    <!-- FIXME -->
+                    <!-- {{#recipes}}{{> partial/recipe }}{{/recipes}} -->
+                    <nav class="pagination" role="navigation">
+                        <a class="pagination-previous" @if (sr.previousPageHref().isEmpty()) { disabled } else { href="@sr.previousPageHref()" }>Previous page</a>
+                        <a class="pagination-next" @if (sr.nextPageHref().isEmpty()) { disabled } else { href="@sr.nextPageHref()" }>Next page</a>
+                        <ul class="pagination-list"></ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+}

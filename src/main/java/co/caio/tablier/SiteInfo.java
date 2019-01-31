@@ -4,16 +4,14 @@ import java.util.List;
 import org.immutables.value.Value;
 import org.immutables.value.Value.Style.ImplementationVisibility;
 
-
-@Value.Style(
-    visibility = ImplementationVisibility.PACKAGE,
-    overshadowImplementation = true
-)
+@Value.Style(visibility = ImplementationVisibility.PACKAGE, overshadowImplementation = true)
 @Value.Immutable
 public interface SiteInfo {
 
   @Value.Default
-  default String title() { return "gula.recipes"; }
+  default String title() {
+    return "gula.recipes";
+  }
 
   List<NavigationItem> navigationItems();
 

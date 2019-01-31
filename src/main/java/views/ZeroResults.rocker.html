@@ -1,0 +1,41 @@
+@import co.caio.tablier.*
+
+@args (SiteInfo site, PageInfo page, SearchFormInfo searchForm)
+
+@views.base.template(site, page) -> {
+    <section class="hero">
+        <div class="hero-head">
+            @views.nav.template(site)
+        </div>
+    </section>
+
+    <section class="hero is-info">
+        <div class="hero-body">
+            <div class="container has-text-centered" id="try_again">
+                <h1 class="title">
+                    @searchForm.title()
+                </h1>
+                <h2 class="subtitle">
+                    @searchForm.subtitle()
+                </h2>
+                @views.searchform.template(searchForm)
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="results">
+        <div class="columns is-multiline is-centered">
+            <div class="column is-full">
+                <div class="container has-text-centered">
+                    <h1 class="title">
+                        Search Results
+                    </h1>
+                    <h2 class="subtitle">
+                        Couldn't find any recipe matching your search :(
+                    </h2>
+                    <p><a href="#try_again">Try changing your query?</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+}

@@ -1,13 +1,9 @@
 package co.caio.tablier;
 
-
 import org.immutables.value.Value;
 import org.immutables.value.Value.Style.ImplementationVisibility;
 
-@Value.Style(
-    visibility = ImplementationVisibility.PACKAGE,
-    overshadowImplementation = true
-)
+@Value.Style(visibility = ImplementationVisibility.PACKAGE, overshadowImplementation = true)
 @Value.Immutable
 public interface SearchFormInfo {
 
@@ -37,10 +33,14 @@ public interface SearchFormInfo {
   }
 
   @Value.Default
-  default boolean isDisabled() { return false; }
+  default boolean isDisabled() {
+    return false;
+  }
 
   @Value.Default
-  default boolean isAutoFocus() { return true; }
+  default boolean isAutoFocus() {
+    return true;
+  }
 
   class Builder extends ImmutableSearchFormInfo.Builder {}
 }

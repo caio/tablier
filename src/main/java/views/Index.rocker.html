@@ -1,6 +1,6 @@
 @import co.caio.tablier.*
 
-@args (SiteInfo site, PageInfo page, SearchFormInfo search)
+@args (SiteInfo site, PageInfo page, SearchFormInfo searchForm)
 
 @views.base.template(site, page) -> {
     <section class="hero is-fullheight">
@@ -17,12 +17,12 @@
                 }
 
                 <h1 class="title">
-                    @search.title()
+                    @searchForm.title()
                 </h1>
                 <h2 class="subtitle">
-                    @search.subtitle()
+                    @searchForm.subtitle()
                 </h2>
-                @views.searchform.template(search)
+                @views.searchform.template(searchForm)
                 <div class="hero-foot">
                 </div>
             </div>

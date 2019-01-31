@@ -4,3 +4,5 @@ src/css
 src/vendor
 src/*.html
 target/
+release.properties
+pom.xml.*

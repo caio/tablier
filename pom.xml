@@ -6,12 +6,19 @@
 
     <groupId>co.caio</groupId>
     <artifactId>tablier</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <url>https://caio.co</url>
     <packaging>jar</packaging>
 
     <name>tablier</name>
     <description></description>
+
+    <scm>
+        <connection>scm:git:file://.</connection>
+        <developerConnection>scm:git:file://.</developerConnection>
+        <url>scm:git:file://.</url>
+        <tag>HEAD</tag>
+    </scm>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -25,6 +32,17 @@
             </resource>
         </resources>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <configuration>
+                    <pushChanges>false</pushChanges>
+                    <localCheckout>true</localCheckout>
+                    <remoteTagging>false</remoteTagging>
+                    <goals>install</goals>
+                    <tagNameFormat>@{project.version}</tagNameFormat>
+                </configuration>
+            </plugin>
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
                 <version>3.1.0</version>

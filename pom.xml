@@ -19,9 +19,24 @@
     </scm>
 
     <properties>
+        <java.version>11</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <rocker.version>1.2.1</rocker.version>
+        <rocker.javaVersion>${java.version}</rocker.javaVersion>
+        <rocker.optimize>true</rocker.optimize>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.fizzed</groupId>
+            <artifactId>rocker-runtime</artifactId>
+            <version>${rocker.version}</version>
+        </dependency>
+    </dependencies>
 
     <build>
         <resources>
@@ -40,6 +55,20 @@
                     <goals>generate-resources install</goals>
                     <tagNameFormat>@{project.version}</tagNameFormat>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.fizzed</groupId>
+                <artifactId>rocker-maven-plugin</artifactId>
+                <version>${rocker.version}</version>
+                <executions>
+                    <execution>
+                        <id>generate-rocker-templates</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>

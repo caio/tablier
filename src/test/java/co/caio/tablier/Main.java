@@ -4,24 +4,67 @@ import com.fizzed.rocker.runtime.ArrayOfByteArraysOutput;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import views.Index;
 
 public class Main {
 
-  public static void main(String[] args) throws IOException {
+  private static final Path outputDir = Path.of("src/");
 
-    Path outputDir = Path.of("src/");
+  private static final Map<String, PageInfo> pageVariations;
+  private static final Map<String, SearchFormInfo> searchFormVariations;
 
-    var os = new FileOutputStream(outputDir.resolve("index.html").toFile());
+  static {
+    var pages = new HashMap<String, PageInfo>();
+    var defaultPage = new PageInfo.Builder().title("Index").build();
+    pages.put("", defaultPage);
+    pages.put(
+        "_unstable", new PageInfo.Builder().from(defaultPage).showUnstableWarning(true).build());
 
-    var result =
-        Index.template(new SiteInfo(), new PageInfo(), new SearchInfo())
-            .render(ArrayOfByteArraysOutput.FACTORY);
+    pageVariations = Collections.unmodifiableMap(pages);
 
-    for (byte[] array : result.getArrays()) {
-      os.write(array);
-    }
+    var searchforms = new HashMap<String, SearchFormInfo>();
+    var defaultSearchForm = new SearchFormInfo.Builder().build();
+    searchforms.put("", defaultSearchForm);
+    searchforms.put("_disabled", new SearchFormInfo.Builder().isDisabled(true).build());
+    searchforms.put("_nofocus", new SearchFormInfo.Builder().isAutoFocus(false).build());
+    searchforms.put(
+        "_disablednofocus",
+        new SearchFormInfo.Builder().isDisabled(true).isAutoFocus(false).build());
 
-    os.close();
+    searchFormVariations = Collections.unmodifiableMap(searchforms);
+  }
+
+  public static void main(String[] args) {
+
+    var siteInfo =
+        new SiteInfo.Builder()
+            .title("gula.recipes")
+            .addNavigationItem("/", "gula.recipes", true)
+            .addNavigationItem("/about", "About", false)
+            .build();
+
+    pageVariations.forEach(
+        (pagePrefix, page) -> {
+          searchFormVariations.forEach(
+              (searchFormPrefix, searchForm) -> {
+                var name = String.format("index%s%s.html", pagePrefix, searchFormPrefix);
+
+                try (var os = new FileOutputStream(outputDir.resolve(name).toFile())) {
+                  var result =
+                      Index.template(siteInfo, page, searchForm)
+                          .render(ArrayOfByteArraysOutput.FACTORY);
+
+                  for (byte[] array : result.getArrays()) {
+                    os.write(array);
+                  }
+                } catch (IOException e) {
+                  e.printStackTrace();
+                  System.exit(1);
+                }
+              });
+        });
   }
 }

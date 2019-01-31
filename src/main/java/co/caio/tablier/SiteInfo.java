@@ -1,20 +1,30 @@
 package co.caio.tablier;
 
 import java.util.List;
+import org.immutables.value.Value;
+import org.immutables.value.Value.Style.ImplementationVisibility;
 
-public class SiteInfo {
 
-  public String title() {
-    return "gula.recipes";
+@Value.Style(
+    visibility = ImplementationVisibility.PACKAGE,
+    overshadowImplementation = true
+)
+@Value.Immutable
+public interface SiteInfo {
+
+  @Value.Default
+  default String title() { return "gula.recipes"; }
+
+  List<NavigationItem> navigationItems();
+
+  class Builder extends ImmutableSiteInfo.Builder {
+    public Builder addNavigationItem(String href, String text, boolean isActive) {
+      addNavigationItems(new NavigationItem(href, text, isActive));
+      return this;
+    }
   }
 
-  public List<NavigationItem> navigationItems() {
-    return List.of(
-        new NavigationItem("/", "gula.recipes", true),
-        new NavigationItem("/about", "About", false));
-  }
-
-  public class NavigationItem {
+  class NavigationItem {
     private final String href;
     private final String text;
     private final boolean isActive;

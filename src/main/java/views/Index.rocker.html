@@ -1,0 +1,31 @@
+@import co.caio.tablier.*
+
+@args (SiteInfo site, PageInfo page, SearchInfo search)
+
+@views.base.template(site, page) -> {
+    <section class="hero is-fullheight">
+        <div class="hero-head">
+            @views.nav.template(site)
+        </div>
+        <div class="hero-body">
+            <div class="container has-text-centered">
+
+                @if (page.showUnstableWarning()) {
+                    <div class="notification is-warning">
+                        <p>The site is experiencing performance degradation due to unexpectedly high traffic.<br>The search functionality has been <em>temporarily</em> disabled. Please try again in a few minutes.</p>
+                    </div>
+                }
+
+                <h1 class="title">
+                    @search.title()
+                </h1>
+                <h2 class="subtitle">
+                    @search.subtitle()
+                </h2>
+                @views.searchform.template(search)
+                <div class="hero-foot">
+                </div>
+            </div>
+        </div>
+    </section>
+}

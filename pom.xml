@@ -37,7 +37,7 @@
                     <pushChanges>false</pushChanges>
                     <localCheckout>true</localCheckout>
                     <remoteTagging>false</remoteTagging>
-                    <goals>install</goals>
+                    <goals>generate-resources install</goals>
                     <tagNameFormat>@{project.version}</tagNameFormat>
                 </configuration>
             </plugin>

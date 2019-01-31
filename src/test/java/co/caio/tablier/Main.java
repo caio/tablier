@@ -91,34 +91,6 @@ public class Main {
     }
   }
 
-  private static void renderIndex(
-      String filename, SiteInfo siteInfo, PageInfo pageInfo, SearchFormInfo searchFormInfo) {
-
-    writeResult(
-        filename,
-        Index.template(siteInfo, pageInfo, searchFormInfo).render(ArrayOfByteArraysOutput.FACTORY));
-  }
-
-  private static void renderSearch(
-      String filename,
-      SiteInfo siteInfo,
-      PageInfo pageInfo,
-      SearchFormInfo searchFormInfo,
-      SearchResultsInfo srInfo) {
-    try (var os = new FileOutputStream(outputDir.resolve(filename).toFile())) {
-      var result =
-          Search.template(siteInfo, pageInfo, searchFormInfo, srInfo)
-              .render(ArrayOfByteArraysOutput.FACTORY);
-
-      for (byte[] array : result.getArrays()) {
-        os.write(array);
-      }
-    } catch (IOException e) {
-      e.printStackTrace();
-      System.exit(1);
-    }
-  }
-
   public static void main(String[] args) {
 
     var siteInfo =
@@ -133,7 +105,8 @@ public class Main {
             searchFormVariations.forEach(
                 (searchFormPrefix, searchForm) -> {
                   var indexName = String.format("index%s%s.html", pagePrefix, searchFormPrefix);
-                  var zeroName = String.format("zero_results%s%s.html", pagePrefix, searchFormPrefix);
+                  var zeroName =
+                      String.format("zero_results%s%s.html", pagePrefix, searchFormPrefix);
 
                   writeResult(
                       indexName,

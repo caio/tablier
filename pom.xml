@@ -30,6 +30,7 @@
         <rocker.optimize>true</rocker.optimize>
 
         <immutables.version>2.7.5</immutables.version>
+        <javafaker.version>0.16</javafaker.version>
     </properties>
 
     <dependencies>
@@ -43,6 +44,12 @@
             <artifactId>value</artifactId>
             <version>${immutables.version}</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.javafaker</groupId>
+            <artifactId>javafaker</artifactId>
+            <version>${javafaker.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

@@ -37,8 +37,9 @@
             </div>
             <div class="column is-half">
                 <div class="content">
-                    <!-- FIXME -->
-                    <!-- {{#recipes}}{{> partial/recipe }}{{/recipes}} -->
+                    @for ((i, recipe): sr.recipes()) {
+                        @views.recipe.template(i.index() + sr.paginationStart(), recipe)
+                    }
                     <nav class="pagination" role="navigation">
                         <a class="pagination-previous" @if (sr.previousPageHref().isEmpty()) { disabled } else { href="@sr.previousPageHref()" }>Previous page</a>
                         <a class="pagination-next" @if (sr.nextPageHref().isEmpty()) { disabled } else { href="@sr.nextPageHref()" }>Next page</a>

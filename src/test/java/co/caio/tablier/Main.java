@@ -1,15 +1,18 @@
 package co.caio.tablier;
 
 import com.fizzed.rocker.runtime.ArrayOfByteArraysOutput;
+import com.github.javafaker.Faker;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import views.Error;
 import views.Index;
 import views.Search;
-import views.Error;
 import views.ZeroResults;
 
 public class Main {
@@ -45,8 +48,9 @@ public class Main {
     var srSinglePage =
         new SearchResultsInfo.Builder()
             .paginationStart(1)
-            .paginationEnd(19)
-            .numMatching(19)
+            .paginationEnd(12)
+            .numMatching(12)
+            .addAllRecipes(generateRecipes(12))
             .build();
     srs.put("", srSinglePage);
 
@@ -56,6 +60,7 @@ public class Main {
             .paginationEnd(20)
             .numMatching(21)
             .nextPageHref("/next")
+            .addAllRecipes(generateRecipes(20))
             .build();
     srs.put("_next", srHasNext);
 
@@ -65,6 +70,7 @@ public class Main {
             .paginationEnd(21)
             .numMatching(21)
             .previousPageHref("/previous")
+            .addAllRecipes(generateRecipes(1))
             .build();
     srs.put("_prev", srHasPrevious);
 
@@ -75,10 +81,33 @@ public class Main {
             .numMatching(99)
             .nextPageHref("/next")
             .previousPageHref("/previous")
+            .addAllRecipes(generateRecipes(20))
             .build();
     srs.put("_both", srHasBoth);
 
     searchResultsVariations = Collections.unmodifiableMap(srs);
+  }
+
+  private static List<RecipeInfo> generateRecipes(int wanted) {
+    var result = new ArrayList<RecipeInfo>(wanted);
+
+    var faker = new Faker();
+
+    for (int i = 0; i < wanted; i++) {
+      var recipe =
+          new RecipeInfo.Builder()
+              .name(faker.funnyName().name())
+              .siteName(faker.company().name())
+              .crawlUrl(faker.company().url())
+              .numIngredients(faker.number().numberBetween(1, 15))
+              .calories(faker.number().numberBetween(1, 1500))
+              .totalTime(faker.number().numberBetween(1, 240))
+              .build();
+
+      result.add(recipe);
+    }
+
+    return result;
   }
 
   private static void writeResult(String filename, ArrayOfByteArraysOutput result) {
@@ -111,8 +140,7 @@ public class Main {
                   var indexName = String.format("index%s%s.html", pagePrefix, searchFormPrefix);
                   var zeroName =
                       String.format("zero_results%s%s.html", pagePrefix, searchFormPrefix);
-                  var errorName =
-                      String.format("error%s%s.html", pagePrefix, searchFormPrefix);
+                  var errorName = String.format("error%s%s.html", pagePrefix, searchFormPrefix);
 
                   writeResult(
                       indexName,

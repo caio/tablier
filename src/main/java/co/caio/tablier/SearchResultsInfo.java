@@ -1,5 +1,6 @@
 package co.caio.tablier;
 
+import java.util.List;
 import org.immutables.value.Value;
 import org.immutables.value.Value.Style.ImplementationVisibility;
 
@@ -22,6 +23,8 @@ public interface SearchResultsInfo {
   default String nextPageHref() {
     return "";
   }
+
+  List<RecipeInfo> recipes();
 
   class Builder extends ImmutableSearchResultsInfo.Builder {}
 }

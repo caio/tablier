@@ -1,24 +1,33 @@
 @import co.caio.tablier.model.*
+@import co.caio.tablier.view.base
+@import co.caio.tablier.view.nav
+@import co.caio.tablier.view.searchform
 
-@args (SiteInfo site, PageInfo page, SearchFormInfo searchForm)
+@args (SiteInfo site, PageInfo page, SearchFormInfo searchForm, ErrorInfo error)
 
-@views.base.template(site, page) -> {
+@base.template(site, page) -> {
     <section class="hero">
         <div class="hero-head">
-            @views.nav.template(site)
+            @nav.template(site)
         </div>
     </section>
-
     <section class="hero is-info">
         <div class="hero-body">
-            <div class="container has-text-centered" id="try_again">
+            <div class="container has-text-centered">
+
+                @if (page.showUnstableWarning()) {
+                    <div class="notification is-warning">
+                        <p>The site is experiencing performance degradation due to unexpectedly high traffic.<br>The search functionality has been <em>temporarily</em> disabled. Please try again in a few minutes.</p>
+                    </div>
+                }
+
                 <h1 class="title">
                     @searchForm.title()
                 </h1>
                 <h2 class="subtitle">
                     @searchForm.subtitle()
                 </h2>
-                @views.searchform.template(searchForm)
+                @searchform.template(searchForm)
             </div>
         </div>
     </section>
@@ -28,12 +37,11 @@
             <div class="column is-full">
                 <div class="container has-text-centered">
                     <h1 class="title">
-                        Search Results
+                        @error.title()
                     </h1>
                     <h2 class="subtitle">
-                        Couldn't find any recipe matching your search :(
+                        @error.subtitle()
                     </h2>
-                    <p><a href="#try_again">Try changing your query?</a></p>
                 </div>
             </div>
         </div>

@@ -1,14 +1,15 @@
 @import co.caio.tablier.model.*
+@import co.caio.tablier.view.base
+@import co.caio.tablier.view.nav
+@import co.caio.tablier.view.searchform
 
-@args (SiteInfo site, PageInfo page, SearchFormInfo searchForm, ErrorInfo error)
+@args (SiteInfo site, PageInfo page, SearchFormInfo searchForm)
 
-@views.base.template(site, page) -> {
-    <section class="hero">
+@base.template(site, page) -> {
+    <section class="hero is-fullheight">
         <div class="hero-head">
-            @views.nav.template(site)
+            @nav.template(site)
         </div>
-    </section>
-    <section class="hero is-info">
         <div class="hero-body">
             <div class="container has-text-centered">
 
@@ -24,21 +25,8 @@
                 <h2 class="subtitle">
                     @searchForm.subtitle()
                 </h2>
-                @views.searchform.template(searchForm)
-            </div>
-        </div>
-    </section>
-
-    <section class="section" id="results">
-        <div class="columns is-multiline is-centered">
-            <div class="column is-full">
-                <div class="container has-text-centered">
-                    <h1 class="title">
-                        @error.title()
-                    </h1>
-                    <h2 class="subtitle">
-                        @error.subtitle()
-                    </h2>
+                @searchform.template(searchForm)
+                <div class="hero-foot">
                 </div>
             </div>
         </div>

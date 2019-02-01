@@ -6,6 +6,10 @@ import co.caio.tablier.model.RecipeInfo;
 import co.caio.tablier.model.SearchFormInfo;
 import co.caio.tablier.model.SearchResultsInfo;
 import co.caio.tablier.model.SiteInfo;
+import co.caio.tablier.view.Error;
+import co.caio.tablier.view.Index;
+import co.caio.tablier.view.Search;
+import co.caio.tablier.view.ZeroResults;
 import com.fizzed.rocker.runtime.ArrayOfByteArraysOutput;
 import com.github.javafaker.Faker;
 import java.io.FileOutputStream;
@@ -16,10 +20,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import views.Index;
-import views.Search;
-import views.ZeroResults;
-import views.Error;
 
 public class Generator {
 
@@ -191,5 +191,4 @@ public class Generator {
 
     System.out.println("Done!");
   }
-
 }

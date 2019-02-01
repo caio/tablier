@@ -1,11 +1,15 @@
 @import co.caio.tablier.model.*
+@import co.caio.tablier.view.base
+@import co.caio.tablier.view.nav
+@import co.caio.tablier.view.searchform
+@import co.caio.tablier.view.recipe
 
 @args (SiteInfo site, PageInfo page, SearchFormInfo searchForm, SearchResultsInfo sr)
 
-@views.base.template(site, page) -> {
+@base.template(site, page) -> {
     <section class="hero">
         <div class="hero-head">
-            @views.nav.template(site)
+            @nav.template(site)
         </div>
     </section>
 
@@ -18,7 +22,7 @@
                 <h2 class="subtitle">
                     @searchForm.subtitle()
                 </h2>
-                @views.searchform.template(searchForm)
+                @searchform.template(searchForm)
             </div>
         </div>
     </section>
@@ -37,8 +41,8 @@
             </div>
             <div class="column is-half">
                 <div class="content">
-                    @for ((i, recipe): sr.recipes()) {
-                        @views.recipe.template(i.index() + sr.paginationStart(), recipe)
+                    @for ((i, ri): sr.recipes()) {
+                        @recipe.template(i.index() + sr.paginationStart(), ri)
                     }
                     <nav class="pagination" role="navigation">
                         <a class="pagination-previous" @if (sr.previousPageHref().isEmpty()) { disabled } else { href="@sr.previousPageHref()" }>Previous page</a>

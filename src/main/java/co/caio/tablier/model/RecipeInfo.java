@@ -1,4 +1,4 @@
-package co.caio.tablier;
+package co.caio.tablier.model;
 
 import java.util.OptionalInt;
 import org.immutables.value.Value;

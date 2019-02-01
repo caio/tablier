@@ -1,5 +1,11 @@
 package co.caio.tablier;
 
+import co.caio.tablier.model.ErrorInfo;
+import co.caio.tablier.model.PageInfo;
+import co.caio.tablier.model.RecipeInfo;
+import co.caio.tablier.model.SearchFormInfo;
+import co.caio.tablier.model.SearchResultsInfo;
+import co.caio.tablier.model.SiteInfo;
 import com.fizzed.rocker.runtime.ArrayOfByteArraysOutput;
 import com.github.javafaker.Faker;
 import java.io.FileOutputStream;
@@ -10,12 +16,12 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import views.Error;
 import views.Index;
 import views.Search;
 import views.ZeroResults;
+import views.Error;
 
-public class Main {
+public class Generator {
 
   private static final Path outputDir = Path.of("src/");
 
@@ -133,6 +139,8 @@ public class Main {
     var errorInfo =
         new ErrorInfo.Builder().title("Unknown Error").subtitle("Hue hue hue hue hue hue?").build();
 
+    System.out.println("Generating all possible template variations");
+
     pageVariations.forEach(
         (pagePrefix, page) ->
             searchFormVariations.forEach(
@@ -169,5 +177,19 @@ public class Main {
                                 .render(ArrayOfByteArraysOutput.FACTORY));
                       });
                 }));
+
+    System.out.println("Compiling and postprocessing css");
+
+    var pb = new ProcessBuilder("docker-compose", "run", "--rm", "css", "gulp", "build");
+    try {
+      var process = pb.start();
+      process.waitFor();
+    } catch (Exception e) {
+      e.printStackTrace(System.err);
+      System.exit(2);
+    }
+
+    System.out.println("Done!");
   }
+
 }

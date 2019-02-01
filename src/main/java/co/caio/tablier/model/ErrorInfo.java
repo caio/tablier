@@ -1,4 +1,4 @@
-package co.caio.tablier;
+package co.caio.tablier.model;
 
 import org.immutables.value.Value;
 import org.immutables.value.Value.Style.ImplementationVisibility;

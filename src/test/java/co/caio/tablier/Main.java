@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import views.Index;
 import views.Search;
+import views.Error;
 import views.ZeroResults;
 
 public class Main {
@@ -100,6 +101,9 @@ public class Main {
             .addNavigationItem("/about", "About", false)
             .build();
 
+    var errorInfo =
+        new ErrorInfo.Builder().title("Unknown Error").subtitle("Hue hue hue hue hue hue?").build();
+
     pageVariations.forEach(
         (pagePrefix, page) ->
             searchFormVariations.forEach(
@@ -107,6 +111,8 @@ public class Main {
                   var indexName = String.format("index%s%s.html", pagePrefix, searchFormPrefix);
                   var zeroName =
                       String.format("zero_results%s%s.html", pagePrefix, searchFormPrefix);
+                  var errorName =
+                      String.format("error%s%s.html", pagePrefix, searchFormPrefix);
 
                   writeResult(
                       indexName,
@@ -116,6 +122,11 @@ public class Main {
                   writeResult(
                       zeroName,
                       ZeroResults.template(siteInfo, page, searchForm)
+                          .render(ArrayOfByteArraysOutput.FACTORY));
+
+                  writeResult(
+                      errorName,
+                      Error.template(siteInfo, page, searchForm, errorInfo)
                           .render(ArrayOfByteArraysOutput.FACTORY));
 
                   searchResultsVariations.forEach(

@@ -1,0 +1,36 @@
+@import co.caio.tablier.model.RecipeInfo
+
+@args (int position, RecipeInfo recipe)
+
+<div class="box">
+    <article class="media">
+        <div class="media-content" id="recipe-@position">
+            <div class="content">
+                <p><strong><a href="@recipe.crawlUrl()" title="@recipe.name()">@recipe.name()</a></strong> <small>@recipe.siteName()</small>
+                </p>
+            </div>
+            <div class="level is-mobile">
+                <div class="level-left">
+                </div>
+                <div class="level-right">
+                    <p class="level-item is-size-7">
+                        @recipe.numIngredients() ingredients
+                    </p>
+
+                    @if (recipe.calories().isPresent()) {
+                    <p class="level-item is-size-7">
+                        @recipe.calories().getAsInt() calories
+                    </p>
+                    }
+
+                    @if (recipe.totalTime().isPresent()) {
+                    <p class="level-item is-size-7">
+                        @recipe.totalTime().getAsInt() minutes
+                    </p>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </article>
+</div>

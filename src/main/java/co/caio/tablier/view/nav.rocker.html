@@ -1,8 +1,12 @@
+@import co.caio.tablier.model.SiteInfo
+
+@args (SiteInfo site)
+
 <nav class="navbar">
     <div class="container">
         <div class="navbar-brand">
-            <a class="navbar-item" href="/" title="{{ site_title }}">
-                <h1>{{ site_title }}</h1>
+            <a class="navbar-item" href="/" title="@site.title()">
+                <h1>@site.title()</h1>
             </a>
             <span class="navbar-burger burger" data-target="navigationMenu">
                 <span></span>
@@ -12,12 +16,13 @@
         </div>
         <div id="navigationMenu" class="navbar-menu">
             <div class="navbar-end">
-            {{#nav}}
-                <a href="{{ href }}" class="navbar-item {{#is_active}}is-active{{/is_active}}">
-                    {{ text }}
+                @for (item: site.navigationItems()) {
+                <a href="@item.href()" class="navbar-item @if (item.isActive()) { is-active }">
+                        @item.text()
                 </a>
-            {{/nav}}
+                }
             </div>
         </div>
     </div>
 </nav>
+

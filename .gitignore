@@ -6,3 +6,5 @@ src/*.html
 target/
 release.properties
 pom.xml.*
+.idea/
+tablier.iml

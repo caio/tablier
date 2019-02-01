@@ -1,12 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-{{> partial/head }}
-</head>
-<body>
+@import co.caio.tablier.model.*
+@import co.caio.tablier.view.base
+@import co.caio.tablier.view.nav
+@import co.caio.tablier.view.searchform
+@import co.caio.tablier.view.recipe
+
+@args (SiteInfo site, PageInfo page, SearchFormInfo searchForm, SearchResultsInfo sr)
+
+@base.template(site, page) -> {
     <section class="hero">
         <div class="hero-head">
-            {{> partial/nav }}
+            @nav.template(site)
         </div>
     </section>
 
@@ -14,12 +17,12 @@
         <div class="hero-body">
             <div class="container has-text-centered">
                 <h1 class="title">
-                    {{ search_title }}
+                    @searchForm.title()
                 </h1>
                 <h2 class="subtitle">
-                    {{ search_subtitle }}
+                    @searchForm.subtitle()
                 </h2>
-                {{> partial/search_form }}
+                @searchform.template(searchForm)
             </div>
         </div>
     </section>
@@ -32,23 +35,22 @@
                         Search Results
                     </h1>
                     <h2 class="subtitle">
-                        Showing recipes {{ pagination_start }} to {{ pagination_end }} (Out of {{ pagination_max }})
+                        Showing recipes @sr.paginationStart() to @sr.paginationEnd() (Out of @sr.numMatching())
                     </h2>
                 </div>
             </div>
             <div class="column is-half">
                 <div class="content">
-                    {{#recipes}}{{> partial/recipe }}{{/recipes}}
+                    @for ((i, ri): sr.recipes()) {
+                        @recipe.template(i.index() + sr.paginationStart(), ri)
+                    }
                     <nav class="pagination" role="navigation">
-                        <a class="pagination-previous" {{#pagination_prev_href}}href="{{.}}"{{/pagination_prev_href}}{{^pagination_prev_href}}disabled{{/pagination_prev_href}}>Previous page</a>
-                        <a class="pagination-next" {{#pagination_next_href}}href="{{.}}"{{/pagination_next_href}}{{^pagination_next_href}}disabled{{/pagination_next_href}}>Next page</a>
+                        <a class="pagination-previous" @if (sr.previousPageHref().isEmpty()) { disabled } else { href="@sr.previousPageHref()" }>Previous page</a>
+                        <a class="pagination-next" @if (sr.nextPageHref().isEmpty()) { disabled } else { href="@sr.nextPageHref()" }>Next page</a>
                         <ul class="pagination-list"></ul>
                     </nav>
                 </div>
             </div>
         </div>
     </section>
-
-{{> partial/js_bottom }}
-</body>
-</html>
+}

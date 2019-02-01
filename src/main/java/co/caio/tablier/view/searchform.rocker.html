@@ -1,0 +1,16 @@
+@import co.caio.tablier.model.SearchFormInfo
+
+@args (SearchFormInfo searchForm)
+
+<form action="/search?#results" method="get">
+    <div class="field has-addons has-addons-centered">
+        <div class="control">
+            <input class="input" @if (searchForm.isDisabled()) { disabled } type="search" name="q" @if (searchForm.isAutoFocus()) { autofocus } placeholder="@searchForm.placeholder()" value="@searchForm.value()">
+        </div>
+        <div class="control">
+            <button class="button is-primary" @if (searchForm.isDisabled()) { disabled }>
+                @searchForm.buttonText()
+            </button>
+        </div>
+    </div>
+</form>

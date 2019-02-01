@@ -19,16 +19,40 @@
     </scm>
 
     <properties>
+        <java.version>11</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <maven.javadoc.skip>true</maven.javadoc.skip>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <rocker.version>1.2.1</rocker.version>
+
+        <immutables.version>2.7.5</immutables.version>
+        <javafaker.version>0.16</javafaker.version>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.fizzed</groupId>
+            <artifactId>rocker-runtime</artifactId>
+            <version>${rocker.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.immutables</groupId>
+            <artifactId>value</artifactId>
+            <version>${immutables.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.javafaker</groupId>
+            <artifactId>javafaker</artifactId>
+            <version>${javafaker.version}</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
+
     <build>
-        <resources>
-            <resource>
-                <directory>${basedir}/target/webroot</directory>
-            </resource>
-        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -37,37 +61,25 @@
                     <pushChanges>false</pushChanges>
                     <localCheckout>true</localCheckout>
                     <remoteTagging>false</remoteTagging>
-                    <goals>generate-resources install</goals>
+                    <goals>install</goals>
                     <tagNameFormat>@{project.version}</tagNameFormat>
                 </configuration>
             </plugin>
             <plugin>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>3.1.0</version>
+                <groupId>com.fizzed</groupId>
+                <artifactId>rocker-maven-plugin</artifactId>
+                <version>${rocker.version}</version>
                 <executions>
                     <execution>
-                        <id>copy-resources</id>
-                        <phase>validate</phase>
+                        <id>generate-rocker-templates</id>
+                        <phase>generate-sources</phase>
                         <goals>
-                            <goal>copy-resources</goal>
+                            <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${basedir}/target/webroot/tablier</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>src</directory>
-                                    <includes>
-                                        <include>css/main.css.gz</include>
-                                        <include>css/main.css</include>
-                                    </includes>
-                                </resource>
-                                <resource>
-                                    <directory>src</directory>
-                                    <includes>
-                                        <include>template/</include>
-                                    </includes>
-                                </resource>
-                            </resources>
+                            <javaVersion>${java.version}</javaVersion>
+                            <optimize>true</optimize>
+                            <skipTouch>true</skipTouch>
                         </configuration>
                     </execution>
                 </executions>
@@ -78,22 +90,50 @@
                 <version>1.6.0</version>
                 <executions>
                     <execution>
-                        <id>build-css</id>
-                        <phase>generate-resources</phase>
+                        <id>minify-css</id>
+                        <phase>process-classes</phase>
                         <goals>
-                            <goal>exec</goal>
+                            <goal>java</goal>
                         </goals>
                     </execution>
                 </executions>
                 <configuration>
-                    <executable>docker-compose</executable>
-                    <arguments>
-                        <argument>run</argument>
-                        <argument>--rm</argument>
-                        <argument>css</argument>
-                        <argument>gulp</argument>
-                        <argument>build</argument>
-                    </arguments>
+                    <mainClass>co.caio.tablier.Generator</mainClass>
+                    <workingDirectory>${project.basedir}</workingDirectory>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>copy-minified-css-resources</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.outputDirectory}/tablier</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>src/css</directory>
+                                    <includes>
+                                        <include>main.css.gz</include>
+                                        <include>main.css</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.1.1</version>
+                <configuration>
+                    <excludes>
+                        <exclude>**/Generator.class</exclude>
+                    </excludes>
                 </configuration>
             </plugin>
         </plugins>

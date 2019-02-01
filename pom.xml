@@ -61,7 +61,7 @@
                     <pushChanges>false</pushChanges>
                     <localCheckout>true</localCheckout>
                     <remoteTagging>false</remoteTagging>
-                    <goals>package install</goals>
+                    <goals>install</goals>
                     <tagNameFormat>@{project.version}</tagNameFormat>
                 </configuration>
             </plugin>

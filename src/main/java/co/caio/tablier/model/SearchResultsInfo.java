@@ -12,7 +12,7 @@ public interface SearchResultsInfo {
 
   int paginationEnd();
 
-  int numMatching();
+  long numMatching();
 
   @Value.Default
   default String previousPageHref() {

@@ -178,17 +178,6 @@ public class Generator {
                       });
                 }));
 
-    System.out.println("Compiling and postprocessing css");
-
-    var pb = new ProcessBuilder("docker-compose", "run", "--rm", "css", "gulp", "build");
-    try {
-      var process = pb.start();
-      process.waitFor();
-    } catch (Exception e) {
-      e.printStackTrace(System.err);
-      System.exit(2);
-    }
-
     System.out.println("Done!");
   }
 }

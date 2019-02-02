@@ -90,18 +90,35 @@
                 <version>1.6.0</version>
                 <executions>
                     <execution>
-                        <id>minify-css</id>
+                        <id>generate-sample-html</id>
                         <phase>process-classes</phase>
                         <goals>
                             <goal>java</goal>
                         </goals>
+                        <configuration>
+                            <mainClass>co.caio.tablier.Generator</mainClass>
+                            <workingDirectory>${project.basedir}</workingDirectory>
+                            <classpathScope>compile</classpathScope>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>minify-css</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                            <configuration>
+                                <executable>docker-compose</executable>
+                                <arguments>
+                                    <argument>run</argument>
+                                    <argument>--rm</argument>
+                                    <argument>css</argument>
+                                    <argument>gulp</argument>
+                                    <argument>build</argument>
+                                </arguments>
+                            </configuration>
                     </execution>
                 </executions>
-                <configuration>
-                    <mainClass>co.caio.tablier.Generator</mainClass>
-                    <workingDirectory>${project.basedir}</workingDirectory>
-                    <classpathScope>compile</classpathScope>
-                </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>

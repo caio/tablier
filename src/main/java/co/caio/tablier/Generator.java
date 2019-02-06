@@ -1,5 +1,9 @@
 package co.caio.tablier;
 
+import static java.nio.file.StandardWatchEventKinds.ENTRY_CREATE;
+import static java.nio.file.StandardWatchEventKinds.ENTRY_DELETE;
+import static java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY;
+
 import co.caio.tablier.model.ErrorInfo;
 import co.caio.tablier.model.PageInfo;
 import co.caio.tablier.model.RecipeInfo;
@@ -11,15 +15,20 @@ import co.caio.tablier.view.Index;
 import co.caio.tablier.view.Search;
 import co.caio.tablier.view.ZeroResults;
 import com.fizzed.rocker.runtime.ArrayOfByteArraysOutput;
+import com.fizzed.rocker.runtime.RockerRuntime;
 import com.github.javafaker.Faker;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.FileSystems;
 import java.nio.file.Path;
+import java.nio.file.WatchEvent;
+import java.nio.file.WatchKey;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Generator {
 
@@ -127,20 +136,17 @@ public class Generator {
     }
   }
 
-  public static void main(String[] args) {
+  private static final SiteInfo siteInfo =
+      new SiteInfo.Builder()
+          .title("gula.recipes")
+          .addNavigationItem("/", "gula.recipes", true)
+          .addNavigationItem("/about", "About", false)
+          .build();
 
-    var siteInfo =
-        new SiteInfo.Builder()
-            .title("gula.recipes")
-            .addNavigationItem("/", "gula.recipes", true)
-            .addNavigationItem("/about", "About", false)
-            .build();
+  private static final ErrorInfo errorInfo =
+      new ErrorInfo.Builder().title("Unknown Error").subtitle("Hue hue hue hue hue hue?").build();
 
-    var errorInfo =
-        new ErrorInfo.Builder().title("Unknown Error").subtitle("Hue hue hue hue hue hue?").build();
-
-    System.out.println("Generating all possible template variations");
-
+  private static void generate() {
     pageVariations.forEach(
         (pagePrefix, page) ->
             searchFormVariations.forEach(
@@ -177,6 +183,41 @@ public class Generator {
                                 .render(ArrayOfByteArraysOutput.FACTORY));
                       });
                 }));
+  }
+
+  public static void main(String[] args) throws Exception {
+
+    System.out.println("Generating all possible template variations");
+    generate();
+
+    if (args.length > 0 && "watch".equals(args[0])) {
+
+      var watchService = FileSystems.getDefault().newWatchService();
+      var templatePath = Path.of("src/main/java/co/caio/tablier/view");
+
+      RockerRuntime.getInstance().setReloading(true);
+
+      System.out.println("Watching for template changes at " + templatePath);
+
+      templatePath.register(watchService, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
+
+      WatchKey key;
+      while ((key = watchService.take()) != null) {
+
+        var changes =
+            key.pollEvents()
+                .stream()
+                .map(WatchEvent::context)
+                .map(Object::toString)
+                .filter(s -> s.endsWith(".html"))
+                .collect(Collectors.toSet());
+
+        System.out.println("Change detected: " + changes);
+        generate();
+        System.out.println("Regeneration complete!");
+        key.reset();
+      }
+    }
 
     System.out.println("Done!");
   }

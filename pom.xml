@@ -27,7 +27,6 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <rocker.version>1.2.1</rocker.version>
-
         <immutables.version>2.7.5</immutables.version>
         <javafaker.version>0.16</javafaker.version>
     </properties>
@@ -37,6 +36,12 @@
             <groupId>com.fizzed</groupId>
             <artifactId>rocker-runtime</artifactId>
             <version>${rocker.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fizzed</groupId>
+            <artifactId>rocker-compiler</artifactId>
+            <version>${rocker.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.immutables</groupId>
@@ -156,4 +161,46 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>watch</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.fizzed</groupId>
+                        <artifactId>rocker-maven-plugin</artifactId>
+                        <version>${rocker.version}</version>
+                        <executions>
+                            <execution>
+                                <id>generate-rocker-templates</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>generate</goal>
+                                </goals>
+                                <configuration>
+                                    <javaVersion>${java.version}</javaVersion>
+                                    <optimize>false</optimize>
+                                    <skipTouch>true</skipTouch>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>1.6.0</version>
+                        <configuration>
+                            <mainClass>co.caio.tablier.Generator</mainClass>
+                            <workingDirectory>${project.basedir}</workingDirectory>
+                            <classpathScope>compile</classpathScope>
+                            <arguments>
+                                <argument>watch</argument>
+                            </arguments>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

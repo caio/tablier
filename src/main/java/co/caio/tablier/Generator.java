@@ -14,21 +14,25 @@ import co.caio.tablier.view.Error;
 import co.caio.tablier.view.Index;
 import co.caio.tablier.view.Search;
 import co.caio.tablier.view.ZeroResults;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fizzed.rocker.runtime.ArrayOfByteArraysOutput;
 import com.fizzed.rocker.runtime.RockerRuntime;
-import com.github.javafaker.Faker;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.FileSystems;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.WatchEvent;
 import java.nio.file.WatchKey;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.OptionalInt;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Generator {
 
@@ -37,6 +41,7 @@ public class Generator {
   private static final Map<String, PageInfo> pageVariations;
   private static final Map<String, SearchFormInfo> searchFormVariations;
   private static final Map<String, SearchResultsInfo> searchResultsVariations;
+  private static final ObjectMapper mapper = new ObjectMapper();
 
   static {
     var pages = new HashMap<String, PageInfo>();
@@ -65,7 +70,7 @@ public class Generator {
             .paginationStart(1)
             .paginationEnd(12)
             .numMatching(12)
-            .addAllRecipes(generateRecipes(12))
+            .addAllRecipes(samples(12))
             .build();
     srs.put("", srSinglePage);
 
@@ -75,7 +80,7 @@ public class Generator {
             .paginationEnd(20)
             .numMatching(21)
             .nextPageHref("/next")
-            .addAllRecipes(generateRecipes(20))
+            .addAllRecipes(samples(20))
             .build();
     srs.put("_next", srHasNext);
 
@@ -85,7 +90,7 @@ public class Generator {
             .paginationEnd(21)
             .numMatching(21)
             .previousPageHref("/previous")
-            .addAllRecipes(generateRecipes(1))
+            .addAllRecipes(samples(1))
             .build();
     srs.put("_prev", srHasPrevious);
 
@@ -96,33 +101,66 @@ public class Generator {
             .numMatching(99)
             .nextPageHref("/next")
             .previousPageHref("/previous")
-            .addAllRecipes(generateRecipes(20))
+            .addAllRecipes(samples(20))
             .build();
     srs.put("_both", srHasBoth);
 
     searchResultsVariations = Collections.unmodifiableMap(srs);
   }
 
-  private static List<RecipeInfo> generateRecipes(int wanted) {
-    var result = new ArrayList<RecipeInfo>(wanted);
+  private static List<RecipeInfo> samples(int wanted) {
+    return lines(Path.of("src/sample_recipes.jsonlines"))
+        .map(Generator::parse)
+        .flatMap(Optional::stream)
+        .limit(wanted)
+        .map(Generator::buildRecipe)
+        .collect(Collectors.toList());
+  }
 
-    var faker = new Faker();
-
-    for (int i = 0; i < wanted; i++) {
-      var recipe =
-          new RecipeInfo.Builder()
-              .name(faker.funnyName().name())
-              .siteName(faker.company().name())
-              .crawlUrl(faker.company().url())
-              .numIngredients(faker.number().numberBetween(1, 15))
-              .calories(faker.number().numberBetween(1, 1500))
-              .totalTime(faker.number().numberBetween(1, 240))
-              .build();
-
-      result.add(recipe);
+  private static Stream<String> lines(Path filename) {
+    try {
+      return Files.lines(filename);
+    } catch (Exception ignored) {
+      return Stream.empty();
     }
+  }
 
-    return result;
+  private static RecipeInfo buildRecipe(JsonNode node) {
+    var kcal =
+        node.has("calories")
+            ? OptionalInt.of(node.get("calories").intValue())
+            : OptionalInt.empty();
+    var time =
+        node.has("calories")
+            ? OptionalInt.of(node.get("calories").intValue())
+            : OptionalInt.empty();
+
+    return new RecipeInfo.Builder()
+        .name(node.get("name").asText())
+        .siteName(node.get("siteName").asText())
+        .crawlUrl(node.get("crawlUrl").asText())
+        .numIngredients(node.withArray("ingredients").size())
+        .calories(readInt(node, "calories"))
+        .totalTime(readInt(node, "totalTime"))
+        .build();
+  }
+
+  private static OptionalInt readInt(JsonNode node, String key) {
+    if (node.has(key)) {
+      int value = node.get(key).intValue();
+      if (value != 0) {
+        return OptionalInt.of(value);
+      }
+    }
+    return OptionalInt.empty();
+  }
+
+  private static Optional<JsonNode> parse(String line) {
+    try {
+      return Optional.ofNullable(mapper.readTree(line));
+    } catch (Exception ignored) {
+      return Optional.empty();
+    }
   }
 
   private static void writeResult(String filename, ArrayOfByteArraysOutput result) {
@@ -205,17 +243,20 @@ public class Generator {
       while ((key = watchService.take()) != null) {
 
         var changes =
-            key.pollEvents()
-                .stream()
+            key.pollEvents().stream()
                 .map(WatchEvent::context)
                 .map(Object::toString)
                 .filter(s -> s.endsWith(".html"))
                 .collect(Collectors.toSet());
+        key.reset();
+
+        if (changes.isEmpty()) {
+          continue;
+        }
 
         System.out.println("Change detected: " + changes);
         generate();
         System.out.println("Regeneration complete!");
-        key.reset();
       }
     }
 

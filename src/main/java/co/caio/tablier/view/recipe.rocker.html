@@ -2,35 +2,28 @@
 
 @args (int position, RecipeInfo recipe)
 
-<div class="box">
-    <article class="media">
-        <div class="media-content" id="recipe-@position">
-            <div class="content">
-                <p><strong><a href="@recipe.crawlUrl()" title="@recipe.name()">@recipe.name()</a></strong> <small>@recipe.siteName()</small>
-                </p>
-            </div>
-            <div class="level is-mobile">
-                <div class="level-left">
-                </div>
-                <div class="level-right">
-                    <p class="level-item is-size-7">
-                        @recipe.numIngredients() ingredients
-                    </p>
+<article class="media">
+  <div class="media-content" id="recipe-@position">
+    <div class="content">
+      <p class="is-marginless"><strong><a href="@recipe.crawlUrl()" title="@recipe.name()">@recipe.name()</a></strong> <small>@recipe.siteName()</small>
+      </p>
+      <ul class="is-marginless">
+        <li class="recipe-meta-item is-size-7">
+          <svg class="icon icon-ingredients"><use xlink:href="#icon-ingredients"></use></svg> @recipe.numIngredients()
+        </li>
 
-                    @if (recipe.calories().isPresent()) {
-                    <p class="level-item is-size-7">
-                        @recipe.calories().getAsInt() calories
-                    </p>
-                    }
+        @if (recipe.calories().isPresent()) {
+        <li class="recipe-meta-item is-size-7">
+          <svg class="icon icon-calories"><use xlink:href="#icon-calories"></use></svg> @recipe.calories().getAsInt()
+        </li>
+        }
 
-                    @if (recipe.totalTime().isPresent()) {
-                    <p class="level-item is-size-7">
-                        @recipe.totalTime().getAsInt() minutes
-                    </p>
-                    }
-
-                </div>
-            </div>
-        </div>
-    </article>
-</div>
+        @if (recipe.totalTime().isPresent()) {
+        <li class="recipe-meta-item is-size-7">
+          <svg class="icon icon-time"><use xlink:href="#icon-time"></use></svg> @recipe.totalTime().getAsInt() min
+        </li>
+        }
+      </ul>
+    </div>
+  </div>
+</article>

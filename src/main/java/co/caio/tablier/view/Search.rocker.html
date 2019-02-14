@@ -7,6 +7,24 @@
 @args (SiteInfo site, PageInfo page, SearchFormInfo searchForm, SearchResultsInfo sr)
 
 @base.template(site, page) -> {
+
+<svg aria-hidden="true" style="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+  <symbol id="icon-time" viewBox="0 0 32 32">
+  <title>Cook Time (in minutes)</title>
+  <path d="M20.586 23.414l-6.586-6.586v-8.828h4v7.172l5.414 5.414zM16 0c-8.837 0-16 7.163-16 16s7.163 16 16 16 16-7.163 16-16-7.163-16-16-16zM16 28c-6.627 0-12-5.373-12-12s5.373-12 12-12c6.627 0 12 5.373 12 12s-5.373 12-12 12z"></path>
+  </symbol>
+  <symbol id="icon-calories" viewBox="0 0 32 32">
+  <title>Calories (in kcal)</title>
+  <path d="M10.031 32c-2.133-4.438-0.997-6.981 0.642-9.376 1.795-2.624 2.258-5.221 2.258-5.221s1.411 1.834 0.847 4.703c2.493-2.775 2.963-7.196 2.587-8.889 5.635 3.938 8.043 12.464 4.798 18.783 17.262-9.767 4.294-24.38 2.036-26.027 0.753 1.646 0.895 4.433-0.625 5.785-2.573-9.759-8.937-11.759-8.937-11.759 0.753 5.033-2.728 10.536-6.084 14.648-0.118-2.007-0.243-3.392-1.298-5.312-0.237 3.646-3.023 6.617-3.777 10.27-1.022 4.946 0.765 8.568 7.555 12.394z"></path>
+  </symbol>
+  <symbol id="icon-ingredients" viewBox="0 0 32 32">
+  <title>Number of Ingredients</title>
+  <path d="M29.884 25.14l-9.884-16.47v-6.671h1c0.55 0 1-0.45 1-1s-0.45-1-1-1h-10c-0.55 0-1 0.45-1 1s0.45 1 1 1h1v6.671l-9.884 16.47c-2.264 3.773-0.516 6.86 3.884 6.86h20c4.4 0 6.148-3.087 3.884-6.86zM7.532 20l6.468-10.779v-7.221h4v7.221l6.468 10.779h-16.935z"></path>
+  </symbol>
+  </defs>
+</svg>
+
     <section class="hero">
         <div class="hero-head">
             @nav.template(site)
@@ -50,6 +68,9 @@
                         <ul class="pagination-list"></ul>
                     </nav>
                 </div>
+            </div>
+            <div class="column is-one-quarter" style="background-color:red; height:100px">
+              test
             </div>
         </div>
     </section>

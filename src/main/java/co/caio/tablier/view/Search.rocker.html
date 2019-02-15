@@ -40,7 +40,7 @@
                 <h2 class="subtitle">
                     @searchForm.subtitle()
                 </h2>
-                @searchform.template(searchForm)
+                @searchform.template(site, searchForm)
             </div>
         </div>
     </section>
@@ -63,8 +63,8 @@
                         @recipe.template(i.index() + sr.paginationStart(), ri)
                     }
                     <nav class="pagination" role="navigation">
-                        <a class="pagination-previous" @if (sr.previousPageHref().isEmpty()) { disabled } else { href="@sr.previousPageHref()" }>Previous page</a>
-                        <a class="pagination-next" @if (sr.nextPageHref().isEmpty()) { disabled } else { href="@sr.nextPageHref()" }>Next page</a>
+                        <a class="pagination-previous" @if (site.isUnstable() || sr.previousPageHref().isEmpty()) { disabled } else { href="@sr.previousPageHref()" }>Previous page</a>
+                        <a class="pagination-next" @if (site.isUnstable() || sr.nextPageHref().isEmpty()) { disabled } else { href="@sr.nextPageHref()" }>Next page</a>
                         <ul class="pagination-list"></ul>
                     </nav>
                 </div>

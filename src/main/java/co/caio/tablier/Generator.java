@@ -38,28 +38,26 @@ public class Generator {
 
   private static final Path outputDir = Path.of("src/");
 
+  private static final Map<String, SiteInfo> siteVariations;
   private static final Map<String, PageInfo> pageVariations;
   private static final Map<String, SearchFormInfo> searchFormVariations;
   private static final Map<String, SearchResultsInfo> searchResultsVariations;
   private static final ObjectMapper mapper = new ObjectMapper();
 
   static {
-    var pages = new HashMap<String, PageInfo>();
-    var defaultPage = new PageInfo.Builder().title("Index").build();
-    pages.put("", defaultPage);
-    pages.put(
-        "_unstable", new PageInfo.Builder().from(defaultPage).showUnstableWarning(true).build());
+    siteVariations =
+        Map.of(
+            "",
+            new SiteInfo.Builder().build(),
+            "_unstable",
+            new SiteInfo.Builder().isUnstable(true).build());
 
-    pageVariations = Collections.unmodifiableMap(pages);
+    pageVariations = Map.of("", new PageInfo.Builder().title("Index").build());
 
     var searchforms = new HashMap<String, SearchFormInfo>();
     var defaultSearchForm = new SearchFormInfo.Builder().build();
     searchforms.put("", defaultSearchForm);
-    searchforms.put("_disabled", new SearchFormInfo.Builder().isDisabled(true).build());
     searchforms.put("_nofocus", new SearchFormInfo.Builder().isAutoFocus(false).build());
-    searchforms.put(
-        "_disablednofocus",
-        new SearchFormInfo.Builder().isDisabled(true).isAutoFocus(false).build());
 
     searchFormVariations = Collections.unmodifiableMap(searchforms);
 
@@ -126,15 +124,6 @@ public class Generator {
   }
 
   private static RecipeInfo buildRecipe(JsonNode node) {
-    var kcal =
-        node.has("calories")
-            ? OptionalInt.of(node.get("calories").intValue())
-            : OptionalInt.empty();
-    var time =
-        node.has("calories")
-            ? OptionalInt.of(node.get("calories").intValue())
-            : OptionalInt.empty();
-
     return new RecipeInfo.Builder()
         .name(node.get("name").asText())
         .siteName(node.get("siteName").asText())
@@ -174,53 +163,56 @@ public class Generator {
     }
   }
 
-  private static final SiteInfo siteInfo =
-      new SiteInfo.Builder()
-          .title("gula.recipes")
-          .addNavigationItem("/", "gula.recipes", true)
-          .addNavigationItem("/about", "About", false)
-          .build();
-
   private static final ErrorInfo errorInfo =
       new ErrorInfo.Builder().title("Unknown Error").subtitle("Hue hue hue hue hue hue?").build();
 
   private static void generate() {
-    pageVariations.forEach(
-        (pagePrefix, page) ->
-            searchFormVariations.forEach(
-                (searchFormPrefix, searchForm) -> {
-                  var indexName = String.format("index%s%s.html", pagePrefix, searchFormPrefix);
-                  var zeroName =
-                      String.format("zero_results%s%s.html", pagePrefix, searchFormPrefix);
-                  var errorName = String.format("error%s%s.html", pagePrefix, searchFormPrefix);
-
-                  writeResult(
-                      indexName,
-                      Index.template(siteInfo, page, searchForm)
-                          .render(ArrayOfByteArraysOutput.FACTORY));
-
-                  writeResult(
-                      zeroName,
-                      ZeroResults.template(siteInfo, page, searchForm)
-                          .render(ArrayOfByteArraysOutput.FACTORY));
-
-                  writeResult(
-                      errorName,
-                      Error.template(siteInfo, page, searchForm, errorInfo)
-                          .render(ArrayOfByteArraysOutput.FACTORY));
-
-                  searchResultsVariations.forEach(
-                      (srPrefix, sr) -> {
-                        var searchName =
+    siteVariations.forEach(
+        (sitePrefix, site) -> {
+          pageVariations.forEach(
+              (pagePrefix, page) ->
+                  searchFormVariations.forEach(
+                      (searchFormPrefix, searchForm) -> {
+                        var indexName =
                             String.format(
-                                "search%s%s%s.html", pagePrefix, searchFormPrefix, srPrefix);
+                                "index%s%s%s.html", sitePrefix, pagePrefix, searchFormPrefix);
+                        var zeroName =
+                            String.format(
+                                "zero_results%s%s%s.html",
+                                sitePrefix, pagePrefix, searchFormPrefix);
+                        var errorName =
+                            String.format(
+                                "error%s%s%s.html", sitePrefix, pagePrefix, searchFormPrefix);
 
                         writeResult(
-                            searchName,
-                            Search.template(siteInfo, page, searchForm, sr)
+                            indexName,
+                            Index.template(site, page, searchForm)
                                 .render(ArrayOfByteArraysOutput.FACTORY));
-                      });
-                }));
+
+                        writeResult(
+                            zeroName,
+                            ZeroResults.template(site, page, searchForm)
+                                .render(ArrayOfByteArraysOutput.FACTORY));
+
+                        writeResult(
+                            errorName,
+                            Error.template(site, page, searchForm, errorInfo)
+                                .render(ArrayOfByteArraysOutput.FACTORY));
+
+                        searchResultsVariations.forEach(
+                            (srPrefix, sr) -> {
+                              var searchName =
+                                  String.format(
+                                      "search%s%s%s%s.html",
+                                      sitePrefix, pagePrefix, searchFormPrefix, srPrefix);
+
+                              writeResult(
+                                  searchName,
+                                  Search.template(site, page, searchForm, sr)
+                                      .render(ArrayOfByteArraysOutput.FACTORY));
+                            });
+                      }));
+        });
   }
 
   public static void main(String[] args) throws Exception {
@@ -243,7 +235,8 @@ public class Generator {
       while ((key = watchService.take()) != null) {
 
         var changes =
-            key.pollEvents().stream()
+            key.pollEvents()
+                .stream()
                 .map(WatchEvent::context)
                 .map(Object::toString)
                 .filter(s -> s.endsWith(".html"))

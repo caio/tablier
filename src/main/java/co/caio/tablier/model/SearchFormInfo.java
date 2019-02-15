@@ -33,11 +33,6 @@ public interface SearchFormInfo {
   }
 
   @Value.Default
-  default boolean isDisabled() {
-    return false;
-  }
-
-  @Value.Default
   default boolean isAutoFocus() {
     return true;
   }

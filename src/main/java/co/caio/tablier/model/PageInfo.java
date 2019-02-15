@@ -9,11 +9,6 @@ public interface PageInfo {
   String title();
 
   @Value.Default
-  default boolean showUnstableWarning() {
-    return false;
-  }
-
-  @Value.Default
   default String description() {
     return "";
   }

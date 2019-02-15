@@ -13,6 +13,11 @@ public interface SiteInfo {
     return "gula.recipes";
   }
 
+  @Value.Default
+  default boolean isUnstable() {
+    return false;
+  }
+
   List<NavigationItem> navigationItems();
 
   class Builder extends ImmutableSiteInfo.Builder {

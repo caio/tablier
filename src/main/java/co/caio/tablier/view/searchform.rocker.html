@@ -4,14 +4,14 @@
 @args (SiteInfo site, SearchFormInfo searchForm)
 
 <form action="/search?#results" method="get">
-    <div class="field has-addons has-addons-centered">
-        <div class="control">
-            <input class="input" @if (site.isUnstable()) { disabled } type="search" name="q" @if (searchForm.isAutoFocus()) { autofocus } placeholder="@searchForm.placeholder()" value="@searchForm.value()">
-        </div>
-        <div class="control">
-            <button class="button is-primary" @if (site.isUnstable()) { disabled }>
-                @searchForm.buttonText()
-            </button>
-        </div>
+  <div class="field has-addons has-addons-centered">
+    <div class="control">
+      <input class="input" @if (site.isUnstable()) { disabled } type="search" name="q" @if (searchForm.isAutoFocus()) { autofocus } placeholder="@searchForm.placeholder()" value="@searchForm.value()">
     </div>
+    <div class="control">
+      <button class="button is-primary" @if (site.isUnstable()) { disabled }>
+        @searchForm.buttonText()
+      </button>
+    </div>
+  </div>
 </form>

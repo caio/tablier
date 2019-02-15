@@ -3,26 +3,26 @@
 @args (SiteInfo site)
 
 <nav class="navbar">
-    <div class="container">
-        <div class="navbar-brand">
-            <a class="navbar-item" href="/" title="@site.title()">
-                <h1>@site.title()</h1>
-            </a>
-            <span class="navbar-burger burger" data-target="navigationMenu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </span>
-        </div>
-        <div id="navigationMenu" class="navbar-menu">
-            <div class="navbar-end">
-                @for (item: site.navigationItems()) {
-                <a href="@item.href()" class="navbar-item @if (item.isActive()) { is-active }">
-                        @item.text()
-                </a>
-                }
-            </div>
-        </div>
+  <div class="container">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="/" title="@site.title()">
+        <h1>@site.title()</h1>
+      </a>
+      <span class="navbar-burger burger" data-target="navigationMenu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </span>
     </div>
+    <div id="navigationMenu" class="navbar-menu">
+      <div class="navbar-end">
+        @for (item: site.navigationItems()) {
+        <a href="@item.href()" class="navbar-item @if (item.isActive()) { is-active }">
+          @item.text()
+        </a>
+        }
+      </div>
+    </div>
+  </div>
 </nav>
 

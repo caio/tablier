@@ -14,6 +14,8 @@ public interface RecipeInfo {
 
   String crawlUrl();
 
+  String slug();
+
   int numIngredients();
 
   OptionalInt calories();

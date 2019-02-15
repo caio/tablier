@@ -9,9 +9,7 @@
       <input class="input" @if (site.isUnstable()) { disabled } type="search" name="q" @if (searchForm.isAutoFocus()) { autofocus } placeholder="@searchForm.placeholder()" value="@searchForm.value()">
     </div>
     <div class="control">
-      <button class="button is-primary" @if (site.isUnstable()) { disabled }>
-        @searchForm.buttonText()
-      </button>
+      <button class="button is-primary" @if (site.isUnstable()) { disabled }>Search</button>
     </div>
   </div>
 </form>

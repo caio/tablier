@@ -23,11 +23,6 @@ public interface SearchFormInfo {
   }
 
   @Value.Default
-  default String buttonText() {
-    return "Search";
-  }
-
-  @Value.Default
   default String placeholder() {
     return "Ingredients, diets, brands, etc";
   }

@@ -14,6 +14,7 @@ import co.caio.tablier.model.SidebarInfo;
 import co.caio.tablier.model.SiteInfo;
 import co.caio.tablier.view.Error;
 import co.caio.tablier.view.Index;
+import co.caio.tablier.view.Recipe;
 import co.caio.tablier.view.Search;
 import co.caio.tablier.view.ZeroResults;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -63,38 +64,37 @@ public class Generator {
 
     searchFormVariations = Collections.unmodifiableMap(searchforms);
 
-    var filters = List.of(
-        new FilterInfo.Builder()
-            .name("Limit Ingredients")
-            .addOption("Less than 5", "#", 12)
-            .addOption("6 to 10", "#", 22)
-            .addOption("More than 10", "#", 4)
-            .build(),
+    var filters =
+        List.of(
+            new FilterInfo.Builder()
+                .name("Limit Ingredients")
+                .addOption("Less than 5", "#", 12)
+                .addOption("6 to 10", "#", 22)
+                .addOption("More than 10", "#", 4)
+                .build(),
+            new FilterInfo.Builder()
+                .name("Limit Cook Time")
+                .addOption("Up to 15 minutes", "#", 7)
+                .addOption("15 to 30 minutes", "#", 29)
+                .addOption("30 to 60 minutes", "#", 11)
+                .addOption("One hour or longer", "#", 2)
+                .build(),
+            new FilterInfo.Builder()
+                .name("Limit Nutrition (per serving)")
+                .addOption("Up to 200 kcal", "#", 2)
+                .addOption("Up to 500 kcal", "#", 29)
+                .addOption("Up to 10g of Fat", "#", 11)
+                .addOption("Up to 30g of Carbs", "#", 23)
+                .build());
 
-        new FilterInfo.Builder()
-            .name("Limit Cook Time")
-            .addOption("Up to 15 minutes", "#", 7)
-            .addOption("15 to 30 minutes", "#", 29)
-            .addOption("30 to 60 minutes", "#", 11)
-            .addOption("One hour or longer", "#", 2)
-            .build(),
-
-        new FilterInfo.Builder()
-            .name("Limit Nutrition (per serving)")
-            .addOption("Up to 200 kcal", "#", 2)
-            .addOption("Up to 500 kcal", "#", 29)
-            .addOption("Up to 10g of Fat", "#", 11)
-            .addOption("Up to 30g of Carbs", "#", 23)
-            .build()
-    );
-
-    var sidebar = new SidebarInfo.Builder()
-        .showCounts(true)
-        .addSortOption("Relevance","noop", true)
-        .addSortOption("Fastest to Cook","fc", false)
-        .addSortOption("Least Ingredients","li", false)
-        .addAllFilters(filters)
-        .build();
+    var sidebar =
+        new SidebarInfo.Builder()
+            .showCounts(true)
+            .addSortOption("Relevance", "noop", true)
+            .addSortOption("Fastest to Cook", "fc", false)
+            .addSortOption("Least Ingredients", "li", false)
+            .addAllFilters(filters)
+            .build();
 
     var srs = new HashMap<String, SearchResultsInfo>();
 
@@ -163,15 +163,20 @@ public class Generator {
   }
 
   private static RecipeInfo buildRecipe(JsonNode node) {
-    return new RecipeInfo.Builder()
-        .name(node.get("name").asText())
-        .siteName(node.get("siteName").asText())
-        .crawlUrl(node.get("crawlUrl").asText())
-        .slug(node.get("slug").asText())
-        .numIngredients(node.withArray("ingredients").size())
-        .calories(readInt(node, "calories"))
-        .totalTime(readInt(node, "totalTime"))
-        .build();
+    var builder =
+        new RecipeInfo.Builder()
+            .name(node.get("name").asText())
+            .siteName(node.get("siteName").asText())
+            .crawlUrl(node.get("crawlUrl").asText())
+            .slug(node.get("slug").asText())
+            .numIngredients(node.withArray("ingredients").size())
+            .calories(readInt(node, "calories"))
+            .totalTime(readInt(node, "totalTime"));
+
+    node.withArray("ingredients").forEach(i -> builder.addIngredients(i.asText()));
+    node.withArray("instructions").forEach(i -> builder.addInstructions(i.asText()));
+
+    return builder.build();
   }
 
   private static OptionalInt readInt(JsonNode node, String key) {
@@ -224,6 +229,10 @@ public class Generator {
                             String.format(
                                 "error%s%s%s.html", sitePrefix, pagePrefix, searchFormPrefix);
 
+                        var recipeName =
+                            String.format(
+                                "recipe%s%s%s.html", sitePrefix, pagePrefix, searchFormPrefix);
+
                         writeResult(
                             indexName,
                             Index.template(site, page, searchForm)
@@ -237,6 +246,11 @@ public class Generator {
                         writeResult(
                             errorName,
                             Error.template(site, page, searchForm, errorInfo)
+                                .render(ArrayOfByteArraysOutput.FACTORY));
+
+                        writeResult(
+                            recipeName,
+                            Recipe.template(site, page, searchForm, samples(5).get(4))
                                 .render(ArrayOfByteArraysOutput.FACTORY));
 
                         searchResultsVariations.forEach(

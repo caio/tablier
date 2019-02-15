@@ -1,5 +1,6 @@
 package co.caio.tablier.model;
 
+import java.util.List;
 import java.util.OptionalInt;
 import org.immutables.value.Value;
 import org.immutables.value.Value.Style.ImplementationVisibility;
@@ -21,6 +22,10 @@ public interface RecipeInfo {
   OptionalInt calories();
 
   OptionalInt totalTime();
+
+  List<String> ingredients();
+
+  List<String> instructions();
 
   class Builder extends ImmutableRecipeInfo.Builder {}
 }

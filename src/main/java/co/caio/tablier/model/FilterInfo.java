@@ -6,8 +6,7 @@ import org.immutables.value.Value.Style.ImplementationVisibility;
 
 @Value.Style(visibility = ImplementationVisibility.PACKAGE, overshadowImplementation = true)
 @Value.Immutable
-public
-interface FilterInfo {
+public interface FilterInfo {
 
   String name();
 

@@ -11,18 +11,18 @@
         </p>
         <ul class="is-marginless">
           <li class="recipe-meta-item is-size-7">
-            <svg class="icon icon-ingredients"><use xlink:href="#icon-ingredients"></use></svg> @recipe.numIngredients()
+            <svg class="icon"><use xlink:href="#icon-ingredients"></use></svg> @recipe.numIngredients()
           </li>
 
           @if (recipe.calories().isPresent()) {
           <li class="recipe-meta-item is-size-7">
-            <svg class="icon icon-calories"><use xlink:href="#icon-calories"></use></svg> @recipe.calories().getAsInt()
+            <svg class="icon"><use xlink:href="#icon-calories"></use></svg> @recipe.calories().getAsInt()
           </li>
           }
 
           @if (recipe.totalTime().isPresent()) {
           <li class="recipe-meta-item is-size-7">
-            <svg class="icon icon-time"><use xlink:href="#icon-time"></use></svg> @recipe.totalTime().getAsInt() min
+            <svg class="icon"><use xlink:href="#icon-time"></use></svg> @recipe.totalTime().getAsInt() min
           </li>
           }
 

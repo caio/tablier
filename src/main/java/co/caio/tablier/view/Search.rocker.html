@@ -60,7 +60,7 @@
     <div class="column is-two-fifths">
       <div class="content">
         @for ((i, ri): sr.recipes()) {
-        @recipe.template(i.index() + sr.paginationStart(), ri)
+        @recipe.template(site, ri, i.index() + sr.paginationStart())
         }
         <nav class="pagination" role="navigation">
           <a class="pagination-previous" @if (site.isUnstable() || sr.previousPageHref().isEmpty()) { disabled } else { href="@sr.previousPageHref()" }>Previous page</a>

@@ -1,6 +1,7 @@
+@import co.caio.tablier.model.SiteInfo
 @import co.caio.tablier.model.RecipeInfo
 
-@args (int position, RecipeInfo recipe)
+@args (SiteInfo site, RecipeInfo recipe, int position)
 
 <div class="box">
   <article class="media">
@@ -26,7 +27,7 @@
           }
 
           <li class="recipe-meta-item is-size-7">
-            <a href="/recipe/@recipe.slug()">More Info</a>
+            <a @if (site.isUnstable()) { disabled } class="button is-link is-inverted is-small" href="/recipe/@recipe.slug()">More Info</a>
           </li>
         </ul>
       </div>

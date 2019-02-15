@@ -26,5 +26,7 @@ public interface SearchResultsInfo {
 
   List<RecipeInfo> recipes();
 
+  SidebarInfo sidebar();
+
   class Builder extends ImmutableSearchResultsInfo.Builder {}
 }

@@ -1,0 +1,32 @@
+@import co.caio.tablier.model.*
+@import co.caio.tablier.view.base
+
+@args (SiteInfo site, PageInfo page, SidebarInfo sidebar)
+
+@base.template(site, page) -> {
+
+<div class="filter-group">
+  Sort recipes by:<br>
+  <select id="sort_order">
+    @for (option : sidebar.sortOptions()) {
+    <option selected>@option.name()</option>
+    @if (option.isSelected()) {
+    } else {
+    <option value="@option.value()">@option.name()</option>
+    }
+    }
+  </select>
+</div>
+
+@for (filter : sidebar.filters()) {
+<div class="filter-group">
+  @filter.name():
+  <ul>
+    @for (option : filter.options()) {
+    <li><a href="@option.href()">@option.name() @if (filter.showCounts()) { (@option.count()) }</a></li>
+    }
+  </ul>
+</div>
+}
+
+}

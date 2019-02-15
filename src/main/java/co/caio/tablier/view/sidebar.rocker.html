@@ -9,8 +9,8 @@
   Sort recipes by:<br>
   <select id="sort_order">
     @for (option : sidebar.sortOptions()) {
-    <option selected>@option.name()</option>
     @if (option.isSelected()) {
+    <option selected>@option.name()</option>
     } else {
     <option value="@option.value()">@option.name()</option>
     }

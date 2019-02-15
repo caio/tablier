@@ -2,6 +2,7 @@
 
 @args (int position, RecipeInfo recipe)
 
+<div class="box">
 <article class="media">
   <div class="media-content" id="recipe-@position">
     <div class="content">
@@ -23,7 +24,12 @@
           <svg class="icon icon-time"><use xlink:href="#icon-time"></use></svg> @recipe.totalTime().getAsInt() min
         </li>
         }
+
+        <li class="recipe-meta-item is-size-7">
+          <a href="#">More Info</a>
+        </li>
       </ul>
     </div>
   </div>
 </article>
+</div>

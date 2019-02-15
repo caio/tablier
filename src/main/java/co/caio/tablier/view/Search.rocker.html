@@ -16,22 +16,19 @@
       }
     </div>
     }
-    <div class="column is-full">
-      <div class="container has-text-centered">
-        <h1 class="title">
-          Search Results
-        </h1>
-        <h2 class="subtitle">
-          Showing recipes @sr.paginationStart() to @sr.paginationEnd() (Out of @sr.numMatching())
-        </h2>
+    <div class="column is-5 has-text-centered">
+      <div class="notification content">
+        Your search for <span class="is-italic">@searchForm.value()</span> has matched @sr.numMatching() recipe(s).<br>Displaying results from @sr.paginationStart() to @sr.paginationEnd().
       </div>
     </div>
+    <div class="column is-full"></div>
+
     <div class="column is-two-fifths">
       <div class="content">
         @for ((i, ri): sr.recipes()) {
         @recipecard.template(site, ri, i.index() + sr.paginationStart())
         }
-        <nav class="pagination" role="navigation">
+        <nav class="pagination" role="navigation" style="margin-top:1.5rem;">
           <a class="pagination-previous" @if (site.isUnstable() || sr.previousPageHref().isEmpty()) { disabled } else { href="@sr.previousPageHref()" }>Previous page</a>
           <a class="pagination-next" @if (site.isUnstable() || sr.nextPageHref().isEmpty()) { disabled } else { href="@sr.nextPageHref()" }>Next page</a>
           <ul class="pagination-list"></ul>
@@ -39,7 +36,7 @@
       </div>
     </div>
     <div class="column is-one-quarter">
-        @sidebar.template(site, page, sr.sidebar())
+      @sidebar.template(site, page, sr.sidebar())
     </div>
   </div>
 </section>

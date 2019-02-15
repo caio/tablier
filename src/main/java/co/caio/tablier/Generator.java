@@ -60,7 +60,9 @@ public class Generator {
     var searchforms = new HashMap<String, SearchFormInfo>();
     var defaultSearchForm = new SearchFormInfo.Builder().build();
     searchforms.put("", defaultSearchForm);
-    searchforms.put("_nofocus", new SearchFormInfo.Builder().isAutoFocus(false).build());
+    searchforms.put(
+        "_nofocus",
+        new SearchFormInfo.Builder().value("catar coquinhos").isAutoFocus(false).build());
 
     searchFormVariations = Collections.unmodifiableMap(searchforms);
 
@@ -289,8 +291,7 @@ public class Generator {
       while ((key = watchService.take()) != null) {
 
         var changes =
-            key.pollEvents()
-                .stream()
+            key.pollEvents().stream()
                 .map(WatchEvent::context)
                 .map(Object::toString)
                 .filter(s -> s.endsWith(".html"))

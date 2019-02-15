@@ -25,10 +25,11 @@
     @for (option : filter.options()) {
     <li>
       @if (site.isUnstable()) {
-      <a class="button is-link is-inverted" disabled href="#">@option.name() @if (filter.showCounts()) { (@option.count()) }</a></li>
+      <a class="button is-link is-inverted" disabled href="#">@option.name() @if (filter.showCounts()) { (@option.count()) }</a>
       } else {
-      <a class="button is-link is-inverted" href="@option.href()">@option.name() @if (filter.showCounts()) { (@option.count()) }</a></li>
+      <a class="button is-link is-inverted" href="@option.href()">@option.name() @if (filter.showCounts()) { (@option.count()) }</a>
       }
+    </li>
     }
   </ul>
 </div>

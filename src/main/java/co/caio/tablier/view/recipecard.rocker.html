@@ -3,35 +3,33 @@
 
 @args (SiteInfo site, RecipeInfo recipe, int position)
 
-<div class="box">
-  <article class="media">
-    <div class="media-content" id="recipe-@position">
-      <div class="content">
-        <p class="is-marginless"><strong><a href="@recipe.crawlUrl()" title="@recipe.name()">@recipe.name()</a></strong> <small>@recipe.siteName()</small>
-        </p>
-        <ul class="is-marginless">
-          <li class="recipe-meta-item is-size-7">
-            <svg class="icon"><use xlink:href="#icon-ingredients"></use></svg> @recipe.numIngredients()
-          </li>
+<article class="media">
+  <div class="media-content" id="recipe-@position">
+    <div class="content">
+      <p class="title is-size-5" style="margin-bottom: 0.25rem;"><a href="@recipe.crawlUrl()" title="@recipe.name()">@recipe.name()</a></p>
+      <p class="subtitle is-size-6" style="margin-top: 0; margin-bottom: 0.25rem;">@recipe.siteName()</p>
+      <ul class="is-marginless">
+        <li class="recipe-meta-item is-size-7">
+          <svg class="icon"><use xlink:href="#icon-ingredients"></use></svg> @recipe.numIngredients()
+        </li>
 
-          @if (recipe.calories().isPresent()) {
-          <li class="recipe-meta-item is-size-7">
-            <svg class="icon"><use xlink:href="#icon-calories"></use></svg> @recipe.calories().getAsInt()
-          </li>
-          }
+        @if (recipe.calories().isPresent()) {
+        <li class="recipe-meta-item is-size-7">
+          <svg class="icon"><use xlink:href="#icon-calories"></use></svg> @recipe.calories().getAsInt()
+        </li>
+        }
 
-          @if (recipe.totalTime().isPresent()) {
-          <li class="recipe-meta-item is-size-7">
-            <svg class="icon"><use xlink:href="#icon-time"></use></svg> @recipe.totalTime().getAsInt() min
-          </li>
-          }
+        @if (recipe.totalTime().isPresent()) {
+        <li class="recipe-meta-item is-size-7">
+          <svg class="icon"><use xlink:href="#icon-time"></use></svg> @recipe.totalTime().getAsInt() min
+        </li>
+        }
 
-          <li class="recipe-meta-item is-size-7">
-            <a class="button is-white is-small has-text-link" href="/recipe/@recipe.slug()">More Info</a>
-          </li>
+        <li class="recipe-meta-item is-size-7">
+          <a class="button is-white is-small has-text-link" href="/recipe/@recipe.slug()">More Info</a>
+        </li>
 
-        </ul>
-      </div>
+      </ul>
     </div>
-  </article>
-</div>
+  </div>
+</article>

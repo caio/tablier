@@ -1,0 +1,30 @@
+@import co.caio.tablier.model.*
+@import co.caio.tablier.view.base
+@import co.caio.tablier.view.nav
+@import co.caio.tablier.view.searchform
+
+@args (SiteInfo site, PageInfo page, SearchFormInfo searchForm, RockerBody content)
+
+@base.template(site, page) -> {
+<section class="hero">
+  <div class="hero-head">
+    @nav.template(site)
+  </div>
+</section>
+
+<section class="hero is-info">
+  <div class="hero-body">
+    <div class="container has-text-centered">
+      <h1 class="title">
+        @searchForm.title()
+      </h1>
+      <h2 class="subtitle">
+        @searchForm.subtitle()
+      </h2>
+      @searchform.template(site, searchForm)
+    </div>
+  </div>
+</section>
+
+@content
+}

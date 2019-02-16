@@ -291,7 +291,8 @@ public class Generator {
       while ((key = watchService.take()) != null) {
 
         var changes =
-            key.pollEvents().stream()
+            key.pollEvents()
+                .stream()
                 .map(WatchEvent::context)
                 .map(Object::toString)
                 .filter(s -> s.endsWith(".html"))

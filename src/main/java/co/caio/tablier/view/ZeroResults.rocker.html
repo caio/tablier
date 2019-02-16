@@ -1,25 +1,18 @@
 @import co.caio.tablier.model.*
 @import co.caio.tablier.view.base
-@import co.caio.tablier.view.nav
 @import co.caio.tablier.view.searchform
 
 @args (SiteInfo site, PageInfo page, SearchFormInfo searchForm)
 
 @base.template(site, page) -> {
-<section class="hero">
-  <div class="hero-head">
-    @nav.template(site)
-  </div>
-</section>
-
 <section class="hero is-info">
   <div class="hero-body">
     <div class="container has-text-centered" id="try_again">
       <h1 class="title">
-        @searchForm.title()
+        gula.recipes
       </h1>
       <h2 class="subtitle">
-        @searchForm.subtitle()
+        Over a million delicious recipes, zero ads.
       </h2>
       @searchform.template(site, searchForm)
     </div>
@@ -31,12 +24,11 @@
     <div class="column is-full">
       <div class="container has-text-centered">
         <h1 class="title">
-          Search Results
+          Couldn't find any recipe matching your search :(
         </h1>
         <h2 class="subtitle">
-          Couldn't find any recipe matching your search :(
+          Try changing you query
         </h2>
-        <p><a href="#try_again">Try changing your query?</a></p>
       </div>
     </div>
   </div>

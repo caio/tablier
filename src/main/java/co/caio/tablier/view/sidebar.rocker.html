@@ -5,19 +5,6 @@
 
 @base.template(site, page) -> {
 
-<div class="filter-group">
-  Sort recipes by:<br>
-  <select id="sort_order">
-    @for (option : sidebar.sortOptions()) {
-    @if (option.isSelected()) {
-    <option selected>@option.name()</option>
-    } else {
-    <option value="@option.value()">@option.name()</option>
-    }
-    }
-  </select>
-</div>
-
 @for (filter : sidebar.filters()) {
 <div class="filter-group">
   @filter.name():

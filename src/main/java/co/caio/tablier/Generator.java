@@ -92,9 +92,6 @@ public class Generator {
     var sidebar =
         new SidebarInfo.Builder()
             .showCounts(true)
-            .addSortOption("Relevance", "noop", true)
-            .addSortOption("Fastest to Cook", "fc", false)
-            .addSortOption("Least Ingredients", "li", false)
             .addAllFilters(filters)
             .build();
 

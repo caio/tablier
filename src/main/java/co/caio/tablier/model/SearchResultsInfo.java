@@ -15,6 +15,11 @@ public interface SearchResultsInfo {
   long numMatching();
 
   @Value.Default
+  default int numAppliedFilters() {
+    return 0;
+  }
+
+  @Value.Default
   default String previousPageHref() {
     return "";
   }

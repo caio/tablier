@@ -16,9 +16,15 @@
       }
     </div>
     }
-    <div class="column is-5 has-text-centered">
+    <div class="column is-4 has-text-centered">
       <div class="notification content">
-        Your search for <span class="is-italic">@searchForm.value()</span> has matched @sr.numMatching() recipe(s).<br>Displaying results from @sr.paginationStart() to @sr.paginationEnd().
+        Your search for <strong>@searchForm.value()</strong>
+        @if (sr.numAppliedFilters() == 1) {
+        with <em>one</em> filter applied
+        } else if (sr.numAppliedFilters() > 1) {
+        with <em>@sr.numAppliedFilters()</em> filters applied
+        }
+        has matched @sr.numMatching() recipe(s).<br>Displaying results from @sr.paginationStart() to @sr.paginationEnd().
       </div>
     </div>
     <div class="column is-full"></div>

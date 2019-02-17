@@ -17,6 +17,11 @@ public interface FilterInfo {
     return true;
   }
 
+  @Value.Default
+  default boolean isRemovable() {
+    return true;
+  }
+
   class Builder extends ImmutableFilterInfo.Builder {
 
     public Builder addOption(String name, String href, boolean isActive) {

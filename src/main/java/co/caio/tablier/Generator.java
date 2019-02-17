@@ -70,6 +70,7 @@ public class Generator {
         List.of(
             new FilterInfo.Builder()
                 .showCounts(false)
+                .isRemovable(false)
                 .name("Limit Ingredients")
                 .addOption("Less than 5", "#", true)
                 .addOption("6 to 10", "#", 22)

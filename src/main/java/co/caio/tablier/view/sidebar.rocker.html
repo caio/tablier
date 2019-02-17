@@ -13,8 +13,14 @@
     <li>
       @if (site.isUnstable()) {
       <a class="button is-link is-inverted" disabled href="#">@option.name() @if (filter.showCounts()) { (@option.count()) }</a>
+      } else if (filter.isRemovable() && option.isActive()) {
+      <a class="button is-light" href="@option.href()">@option.name() [x]</a>
+      } else if (filter.isRemovable()) {
+      <a class="button is-link is-inverted" href="@option.href()">@option.name() @if (filter.showCounts()) { (@option.count()) }</a>
+      } else if (option.isActive()) {
+      <a class="button is-light">@option.name() @if (filter.showCounts()) { (@option.count()) }</a>
       } else {
-      <a class="button @if (option.isActive()) { is-light } else { is-link is-inverted }" href="@option.href()">@option.name() @if (option.isActive()) { [x] } else if (filter.showCounts()) { (@option.count()) }</a>
+      <a class="button is-link is-inverted" href="@option.href()">@option.name() @if (filter.showCounts()) { (@option.count()) }</a>
       }
     </li>
     }

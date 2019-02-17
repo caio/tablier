@@ -69,15 +69,16 @@ public class Generator {
     var filters =
         List.of(
             new FilterInfo.Builder()
+                .showCounts(false)
                 .name("Limit Ingredients")
-                .addOption("Less than 5", "#", 12)
+                .addOption("Less than 5", "#", true)
                 .addOption("6 to 10", "#", 22)
                 .addOption("More than 10", "#", 4)
                 .build(),
             new FilterInfo.Builder()
                 .name("Limit Cook Time")
                 .addOption("Up to 15 minutes", "#", 7)
-                .addOption("15 to 30 minutes", "#", 29)
+                .addOption("15 to 30 minutes", "#", 29, true)
                 .addOption("30 to 60 minutes", "#", 11)
                 .addOption("One hour or longer", "#", 2)
                 .build(),
@@ -89,11 +90,7 @@ public class Generator {
                 .addOption("Up to 30g of Carbs", "#", 23)
                 .build());
 
-    var sidebar =
-        new SidebarInfo.Builder()
-            .showCounts(true)
-            .addAllFilters(filters)
-            .build();
+    var sidebar = new SidebarInfo.Builder().showCounts(true).addAllFilters(filters).build();
 
     var srs = new HashMap<String, SearchResultsInfo>();
 

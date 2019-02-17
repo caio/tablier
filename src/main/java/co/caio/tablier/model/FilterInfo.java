@@ -18,8 +18,18 @@ public interface FilterInfo {
   }
 
   class Builder extends ImmutableFilterInfo.Builder {
+
+    public Builder addOption(String name, String href, boolean isActive) {
+      return addOption(name, href, 0, isActive);
+    }
+
     public Builder addOption(String name, String href, int count) {
-      addOptions(FilterOption.of(name, href, count));
+      addOptions(FilterOption.of(name, href, count, false));
+      return this;
+    }
+
+    public Builder addOption(String name, String href, int count, boolean isActive) {
+      addOptions(FilterOption.of(name, href, count, isActive));
       return this;
     }
   }
@@ -36,10 +46,20 @@ public interface FilterInfo {
       return 0;
     }
 
+    @Value.Default
+    default boolean isActive() {
+      return false;
+    }
+
     class Builder extends ImmutableFilterOption.Builder {}
 
-    static FilterOption of(String name, String href, int count) {
-      return new FilterOption.Builder().name(name).href(href).count(count).build();
+    static FilterOption of(String name, String href, int count, boolean isActive) {
+      return new FilterOption.Builder()
+          .name(name)
+          .href(href)
+          .count(count)
+          .isActive(isActive)
+          .build();
     }
   }
 }

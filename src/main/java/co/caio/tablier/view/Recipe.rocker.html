@@ -29,12 +29,12 @@
         <svg class="icon icon-subtitle"><use xlink:href="#icon-time"></use></svg> @recipe.totalTime().getAsInt() min
         }
       </div>
-      <a class="button is-info" href="@recipe.crawlUrl()">Visit Original</a>
+      <a class="button is-info" href="@recipe.goUrl()">Visit Original</a>
     </div>
 
     <div class="column is-5 has-text-centered">
       <div class="notification">
-        The following information is cached and possibly outdated. Please <a href="@recipe.crawlUrl()">check the source</a> for pictures and author's notes. If you notice something is off, <a href="mailto:bugs@@gula.recipes?subject=[BUG]%20@recipe.slug()">let us know</a> and we'll fix it as soon as possible.
+        The following information is cached and possibly outdated. Please <a href="@recipe.goUrl()">check the source</a> for pictures and author's notes. If you notice something is off, <a href="mailto:bugs@@gula.recipes?subject=[BUG]%20@recipe.infoUrl()">let us know</a> and we'll fix it as soon as possible.
       </div>
     </div>
     <div class="column is-full"></div>

@@ -13,9 +13,9 @@ public interface RecipeInfo {
 
   String siteName();
 
-  String crawlUrl();
+  String goUrl();
 
-  String slug();
+  String infoUrl();
 
   int numIngredients();
 

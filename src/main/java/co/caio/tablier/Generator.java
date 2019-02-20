@@ -6,9 +6,7 @@ import static java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY;
 
 import co.caio.tablier.model.ErrorInfo;
 import co.caio.tablier.model.FilterInfo;
-import co.caio.tablier.model.PageInfo;
 import co.caio.tablier.model.RecipeInfo;
-import co.caio.tablier.model.SearchFormInfo;
 import co.caio.tablier.model.SearchResultsInfo;
 import co.caio.tablier.model.SidebarInfo;
 import co.caio.tablier.model.SiteInfo;
@@ -42,8 +40,6 @@ public class Generator {
   private static final Path outputDir = Path.of("src/");
 
   private static final Map<String, SiteInfo> siteVariations;
-  private static final Map<String, PageInfo> pageVariations;
-  private static final Map<String, SearchFormInfo> searchFormVariations;
   private static final Map<String, SearchResultsInfo> searchResultsVariations;
   private static final ObjectMapper mapper = new ObjectMapper();
 
@@ -51,20 +47,11 @@ public class Generator {
     siteVariations =
         Map.of(
             "",
-            new SiteInfo.Builder().build(),
+            new SiteInfo.Builder().title("Search").searchValue("trololo").build(),
             "_unstable",
-            new SiteInfo.Builder().isUnstable(true).build());
-
-    pageVariations = Map.of("", new PageInfo.Builder().title("Index").build());
-
-    var searchforms = new HashMap<String, SearchFormInfo>();
-    var defaultSearchForm = new SearchFormInfo.Builder().build();
-    searchforms.put("", defaultSearchForm);
-    searchforms.put(
-        "_nofocus",
-        new SearchFormInfo.Builder().value("catar coquinhos").isAutoFocus(false).build());
-
-    searchFormVariations = Collections.unmodifiableMap(searchforms);
+            new SiteInfo.Builder().title("Index").isUnstable(true).build(),
+            "_autofocus",
+            new SiteInfo.Builder().title("Title").searchIsAutoFocus(false).build());
 
     var filters =
         List.of(
@@ -213,58 +200,30 @@ public class Generator {
   private static void generate() {
     siteVariations.forEach(
         (sitePrefix, site) -> {
-          pageVariations.forEach(
-              (pagePrefix, page) ->
-                  searchFormVariations.forEach(
-                      (searchFormPrefix, searchForm) -> {
-                        var indexName =
-                            String.format(
-                                "index%s%s%s.html", sitePrefix, pagePrefix, searchFormPrefix);
-                        var zeroName =
-                            String.format(
-                                "zero_results%s%s%s.html",
-                                sitePrefix, pagePrefix, searchFormPrefix);
-                        var errorName =
-                            String.format(
-                                "error%s%s%s.html", sitePrefix, pagePrefix, searchFormPrefix);
+          var indexName = String.format("index%s.html", sitePrefix);
+          var zeroName = String.format("zero_results%s.html", sitePrefix);
+          var errorName = String.format("error%s.html", sitePrefix);
 
-                        var recipeName =
-                            String.format(
-                                "recipe%s%s%s.html", sitePrefix, pagePrefix, searchFormPrefix);
+          var recipeName = String.format("recipe%s.html", sitePrefix);
 
-                        writeResult(
-                            indexName,
-                            Index.template(site, page, searchForm)
-                                .render(ArrayOfByteArraysOutput.FACTORY));
+          writeResult(indexName, Index.template(site).render(ArrayOfByteArraysOutput.FACTORY));
 
-                        writeResult(
-                            zeroName,
-                            ZeroResults.template(site, page, searchForm)
-                                .render(ArrayOfByteArraysOutput.FACTORY));
+          writeResult(zeroName, ZeroResults.template(site).render(ArrayOfByteArraysOutput.FACTORY));
 
-                        writeResult(
-                            errorName,
-                            Error.template(site, page, searchForm, errorInfo)
-                                .render(ArrayOfByteArraysOutput.FACTORY));
+          writeResult(
+              errorName, Error.template(site, errorInfo).render(ArrayOfByteArraysOutput.FACTORY));
 
-                        writeResult(
-                            recipeName,
-                            Recipe.template(site, page, searchForm, samples(5).get(4))
-                                .render(ArrayOfByteArraysOutput.FACTORY));
+          writeResult(
+              recipeName,
+              Recipe.template(site, samples(5).get(4)).render(ArrayOfByteArraysOutput.FACTORY));
 
-                        searchResultsVariations.forEach(
-                            (srPrefix, sr) -> {
-                              var searchName =
-                                  String.format(
-                                      "search%s%s%s%s.html",
-                                      sitePrefix, pagePrefix, searchFormPrefix, srPrefix);
+          searchResultsVariations.forEach(
+              (srPrefix, sr) -> {
+                var searchName = String.format("search%s%s.html", sitePrefix, srPrefix);
 
-                              writeResult(
-                                  searchName,
-                                  Search.template(site, page, searchForm, sr)
-                                      .render(ArrayOfByteArraysOutput.FACTORY));
-                            });
-                      }));
+                writeResult(
+                    searchName, Search.template(site, sr).render(ArrayOfByteArraysOutput.FACTORY));
+              });
         });
   }
 

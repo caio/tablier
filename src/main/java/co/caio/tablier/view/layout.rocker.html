@@ -2,9 +2,9 @@
 @import co.caio.tablier.view.base
 @import co.caio.tablier.view.searchform
 
-@args (SiteInfo site, PageInfo page, SearchFormInfo searchForm, RockerBody content)
+@args (SiteInfo site, RockerBody content)
 
-@base.template(site, page) -> {
+@base.template(site) -> {
 
 <!-- from fontello -->
 <svg aria-hidden="true" style="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -33,7 +33,7 @@
       <h2 class="subtitle">
         Over a million delicious recipes, zero ads.
       </h2>
-      @searchform.template(site, searchForm)
+      @searchform.template(site)
     </div>
   </div>
 </section>

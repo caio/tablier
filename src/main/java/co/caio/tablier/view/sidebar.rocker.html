@@ -1,9 +1,9 @@
 @import co.caio.tablier.model.*
 @import co.caio.tablier.view.base
 
-@args (SiteInfo site, PageInfo page, SidebarInfo sidebar)
+@args (SiteInfo site, SidebarInfo sidebar)
 
-@base.template(site, page) -> {
+@base.template(site) -> {
 
 @for (filter : sidebar.filters()) {
 <div class="filter-group">

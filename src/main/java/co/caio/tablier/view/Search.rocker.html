@@ -2,14 +2,14 @@
 @import co.caio.tablier.view.layout
 @import co.caio.tablier.view.recipecard
 
-@args (SiteInfo site, PageInfo page, SearchFormInfo searchForm, SearchResultsInfo sr)
+@args (SiteInfo site, SearchResultsInfo sr)
 
-@layout.template(site, page, searchForm) -> {
+@layout.template(site) -> {
 <section class="section" id="results">
   <div class="columns is-multiline is-centered">
     <div class="column is-5 has-text-justified">
       <div class="notification content">
-        Your search for <strong>@searchForm.value()</strong>
+        Your search for <strong>@site.searchValue()</strong>
         @if (sr.numAppliedFilters() == 1) {
         with <em>one</em> filter applied
         } else if (sr.numAppliedFilters() > 1) {
@@ -33,7 +33,7 @@
       </div>
     </div>
     <div class="column is-one-quarter" id="sidebar">
-      @sidebar.template(site, page, sr.sidebar())
+      @sidebar.template(site, sr.sidebar())
     </div>
   </div>
 </section>

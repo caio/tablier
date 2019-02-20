@@ -2,9 +2,9 @@
 @import co.caio.tablier.view.base
 @import co.caio.tablier.view.searchform
 
-@args (SiteInfo site, PageInfo page, SearchFormInfo searchForm, ErrorInfo error)
+@args (SiteInfo site, ErrorInfo error)
 
-@base.template(site, page) -> {
+@base.template(site) -> {
 <section class="hero is-info">
   <div class="hero-body">
     <div class="container has-text-centered">
@@ -21,7 +21,7 @@
       <h2 class="subtitle">
         Over a million delicious recipes, zero ads.
       </h2>
-      @searchform.template(site, searchForm)
+      @searchform.template(site)
     </div>
   </div>
 </section>

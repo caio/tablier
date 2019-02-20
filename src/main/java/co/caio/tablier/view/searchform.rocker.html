@@ -1,12 +1,11 @@
 @import co.caio.tablier.model.SiteInfo
-@import co.caio.tablier.model.SearchFormInfo
 
-@args (SiteInfo site, SearchFormInfo searchForm)
+@args (SiteInfo site)
 
 <form action="/search?#results" method="get">
   <div class="field has-addons has-addons-centered">
     <div class="control">
-      <input class="input" @if (site.isUnstable()) { disabled } type="search" name="q" @if (searchForm.isAutoFocus()) { autofocus } placeholder="Ingredients, diets, brands, etc." value="@searchForm.value()">
+      <input class="input" @if (site.isUnstable()) { disabled } type="search" name="q" @if (site.searchIsAutoFocus()) { autofocus } placeholder="Ingredients, diets, brands, etc." value="@site.searchValue()">
     </div>
     <div class="control">
       <button class="button is-primary" @if (site.isUnstable()) { disabled }>Search</button>

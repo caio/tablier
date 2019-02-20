@@ -7,15 +7,6 @@
 @layout.template(site, page, searchForm) -> {
 <section class="section" id="results">
   <div class="columns is-multiline is-centered">
-    @if (site.isUnstable()) {
-    <div class="column is-full has-text-centered">
-      @if (site.isUnstable()) {
-      <div class="notification is-warning">
-        <p>We are experiencing performance degradation due to unexpectedly high traffic.<br>The search functionality has been <em>temporarily</em> disabled. Please try again in a few minutes.</p>
-      </div>
-      }
-    </div>
-    }
     <div class="column is-5 has-text-justified">
       <div class="notification content">
         Your search for <strong>@searchForm.value()</strong>

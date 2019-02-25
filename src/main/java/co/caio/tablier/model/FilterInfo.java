@@ -14,7 +14,7 @@ public interface FilterInfo {
 
   @Value.Default
   default boolean showCounts() {
-    return true;
+    return false;
   }
 
   @Value.Default

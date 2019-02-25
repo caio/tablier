@@ -5,15 +5,19 @@
 @args (SiteInfo site, ErrorInfo error)
 
 @base.template(site) -> {
-<section class="hero is-info">
+<section class="hero is-fullheight">
   <div class="hero-body">
     <div class="container has-text-centered">
 
       @if (site.isUnstable()) {
       <div class="notification is-warning">
-        <p>The site is experiencing performance degradation due to unexpectedly high traffic.<br>The search functionality has been <em>temporarily</em> disabled. Please try again in a few minutes.</p>
+        <p>We are experiencing performance degradation due to unexpectedly high traffic.<br>The search functionality has been <em>temporarily</em> disabled. Please try again in a few minutes.</p>
       </div>
       }
+
+      <div class="notification is-danger">
+        <p><strong>@error.title()</strong>: @error.subtitle()</p>
+      </div>
 
       <h1 class="title">
         gula.recipes
@@ -22,20 +26,7 @@
         Over a million delicious recipes, zero ads.
       </h2>
       @searchform.template(site)
-    </div>
-  </div>
-</section>
-
-<section class="section" id="error">
-  <div class="columns is-multiline is-centered">
-    <div class="column is-full">
-      <div class="container has-text-centered">
-        <h1 class="title">
-          @error.title()
-        </h1>
-        <h2 class="subtitle">
-          @error.subtitle()
-        </h2>
+      <div class="hero-foot">
       </div>
     </div>
   </div>

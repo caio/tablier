@@ -7,7 +7,7 @@
 @layout.template(site) -> {
 <section class="section" id="results">
   <div class="columns is-multiline is-centered">
-    <div class="column is-5 has-text-justified">
+    <div class="column is-5">
       <div class="notification content @if (sr.numMatching() == 0) { is-danger }">
         Your search for <strong>@site.searchValue()</strong>
         @if (sr.numAppliedFilters() == 1) {

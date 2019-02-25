@@ -14,7 +14,6 @@ import co.caio.tablier.view.Error;
 import co.caio.tablier.view.Index;
 import co.caio.tablier.view.Recipe;
 import co.caio.tablier.view.Search;
-import co.caio.tablier.view.ZeroResults;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fizzed.rocker.runtime.ArrayOfByteArraysOutput;
@@ -50,7 +49,7 @@ public class Generator {
             new SiteInfo.Builder().title("Search").searchValue("trololo").build(),
             "_unstable",
             new SiteInfo.Builder().title("Index").isUnstable(true).build(),
-            "_autofocus",
+            "_nofocus",
             new SiteInfo.Builder().title("Title").searchIsAutoFocus(false).build());
 
     var filters =
@@ -128,6 +127,16 @@ public class Generator {
             .build();
     srs.put("_both", srHasBoth);
 
+    var srEmpty =
+        new SearchResultsInfo.Builder()
+            .paginationStart(0)
+            .paginationEnd(0)
+            .numMatching(0)
+            .numAppliedFilters(4)
+            .sidebar(sidebar)
+            .build();
+    srs.put("_empty", srEmpty);
+
     searchResultsVariations = Collections.unmodifiableMap(srs);
   }
 
@@ -201,14 +210,11 @@ public class Generator {
     siteVariations.forEach(
         (sitePrefix, site) -> {
           var indexName = String.format("index%s.html", sitePrefix);
-          var zeroName = String.format("zero_results%s.html", sitePrefix);
           var errorName = String.format("error%s.html", sitePrefix);
 
           var recipeName = String.format("recipe%s.html", sitePrefix);
 
           writeResult(indexName, Index.template(site).render(ArrayOfByteArraysOutput.FACTORY));
-
-          writeResult(zeroName, ZeroResults.template(site).render(ArrayOfByteArraysOutput.FACTORY));
 
           writeResult(
               errorName, Error.template(site, errorInfo).render(ArrayOfByteArraysOutput.FACTORY));

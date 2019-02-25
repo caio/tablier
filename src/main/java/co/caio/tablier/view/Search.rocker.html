@@ -8,14 +8,14 @@
 <section class="section" id="results">
   <div class="columns is-multiline is-centered">
     <div class="column is-5 has-text-justified">
-      <div class="notification content">
+      <div class="notification content @if (sr.numMatching() == 0) { is-danger }">
         Your search for <strong>@site.searchValue()</strong>
         @if (sr.numAppliedFilters() == 1) {
         with <em>one</em> filter applied
         } else if (sr.numAppliedFilters() > 1) {
         with <em>@sr.numAppliedFilters()</em> filters applied
         }
-        has matched @sr.numMatching() recipe(s). Displaying results from @sr.paginationStart() to @sr.paginationEnd().
+        has matched @sr.numMatching() recipe(s).@if (sr.numMatching() > 0) { Displaying results from @sr.paginationStart() to @sr.paginationEnd(). } else if (sr.numAppliedFilters() > 0) { Try deselecting filters and/or changing your query. } else { Try changing your query. }
       </div>
     </div>
     <div class="column is-full"></div>
@@ -25,11 +25,15 @@
         @for ((i, ri): sr.recipes()) {
         @recipecard.template(site, ri, i.index() + sr.paginationStart())
         }
+        @if (sr.numMatching() == 0) {
+        <p>Nothing to show here :(</p>
+        } else {
         <nav class="pagination" role="navigation" style="margin-top:1.5rem;">
           <a class="pagination-previous" @if (site.isUnstable() || sr.previousPageHref().isEmpty()) { disabled } else { href="@sr.previousPageHref()#results" }>Previous page</a>
           <a class="pagination-next" @if (site.isUnstable() || sr.nextPageHref().isEmpty()) { disabled } else { href="@sr.nextPageHref()#results" }>Next page</a>
           <ul class="pagination-list"></ul>
         </nav>
+        }
       </div>
     </div>
     <div class="column is-one-quarter" id="sidebar">

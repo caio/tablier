@@ -10,10 +10,5 @@ public interface SidebarInfo {
 
   List<FilterInfo> filters();
 
-  @Value.Default
-  default boolean showCounts() {
-    return true;
-  }
-
   class Builder extends ImmutableSidebarInfo.Builder {}
 }

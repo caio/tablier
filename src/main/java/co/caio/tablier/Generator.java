@@ -77,7 +77,7 @@ public class Generator {
                 .addOption("Up to 30g of Carbs", "#", 23)
                 .build());
 
-    var sidebar = new SidebarInfo.Builder().showCounts(true).addAllFilters(filters).build();
+    var sidebar = new SidebarInfo.Builder().addAllFilters(filters).build();
 
     var srs = new HashMap<String, SearchResultsInfo>();
 

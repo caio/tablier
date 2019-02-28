@@ -19,8 +19,8 @@
 
     <div class="column is-full has-text-centered">
       <p class="title">@recipe.name()</p>
-      <p class="subtitle" style="margin-bottom:0.5rem;">@recipe.siteName()</p>
-      <div style="margin-bottom:0.75rem;">
+      <p class="subtitle mb-050">@recipe.siteName()</p>
+      <div class="mb-050">
         <svg class="icon icon-subtitle"><use xlink:href="#icon-ingredients"></use></svg> @recipe.numIngredients()
         @if (recipe.calories().isPresent()) {
         <svg class="icon icon-subtitle"><use xlink:href="#icon-calories"></use></svg> @recipe.calories().getAsInt()

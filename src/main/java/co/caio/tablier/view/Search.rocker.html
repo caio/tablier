@@ -28,7 +28,7 @@
         @if (sr.numMatching() == 0) {
         <p>Nothing to show here :(</p>
         } else {
-        <nav class="pagination" role="navigation" style="margin-top:1.5rem;">
+        <nav class="pagination mt-150" role="navigation">
           <a class="pagination-previous" @if (site.isUnstable() || sr.previousPageHref().isEmpty()) { disabled } else { href="@sr.previousPageHref()#results" }>Previous page</a>
           <a class="pagination-next" @if (site.isUnstable() || sr.nextPageHref().isEmpty()) { disabled } else { href="@sr.nextPageHref()#results" }>Next page</a>
           <ul class="pagination-list"></ul>

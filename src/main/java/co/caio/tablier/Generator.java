@@ -18,15 +18,17 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fizzed.rocker.runtime.ArrayOfByteArraysOutput;
 import com.fizzed.rocker.runtime.RockerRuntime;
+import com.vladsch.flexmark.html.HtmlRenderer;
+import com.vladsch.flexmark.parser.Parser;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.WatchEvent;
 import java.nio.file.WatchKey;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -233,32 +235,68 @@ public class Generator {
         });
   }
 
+  private static void buildStatic() throws IOException {
+    var parser = Parser.builder().build();
+    var renderer = HtmlRenderer.builder().build();
+
+    var inputPath = Path.of("src/markdown/");
+    // XXX weird
+    var outputPath = Path.of("src/pages/");
+
+    var markdownFiles =
+        Files.list(inputPath)
+            .filter(p -> p.toFile().getName().endsWith(".md"))
+            .collect(Collectors.toList());
+
+    for (var markdownFile : markdownFiles) {
+      var node = parser.parse(Files.readString(markdownFile));
+      var html = renderer.render(node);
+
+      var outputFile =
+          outputPath.resolve(markdownFile.getFileName().toString().replace(".md", ".html"));
+      Files.write(outputFile, html.getBytes());
+    }
+  }
+
   public static void main(String[] args) throws Exception {
 
     System.out.println("Generating all possible template variations");
     generate();
 
+    System.out.println("Generating static pages");
+    buildStatic();
+
     if (args.length > 0 && "watch".equals(args[0])) {
 
       var watchService = FileSystems.getDefault().newWatchService();
+
       var templatePath = Path.of("src/main/java/co/caio/tablier/view");
+      var markdownPath = Path.of("src/markdown");
 
       RockerRuntime.getInstance().setReloading(true);
 
+      System.out.println("Watching for markdown changes at " + markdownPath);
       System.out.println("Watching for template changes at " + templatePath);
 
       templatePath.register(watchService, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
+      markdownPath.register(watchService, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
 
       WatchKey key;
       while ((key = watchService.take()) != null) {
 
-        var changes =
-            key.pollEvents()
-                .stream()
-                .map(WatchEvent::context)
-                .map(Object::toString)
-                .filter(s -> s.endsWith(".html"))
-                .collect(Collectors.toSet());
+        var changes = new HashSet<Path>();
+        for (var event : key.pollEvents()) {
+          var ctx = event.context().toString();
+
+          var changedPath =
+              ctx.endsWith(".html") ? templatePath.resolve(ctx) : markdownPath.resolve(ctx);
+          var changedFile = changedPath.toFile();
+
+          if (changedFile.exists() && changedFile.length() > 0) {
+            changes.add(changedPath);
+          }
+        }
+
         key.reset();
 
         if (changes.isEmpty()) {
@@ -267,6 +305,7 @@ public class Generator {
 
         System.out.println("Change detected: " + changes);
         generate();
+        buildStatic();
         System.out.println("Regeneration complete!");
       }
     }

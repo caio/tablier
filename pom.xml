@@ -8,14 +8,14 @@
         <version>0.0.2</version>
     </parent>
 
-    <groupId>co.caio</groupId>
+    <groupId>co.caio.tablier</groupId>
     <artifactId>tablier</artifactId>
     <version>0.2.6-SNAPSHOT</version>
     <url>https://caio.co</url>
     <packaging>jar</packaging>
 
     <name>tablier</name>
-    <description />
+    <description>The front-end assets for gula.recipes, including type checked templates</description>
 
     <properties>
         <rocker.version>1.2.1</rocker.version>

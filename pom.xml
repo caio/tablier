@@ -19,6 +19,7 @@
 
     <properties>
         <rocker.version>1.2.1</rocker.version>
+        <flexmark.version>0.40.20</flexmark.version>
     </properties>
 
     <dependencies>
@@ -42,6 +43,11 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.vladsch.flexmark</groupId>
+            <artifactId>flexmark-all</artifactId>
+            <version>${flexmark.version}</version>
         </dependency>
     </dependencies>
 

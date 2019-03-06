@@ -1,5 +1,8 @@
 @charset "utf-8";
 
+$menu-item-active-color: hsl(0, 0%, 29%);
+$menu-item-active-background-color: hsl(0, 0%, 86%);
+
 @import "../node_modules/bulma/bulma.sass";
 
 .icon {

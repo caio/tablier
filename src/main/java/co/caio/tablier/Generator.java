@@ -14,10 +14,13 @@ import co.caio.tablier.view.Error;
 import co.caio.tablier.view.Index;
 import co.caio.tablier.view.Recipe;
 import co.caio.tablier.view.Search;
+import co.caio.tablier.view.Static;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fizzed.rocker.runtime.ArrayOfByteArraysOutput;
 import com.fizzed.rocker.runtime.RockerRuntime;
+import com.vladsch.flexmark.ext.yaml.front.matter.AbstractYamlFrontMatterVisitor;
+import com.vladsch.flexmark.ext.yaml.front.matter.YamlFrontMatterExtension;
 import com.vladsch.flexmark.html.HtmlRenderer;
 import com.vladsch.flexmark.parser.Parser;
 import java.io.FileOutputStream;
@@ -37,8 +40,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Generator {
-
-  private static final Path outputDir = Path.of("src/");
 
   private static final Map<String, SiteInfo> siteVariations;
   private static final Map<String, SearchResultsInfo> searchResultsVariations;
@@ -194,8 +195,10 @@ public class Generator {
     }
   }
 
-  private static void writeResult(String filename, ArrayOfByteArraysOutput result) {
-    try (var os = new FileOutputStream(outputDir.resolve(filename).toFile())) {
+  private static final Path outputDir = Path.of("src/");
+
+  private static void writeResult(Path filename, ArrayOfByteArraysOutput result) {
+    try (var os = new FileOutputStream(filename.toFile())) {
       for (byte[] array : result.getArrays()) {
         os.write(array);
       }
@@ -203,6 +206,10 @@ public class Generator {
       e.printStackTrace();
       System.exit(1);
     }
+  }
+
+  private static void writeResult(String filename, ArrayOfByteArraysOutput result) {
+    writeResult(outputDir.resolve(filename), result);
   }
 
   private static final ErrorInfo errorInfo =
@@ -239,9 +246,21 @@ public class Generator {
   private static final Path MARKDOWN_OUTPUT_PATH = Path.of("src/pages/"); // XXX weird
   private static final Path ROCKER_TEMPLATE_PATH = Path.of("src/main/java/co/caio/tablier/view");
 
+  static class FrontMatterVisitor extends AbstractYamlFrontMatterVisitor {
+
+    public String getTitle() {
+      try {
+        return getData().get("title").get(0);
+      } catch (Exception any) {
+        throw new RuntimeException("title front matter is required!", any);
+      }
+    }
+  }
+
   private static void buildStatic() throws IOException {
-    var parser = Parser.builder().build();
-    var renderer = HtmlRenderer.builder().build();
+    var extensions = List.of(YamlFrontMatterExtension.create());
+    var parser = Parser.builder().extensions(extensions).build();
+    var renderer = HtmlRenderer.builder().extensions(extensions).build();
 
     var markdownFiles =
         Files.list(MARKDOWN_INPUT_PATH)
@@ -250,12 +269,21 @@ public class Generator {
 
     for (var markdownFile : markdownFiles) {
       var node = parser.parse(Files.readString(markdownFile));
+
       var html = renderer.render(node);
+
+      var visitor = new FrontMatterVisitor();
+      visitor.visit(node);
+      var title = visitor.getTitle();
 
       var outputFile =
           MARKDOWN_OUTPUT_PATH.resolve(
               markdownFile.getFileName().toString().replace(".md", ".html"));
-      Files.write(outputFile, html.getBytes());
+
+      writeResult(
+          outputFile,
+          Static.template(new SiteInfo.Builder().title(title).build(), html)
+              .render(ArrayOfByteArraysOutput.FACTORY));
     }
   }
 

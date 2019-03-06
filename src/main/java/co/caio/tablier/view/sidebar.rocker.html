@@ -3,8 +3,6 @@
 
 @args (SiteInfo site, SidebarInfo sidebar)
 
-@base.template(site) -> {
-
 @for (filter : sidebar.filters()) {
 <div class="filter-group">
   @filter.name():
@@ -26,6 +24,4 @@
     }
   </ul>
 </div>
-}
-
 }

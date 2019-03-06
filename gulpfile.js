@@ -25,12 +25,6 @@ gulp.task('css', gulp.series('sass', function () {
                 dirs.src + '/*.html',
                 dirs.src + '/pages/*.html',
             ],
-            ignore: [
-                /^\.navbar/,
-                /^\.burger/,
-                /^\.columns$/,
-                '.content',
-            ],
         }),
         cssnano(),
     ];

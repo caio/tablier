@@ -1,0 +1,28 @@
+@import co.caio.tablier.model.SiteInfo
+@import co.caio.tablier.view.base
+@import co.caio.tablier.view.searchform
+
+@args (SiteInfo site, String renderedContent)
+
+@base.template(site) -> {
+<section class="hero is-info">
+  <div class="hero-body">
+    <div class="container has-text-centered">
+      <h1 class="title">
+        <a href="/">gula.recipes</a>
+      </h1>
+      <h2 class="subtitle">
+        Over a million delicious recipes, zero ads.
+      </h2>
+      @searchform.template(site)
+    </div>
+  </div>
+</section>
+<section class="section">
+  <div class="container">
+    <div class="content" id="content">
+      @raw(renderedContent)
+    </div>
+  </div>
+</section>
+}

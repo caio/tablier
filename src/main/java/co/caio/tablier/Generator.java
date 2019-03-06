@@ -280,10 +280,10 @@ public class Generator {
           MARKDOWN_OUTPUT_PATH.resolve(
               markdownFile.getFileName().toString().replace(".md", ".html"));
 
+      var siteInfo = new SiteInfo.Builder().title(title).searchIsAutoFocus(false).build();
+
       writeResult(
-          outputFile,
-          Static.template(new SiteInfo.Builder().title(title).build(), html)
-              .render(ArrayOfByteArraysOutput.FACTORY));
+          outputFile, Static.template(siteInfo, html).render(ArrayOfByteArraysOutput.FACTORY));
     }
   }
 

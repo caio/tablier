@@ -235,16 +235,16 @@ public class Generator {
         });
   }
 
+  private static final Path MARKDOWN_INPUT_PATH = Path.of("src/markdown/");
+  private static final Path MARKDOWN_OUTPUT_PATH = Path.of("src/pages/"); // XXX weird
+  private static final Path ROCKER_TEMPLATE_PATH = Path.of("src/main/java/co/caio/tablier/view");
+
   private static void buildStatic() throws IOException {
     var parser = Parser.builder().build();
     var renderer = HtmlRenderer.builder().build();
 
-    var inputPath = Path.of("src/markdown/");
-    // XXX weird
-    var outputPath = Path.of("src/pages/");
-
     var markdownFiles =
-        Files.list(inputPath)
+        Files.list(MARKDOWN_INPUT_PATH)
             .filter(p -> p.toFile().getName().endsWith(".md"))
             .collect(Collectors.toList());
 
@@ -253,7 +253,8 @@ public class Generator {
       var html = renderer.render(node);
 
       var outputFile =
-          outputPath.resolve(markdownFile.getFileName().toString().replace(".md", ".html"));
+          MARKDOWN_OUTPUT_PATH.resolve(
+              markdownFile.getFileName().toString().replace(".md", ".html"));
       Files.write(outputFile, html.getBytes());
     }
   }
@@ -270,26 +271,26 @@ public class Generator {
 
       var watchService = FileSystems.getDefault().newWatchService();
 
-      var templatePath = Path.of("src/main/java/co/caio/tablier/view");
-      var markdownPath = Path.of("src/markdown");
-
       RockerRuntime.getInstance().setReloading(true);
 
-      System.out.println("Watching for markdown changes at " + markdownPath);
-      System.out.println("Watching for template changes at " + templatePath);
+      System.out.println("Watching for markdown changes at " + MARKDOWN_INPUT_PATH);
+      System.out.println("Watching for template changes at " + ROCKER_TEMPLATE_PATH);
 
-      templatePath.register(watchService, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
-      markdownPath.register(watchService, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
+      ROCKER_TEMPLATE_PATH.register(watchService, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
+      MARKDOWN_INPUT_PATH.register(watchService, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
 
       WatchKey key;
       while ((key = watchService.take()) != null) {
 
         var changes = new HashSet<Path>();
         for (var event : key.pollEvents()) {
+          // XXX NPE if I other ENTRY_* events are captured. May not be a Path too
           var ctx = event.context().toString();
 
           var changedPath =
-              ctx.endsWith(".html") ? templatePath.resolve(ctx) : markdownPath.resolve(ctx);
+              ctx.endsWith(".html")
+                  ? ROCKER_TEMPLATE_PATH.resolve(ctx)
+                  : MARKDOWN_INPUT_PATH.resolve(ctx);
           var changedFile = changedPath.toFile();
 
           if (changedFile.exists() && changedFile.length() > 0) {

@@ -3,7 +3,6 @@
 $purple: hsl(268, 45%, 34%);
 $dark-purple: hsl(269, 49%, 21%);
 $orange: hsl(13, 87%, 61%);
-$blue: hsl(195, 100%, 47%);
 $pink: hsl(321, 60%, 52%);
 $gray: hsl(0, 0%, 86%);
 $dark-gray: hsl(0, 0%, 29%);
@@ -19,6 +18,9 @@ $navbar-background-color: $dark-purple;
 $navbar-item-color: $gray;
 $menu-item-active-color: $dark-gray;
 $menu-item-active-background-color: $gray;
+
+$box-padding: 0.75rem;
+$box-shadow: 0;
 
 @import "../node_modules/bulma/bulma.sass";
 
@@ -62,6 +64,11 @@ $menu-item-active-background-color: $gray;
 nav.navbar div.navbar-item p a.author {
   color: $pink;
 }
+
 nav.navbar div.navbar-item p a.author:hover {
   color: $orange;
+}
+
+.box:not(:last-child) {
+  margin-bottom: 0.25rem;
 }

@@ -49,7 +49,7 @@ public class Generator {
     siteVariations =
         Map.of(
             "",
-            new SiteInfo.Builder().title("Search").searchValue("trololo").build(),
+            new SiteInfo.Builder().title("Search").searchValue("banana").build(),
             "_unstable",
             new SiteInfo.Builder().title("Index").isUnstable(true).build(),
             "_nofocus",
@@ -58,19 +58,32 @@ public class Generator {
     var filters =
         List.of(
             new FilterInfo.Builder()
-                .showCounts(false)
                 .isRemovable(false)
+                .name("Sort recipes by")
+                .addOption("Relevance", "#", true)
+                .addOption("Fastest to cook", "#", 22)
+                .addOption("Least ingredients", "#", 4)
+                .addOption("Calories", "#", 4)
+                .build(),
+            new FilterInfo.Builder()
+                .name("Restrict by diet")
+                .addOption("Low carb", "#", true)
+                .addOption("Vegan", "#", 22)
+                .addOption("Keto", "#", 4)
+                .addOption("Paleo", "#", 4)
+                .build(),
+            new FilterInfo.Builder()
                 .name("Limit Ingredients")
-                .addOption("Less than 5", "#", true)
-                .addOption("6 to 10", "#", 22)
+                .addOption("Up to 5", "#", true)
+                .addOption("From 6 to 10", "#", 22)
                 .addOption("More than 10", "#", 4)
                 .build(),
             new FilterInfo.Builder()
-                .name("Limit Cook Time")
+                .name("Limit Total Time")
                 .addOption("Up to 15 minutes", "#", 7)
-                .addOption("15 to 30 minutes", "#", 29, true)
-                .addOption("30 to 60 minutes", "#", 11)
-                .addOption("One hour or longer", "#", 2)
+                .addOption("From 15 to 30 minutes", "#", 29, true)
+                .addOption("From 30 to 60 minutes", "#", 11)
+                .addOption("One hour or more", "#", 2)
                 .build(),
             new FilterInfo.Builder()
                 .name("Limit Nutrition (per serving)")
@@ -84,15 +97,17 @@ public class Generator {
 
     var srs = new HashMap<String, SearchResultsInfo>();
 
-    var srSinglePage =
+    var srHasBoth =
         new SearchResultsInfo.Builder()
             .paginationStart(1)
-            .paginationEnd(12)
-            .numMatching(12)
-            .addAllRecipes(samples(12))
+            .paginationEnd(10)
+            .numMatching(31409)
+            .previousPageHref("/previous")
+            .nextPageHref("/next")
+            .addAllRecipes(samples(10))
             .sidebar(sidebar)
             .build();
-    srs.put("", srSinglePage);
+    srs.put("", srHasBoth);
 
     var srHasNext =
         new SearchResultsInfo.Builder()
@@ -117,18 +132,16 @@ public class Generator {
             .build();
     srs.put("_prev", srHasPrevious);
 
-    var srHasBoth =
+    var srHasNone =
         new SearchResultsInfo.Builder()
             .paginationStart(41)
             .paginationEnd(60)
             .numMatching(99)
             .numAppliedFilters(4)
-            .nextPageHref("/next")
-            .previousPageHref("/previous")
             .addAllRecipes(samples(20))
             .sidebar(sidebar)
             .build();
-    srs.put("_both", srHasBoth);
+    srs.put("_none", srHasNone);
 
     var srEmpty =
         new SearchResultsInfo.Builder()

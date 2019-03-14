@@ -23,6 +23,7 @@ import com.vladsch.flexmark.ext.yaml.front.matter.AbstractYamlFrontMatterVisitor
 import com.vladsch.flexmark.ext.yaml.front.matter.YamlFrontMatterExtension;
 import com.vladsch.flexmark.html.HtmlRenderer;
 import com.vladsch.flexmark.parser.Parser;
+import com.vladsch.flexmark.util.options.MutableDataSet;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.FileSystems;
@@ -271,9 +272,13 @@ public class Generator {
   }
 
   private static void buildStatic() throws IOException {
-    var extensions = List.of(YamlFrontMatterExtension.create());
-    var parser = Parser.builder().extensions(extensions).build();
-    var renderer = HtmlRenderer.builder().extensions(extensions).build();
+    var options = new MutableDataSet();
+
+    options.set(Parser.EXTENSIONS, List.of(YamlFrontMatterExtension.create()));
+    options.set(HtmlRenderer.RENDER_HEADER_ID, true);
+
+    var parser = Parser.builder(options).build();
+    var renderer = HtmlRenderer.builder(options).build();
 
     var markdownFiles =
         Files.list(MARKDOWN_INPUT_PATH)

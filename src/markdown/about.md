@@ -22,7 +22,7 @@ If you'd like to contribute to this project's sustainability and can
 spare a little money, donations are more than welcome:
 
 <center>
-<a href="#fixme" class="button is-info">Help Make gula.recipes Sustainable</a>
+<a href="#fixme" class="button is-primary">Help Make gula.recipes Sustainable</a>
 </center>
 
 ## Not a Product, Not a Business
@@ -84,4 +84,4 @@ that's not to say there hasn't been help from tools and third parties:
   licensed as [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
 * The [Bulma CSS Framework](https://bulma.io/) made my life a lot easier
 * [Lucene](https://lucene.apache.org/core/) powers the search
-  functionality and reading its code has taught me a _lot_.
+  functionality and reading its code always teaches me a _lot_.

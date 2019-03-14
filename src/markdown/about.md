@@ -4,10 +4,9 @@ title: About
 
 # About
 
-[gula.recipes][gula] is brought to you by [Caio Romão][me] and its
-mission is to provide a distraction-free, privacy respecting and
-fast recipe search experience. The [code is open source][code]
-and soon the data will be too.
+[gula.recipes][gula]'s mission is to provide a distraction-free,
+privacy respecting and fast recipe search experience. It's brought
+to you by [Caio Romão][me] and the [code is open source][code].
 
 [gula]: https://gula.recipes
 [me]: https://caio.co
@@ -15,14 +14,14 @@ and soon the data will be too.
 
 ## Contribute
 
-We're just starting, using the service and spreading the word around
-if you like it is the best way to help right now.
+Using the service and spreading the word around if you like it is the
+best way to help right now.
 
 If you'd like to contribute to this project's sustainability and can
 spare a little money, donations are more than welcome:
 
 <center>
-<a href="#fixme" class="button is-primary">Help Make gula.recipes Sustainable</a>
+<a href="#fixme" class="button is-primary">Help Make Us Sustainable</a>
 </center>
 
 ## Not a Product, Not a Business
@@ -64,9 +63,9 @@ I quickly found myself writing scrapers for my favorite sites to make
 it easier to extract the recipes out of the wall of text that usually
 precedes the real content. After a few iterations of doing just that,
 things started clicking and I went from a small hand-crafted database
-of about 100 recipes to 10 thousand recipes with little effort; A few
-more tweaks and forgetting the crawler running overnight left me with
-around 100 thousand recipes.
+of about 100 recipes to 10.000 recipes with little effort; A few more
+tweaks and forgetting the crawler running overnight left me with
+around 100.000 recipes.
 
 And then things got interesting :-) Growing this to the current 1+M
 database size took more time than effort and I finally had something
@@ -76,9 +75,9 @@ annoying things we all have to deal with in today's web.
 
 # Acknowledgments
 
-This project was created as a one-man show: [Caio][me] takes care of
-everything from the firewalls to what you are reading right now, but
-that's not to say there hasn't been help from tools and third parties:
+This project is a one-man show: [Caio][me] takes care of everything
+from the firewalls to what you are reading right now, but that's not
+to say there hasn't been help from tools and third parties:
 
 * SVG Icons come from the [IcoMoon](https://icomoon.io/) free icon pack,
   licensed as [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)

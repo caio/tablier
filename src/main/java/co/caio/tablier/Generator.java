@@ -19,6 +19,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fizzed.rocker.runtime.ArrayOfByteArraysOutput;
 import com.fizzed.rocker.runtime.RockerRuntime;
+import com.vladsch.flexmark.ext.typographic.TypographicExtension;
 import com.vladsch.flexmark.ext.yaml.front.matter.AbstractYamlFrontMatterVisitor;
 import com.vladsch.flexmark.ext.yaml.front.matter.YamlFrontMatterExtension;
 import com.vladsch.flexmark.html.HtmlRenderer;
@@ -274,7 +275,9 @@ public class Generator {
   private static void buildStatic() throws IOException {
     var options = new MutableDataSet();
 
-    options.set(Parser.EXTENSIONS, List.of(YamlFrontMatterExtension.create()));
+    options.set(
+        Parser.EXTENSIONS,
+        List.of(YamlFrontMatterExtension.create(), TypographicExtension.create()));
     options.set(HtmlRenderer.RENDER_HEADER_ID, true);
 
     var parser = Parser.builder(options).build();

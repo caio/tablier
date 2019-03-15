@@ -7,63 +7,47 @@
 <section class="section" id="recipe">
   <div class="columns is-centered is-multiline">
 
-    @if (site.isUnstable()) {
-    <div class="column is-full has-text-centered">
+    <div class="column is-5 has-text-centered">
       @if (site.isUnstable()) {
       <div class="notification is-warning">
         <p>We are experiencing performance degradation due to unexpectedly high traffic.<br>The search functionality has been <em>temporarily</em> disabled. Please try again in a few minutes.</p>
       </div>
       }
-    </div>
-    }
-
-    <div class="column is-full has-text-centered">
-      <p class="title">@recipe.name()</p>
-      <p class="subtitle mb-050">@recipe.siteName()</p>
-      <div class="mb-050">
-        <svg class="icon icon-subtitle"><use xlink:href="#icon-ingredients"></use></svg> @recipe.numIngredients()
-        @if (recipe.calories().isPresent()) {
-        <svg class="icon icon-subtitle"><use xlink:href="#icon-calories"></use></svg> @recipe.calories().getAsInt()
-        }
-        @if (recipe.totalTime().isPresent()) {
-        <svg class="icon icon-subtitle"><use xlink:href="#icon-time"></use></svg> @recipe.totalTime().getAsInt() min
-        }
-      </div>
-      <a class="button is-info" href="@recipe.goUrl()">Visit Original</a>
-    </div>
-
-    <div class="column is-5 has-text-centered">
       <div class="notification">
         The following information is cached and possibly outdated. Please <a href="@recipe.goUrl()">check the source</a> for pictures and author's notes. If you notice something is off, <a href="mailto:bugs@@gula.recipes?subject=[BUG]%20@recipe.infoUrl()">let us know</a> and we'll fix it as soon as possible.
       </div>
     </div>
     <div class="column is-full"></div>
 
-    <div class="column is-8">
-
-      <div class="columns is-centered">
-        <div class="column is-4">
-          <div class="content">
-            <h3>Ingredients</h3>
-            <ul>
-              @for (ingredient: recipe.ingredients()) {
-              <li>@ingredient</li>
-              }
-            </ul>
-          </div>
-        </div>
-
-        <div class="column">
-          <div class="content">
-            <h3>Instructions</h3>
-            <ol>
-              @for (instruction: recipe.instructions()) {
-              <li>@instruction</li>
-              }
-            </ol>
-          </div>
-        </div>
+    <div class="column is-half">
+      <p class="title">@recipe.name()</p>
+        @if (recipe.calories().isPresent()) {
+        <p>Calories: @recipe.calories().getAsInt() kcal</p>
+        }
+        @if (recipe.totalTime().isPresent()) {
+        <p>Total Time: @recipe.totalTime().getAsInt() minutes</p>
+        }
+      <p>Source: @recipe.crawlUrl()</p>
+      <br>
+      <!-- <p class="subtitle mb&#45;050">@recipe.siteName()</p> -->
+      <div class="content">
+        <h3>Ingredients <small>(@recipe.numIngredients())</small></h3>
+        <ul>
+          @for (ingredient: recipe.ingredients()) {
+          <li>@ingredient</li>
+          }
+        </ul>
+        <h3>Instructions</h3>
+        <ol>
+          @for (instruction: recipe.instructions()) {
+          <li>@instruction</li>
+          }
+        </ol>
       </div>
+    </div>
+
+    <div class="column is-full has-text-centered">
+      <a class="button is-primary" href="@recipe.goUrl()">Visit Original</a>
     </div>
 
   </div>

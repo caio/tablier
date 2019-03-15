@@ -1,5 +1,27 @@
 @charset "utf-8";
 
+$purple: hsl(268, 45%, 34%);
+$dark-purple: hsl(269, 49%, 21%);
+$orange: hsl(13, 87%, 61%);
+$pink: hsl(321, 60%, 52%);
+$gray: hsl(0, 0%, 86%);
+$dark-gray: hsl(0, 0%, 29%);
+$white: hsl(0, 0%, 98%);
+
+$info: $purple;
+$primary: $orange;
+$link: $orange;
+$danger: $pink;
+$dark: $dark-purple;
+
+$navbar-background-color: $dark-purple;
+$navbar-item-color: $gray;
+$menu-item-active-color: $dark-gray;
+$menu-item-active-background-color: $gray;
+
+$box-padding: 0.75rem;
+$box-shadow: 0;
+
 @import "../node_modules/bulma/bulma.sass";
 
 .icon {
@@ -27,18 +49,6 @@
   margin-left: -0.75rem;
 }
 
-div .filter-group {
-  margin-bottom: 1.5rem;
-}
-
-.filter-group #sort_order {
-  margin-top: 1rem;
-}
-
-.filter-group li {
-  margin-left: 0.75rem;
-}
-
 .mb-025 {
   margin-bottom:0.25rem !important;
 }
@@ -49,4 +59,30 @@ div .filter-group {
 
 .mt-150 {
   margin-top:1.5rem !important;
+}
+
+nav.navbar div.navbar-item p a.author {
+  color: $pink;
+}
+
+nav.navbar div.navbar-item p a.author:hover {
+  color: $orange;
+}
+
+.box:not(:last-child) {
+  margin-bottom: 0.25rem;
+}
+
+.content pre {
+  margin-left: 2rem;
+  padding-left: 0.5rem;
+  border-left: 0.5rem solid $purple;
+}
+
+.content ul.toc li {
+  margin-top: 0;
+}
+
+.content ul.toc li ul {
+  margin-top: 0;
 }

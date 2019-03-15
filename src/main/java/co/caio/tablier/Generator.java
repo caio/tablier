@@ -14,19 +14,27 @@ import co.caio.tablier.view.Error;
 import co.caio.tablier.view.Index;
 import co.caio.tablier.view.Recipe;
 import co.caio.tablier.view.Search;
+import co.caio.tablier.view.Static;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fizzed.rocker.runtime.ArrayOfByteArraysOutput;
 import com.fizzed.rocker.runtime.RockerRuntime;
+import com.vladsch.flexmark.ext.toc.TocExtension;
+import com.vladsch.flexmark.ext.typographic.TypographicExtension;
+import com.vladsch.flexmark.ext.yaml.front.matter.AbstractYamlFrontMatterVisitor;
+import com.vladsch.flexmark.ext.yaml.front.matter.YamlFrontMatterExtension;
+import com.vladsch.flexmark.html.HtmlRenderer;
+import com.vladsch.flexmark.parser.Parser;
+import com.vladsch.flexmark.util.options.MutableDataSet;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.WatchEvent;
 import java.nio.file.WatchKey;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -36,8 +44,6 @@ import java.util.stream.Stream;
 
 public class Generator {
 
-  private static final Path outputDir = Path.of("src/");
-
   private static final Map<String, SiteInfo> siteVariations;
   private static final Map<String, SearchResultsInfo> searchResultsVariations;
   private static final ObjectMapper mapper = new ObjectMapper();
@@ -46,7 +52,7 @@ public class Generator {
     siteVariations =
         Map.of(
             "",
-            new SiteInfo.Builder().title("Search").searchValue("trololo").build(),
+            new SiteInfo.Builder().title("Search").searchValue("banana").build(),
             "_unstable",
             new SiteInfo.Builder().title("Index").isUnstable(true).build(),
             "_nofocus",
@@ -55,19 +61,32 @@ public class Generator {
     var filters =
         List.of(
             new FilterInfo.Builder()
-                .showCounts(false)
                 .isRemovable(false)
+                .name("Sort recipes by")
+                .addOption("Relevance", "#", true)
+                .addOption("Fastest to cook", "#", 22)
+                .addOption("Least ingredients", "#", 4)
+                .addOption("Calories", "#", 4)
+                .build(),
+            new FilterInfo.Builder()
+                .name("Restrict by diet")
+                .addOption("Low carb", "#", true)
+                .addOption("Vegan", "#", 22)
+                .addOption("Keto", "#", 4)
+                .addOption("Paleo", "#", 4)
+                .build(),
+            new FilterInfo.Builder()
                 .name("Limit Ingredients")
-                .addOption("Less than 5", "#", true)
-                .addOption("6 to 10", "#", 22)
+                .addOption("Up to 5", "#", true)
+                .addOption("From 6 to 10", "#", 22)
                 .addOption("More than 10", "#", 4)
                 .build(),
             new FilterInfo.Builder()
-                .name("Limit Cook Time")
+                .name("Limit Total Time")
                 .addOption("Up to 15 minutes", "#", 7)
-                .addOption("15 to 30 minutes", "#", 29, true)
-                .addOption("30 to 60 minutes", "#", 11)
-                .addOption("One hour or longer", "#", 2)
+                .addOption("From 15 to 30 minutes", "#", 29, true)
+                .addOption("From 30 to 60 minutes", "#", 11)
+                .addOption("One hour or more", "#", 2)
                 .build(),
             new FilterInfo.Builder()
                 .name("Limit Nutrition (per serving)")
@@ -81,15 +100,17 @@ public class Generator {
 
     var srs = new HashMap<String, SearchResultsInfo>();
 
-    var srSinglePage =
+    var srHasBoth =
         new SearchResultsInfo.Builder()
             .paginationStart(1)
-            .paginationEnd(12)
-            .numMatching(12)
-            .addAllRecipes(samples(12))
+            .paginationEnd(10)
+            .numMatching(31409)
+            .previousPageHref("/previous")
+            .nextPageHref("/next")
+            .addAllRecipes(samples(10))
             .sidebar(sidebar)
             .build();
-    srs.put("", srSinglePage);
+    srs.put("", srHasBoth);
 
     var srHasNext =
         new SearchResultsInfo.Builder()
@@ -114,18 +135,16 @@ public class Generator {
             .build();
     srs.put("_prev", srHasPrevious);
 
-    var srHasBoth =
+    var srHasNone =
         new SearchResultsInfo.Builder()
             .paginationStart(41)
             .paginationEnd(60)
             .numMatching(99)
             .numAppliedFilters(4)
-            .nextPageHref("/next")
-            .previousPageHref("/previous")
             .addAllRecipes(samples(20))
             .sidebar(sidebar)
             .build();
-    srs.put("_both", srHasBoth);
+    srs.put("_none", srHasNone);
 
     var srEmpty =
         new SearchResultsInfo.Builder()
@@ -163,6 +182,7 @@ public class Generator {
             .name(node.get("name").asText())
             .siteName(node.get("siteName").asText())
             .goUrl(node.get("crawlUrl").asText())
+            .crawlUrl(node.get("crawlUrl").asText())
             .infoUrl(node.get("slug").asText())
             .numIngredients(node.withArray("ingredients").size())
             .calories(readInt(node, "calories"))
@@ -192,8 +212,10 @@ public class Generator {
     }
   }
 
-  private static void writeResult(String filename, ArrayOfByteArraysOutput result) {
-    try (var os = new FileOutputStream(outputDir.resolve(filename).toFile())) {
+  private static final Path outputDir = Path.of("src/");
+
+  private static void writeResult(Path filename, ArrayOfByteArraysOutput result) {
+    try (var os = new FileOutputStream(filename.toFile())) {
       for (byte[] array : result.getArrays()) {
         os.write(array);
       }
@@ -201,6 +223,10 @@ public class Generator {
       e.printStackTrace();
       System.exit(1);
     }
+  }
+
+  private static void writeResult(String filename, ArrayOfByteArraysOutput result) {
+    writeResult(outputDir.resolve(filename), result);
   }
 
   private static final ErrorInfo errorInfo =
@@ -233,32 +259,100 @@ public class Generator {
         });
   }
 
+  private static final Path MARKDOWN_INPUT_PATH = Path.of("src/markdown/");
+  private static final Path MARKDOWN_OUTPUT_PATH = Path.of("src/pages/"); // XXX weird
+  private static final Path ROCKER_TEMPLATE_PATH = Path.of("src/main/java/co/caio/tablier/view");
+
+  static class FrontMatterVisitor extends AbstractYamlFrontMatterVisitor {
+
+    public String getTitle() {
+      try {
+        return getData().get("title").get(0);
+      } catch (Exception any) {
+        throw new RuntimeException("title front matter is required!", any);
+      }
+    }
+  }
+
+  private static void buildStatic() throws IOException {
+    var options = new MutableDataSet();
+
+    options.set(
+        Parser.EXTENSIONS,
+        List.of(YamlFrontMatterExtension.create(),
+            TypographicExtension.create(),
+            TocExtension.create()));
+
+    options.set(HtmlRenderer.RENDER_HEADER_ID, true);
+    options.set(TocExtension.LIST_CLASS,"toc");
+
+    var parser = Parser.builder(options).build();
+    var renderer = HtmlRenderer.builder(options).build();
+
+    var markdownFiles =
+        Files.list(MARKDOWN_INPUT_PATH)
+            .filter(p -> p.toFile().getName().endsWith(".md"))
+            .collect(Collectors.toList());
+
+    for (var markdownFile : markdownFiles) {
+      var node = parser.parse(Files.readString(markdownFile));
+
+      var html = renderer.render(node);
+
+      var visitor = new FrontMatterVisitor();
+      visitor.visit(node);
+      var title = visitor.getTitle();
+
+      var outputFile =
+          MARKDOWN_OUTPUT_PATH.resolve(
+              markdownFile.getFileName().toString().replace(".md", ".html"));
+
+      var siteInfo = new SiteInfo.Builder().title(title).searchIsAutoFocus(false).build();
+
+      writeResult(
+          outputFile, Static.template(siteInfo, html).render(ArrayOfByteArraysOutput.FACTORY));
+    }
+  }
+
   public static void main(String[] args) throws Exception {
 
     System.out.println("Generating all possible template variations");
     generate();
 
+    System.out.println("Generating static pages");
+    buildStatic();
+
     if (args.length > 0 && "watch".equals(args[0])) {
 
       var watchService = FileSystems.getDefault().newWatchService();
-      var templatePath = Path.of("src/main/java/co/caio/tablier/view");
 
       RockerRuntime.getInstance().setReloading(true);
 
-      System.out.println("Watching for template changes at " + templatePath);
+      System.out.println("Watching for markdown changes at " + MARKDOWN_INPUT_PATH);
+      System.out.println("Watching for template changes at " + ROCKER_TEMPLATE_PATH);
 
-      templatePath.register(watchService, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
+      ROCKER_TEMPLATE_PATH.register(watchService, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
+      MARKDOWN_INPUT_PATH.register(watchService, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
 
       WatchKey key;
       while ((key = watchService.take()) != null) {
 
-        var changes =
-            key.pollEvents()
-                .stream()
-                .map(WatchEvent::context)
-                .map(Object::toString)
-                .filter(s -> s.endsWith(".html"))
-                .collect(Collectors.toSet());
+        var changes = new HashSet<Path>();
+        for (var event : key.pollEvents()) {
+          // XXX NPE if I other ENTRY_* events are captured. May not be a Path too
+          var ctx = event.context().toString();
+
+          var changedPath =
+              ctx.endsWith(".html")
+                  ? ROCKER_TEMPLATE_PATH.resolve(ctx)
+                  : MARKDOWN_INPUT_PATH.resolve(ctx);
+          var changedFile = changedPath.toFile();
+
+          if (changedFile.exists() && changedFile.length() > 0) {
+            changes.add(changedPath);
+          }
+        }
+
         key.reset();
 
         if (changes.isEmpty()) {
@@ -267,6 +361,7 @@ public class Generator {
 
         System.out.println("Change detected: " + changes);
         generate();
+        buildStatic();
         System.out.println("Regeneration complete!");
       }
     }

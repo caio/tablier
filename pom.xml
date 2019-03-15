@@ -5,7 +5,7 @@
     <parent>
         <groupId>co.caio</groupId>
         <artifactId>gula-bom</artifactId>
-        <version>0.0.2</version>
+        <version>0.0.3</version>
     </parent>
 
     <groupId>co.caio.tablier</groupId>
@@ -19,6 +19,7 @@
 
     <properties>
         <rocker.version>1.2.1</rocker.version>
+        <flexmark.version>0.40.20</flexmark.version>
     </properties>
 
     <dependencies>
@@ -42,6 +43,11 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.vladsch.flexmark</groupId>
+            <artifactId>flexmark-all</artifactId>
+            <version>${flexmark.version}</version>
         </dependency>
     </dependencies>
 
@@ -125,6 +131,24 @@
                             </resources>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>copy-generated-static-pages</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.outputDirectory}/tablier</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>src</directory>
+                                    <includes>
+                                        <include>pages/*.html</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
             <plugin>
@@ -132,7 +156,7 @@
                 <version>3.1.1</version>
                 <configuration>
                     <excludes>
-                        <exclude>**/Generator.class</exclude>
+                        <exclude>**/Generator*.class</exclude>
                     </excludes>
                 </configuration>
             </plugin>

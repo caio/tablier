@@ -1,0 +1,24 @@
+@import co.caio.tablier.model.SiteInfo
+@import co.caio.tablier.view.base
+@import co.caio.tablier.view.searchform
+
+@args (SiteInfo site, String renderedContent)
+
+@base.template(site) -> {
+<section class="hero is-info">
+  <div class="hero-body">
+    <div class="container has-text-centered">
+      @searchform.template(site)
+    </div>
+  </div>
+</section>
+<section class="section">
+  <div class="columns">
+    <div class="column is-half is-offset-one-quarter" id="content">
+      <div class="content has-text-justified">
+        @raw(renderedContent)
+      </div>
+    </div>
+  </div>
+</section>
+}

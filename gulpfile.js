@@ -23,12 +23,7 @@ gulp.task('css', gulp.series('sass', function () {
         uncss({
             html: [
                 dirs.src + '/*.html',
-            ],
-            ignore: [
-                /^\.navbar/,
-                /^\.burger/,
-                /^\.columns$/,
-                '.content',
+                dirs.src + '/pages/*.html',
             ],
         }),
         cssnano(),

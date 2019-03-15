@@ -3,29 +3,27 @@
 
 @args (SiteInfo site, SidebarInfo sidebar)
 
-@base.template(site) -> {
-
-@for (filter : sidebar.filters()) {
-<div class="filter-group">
-  @filter.name():
-  <ul>
+<aside class="menu">
+  @for (filter : sidebar.filters()) {
+  <p class="menu-label">
+  @filter.name()
+  </p>
+  <ul class="menu-list">
     @for (option : filter.options()) {
     <li>
       @if (site.isUnstable()) {
-      <a class="button is-link is-inverted" disabled href="#">@option.name() @if (filter.showCounts()) { (@option.count()) }</a>
+      <a disabled href="#">@option.name() @if (filter.showCounts()) { (@option.count()) }</a>
       } else if (filter.isRemovable() && option.isActive()) {
-      <a class="button is-light" href="@option.href()#results">@option.name() [x]</a>
+      <a class="is-active" href="@option.href()#results">@option.name() <button class="delete is-pulled-right"></button></a>
       } else if (filter.isRemovable()) {
-      <a class="button is-link is-inverted" href="@option.href()#results">@option.name() @if (filter.showCounts()) { (@option.count()) }</a>
+      <a href="@option.href()#results">@option.name() @if (filter.showCounts()) { (@option.count()) }</a>
       } else if (option.isActive()) {
-      <a class="button is-light">@option.name() @if (filter.showCounts()) { (@option.count()) }</a>
+      <a class="is-active">@option.name() @if (filter.showCounts()) { (@option.count()) }</a>
       } else {
-      <a class="button is-link is-inverted" href="@option.href()#results">@option.name() @if (filter.showCounts()) { (@option.count()) }</a>
+      <a href="@option.href()#results">@option.name() @if (filter.showCounts()) { (@option.count()) }</a>
       }
     </li>
     }
   </ul>
-</div>
-}
-
-}
+  }
+</aside>

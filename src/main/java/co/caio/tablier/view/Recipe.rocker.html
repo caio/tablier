@@ -41,13 +41,13 @@
 
     <div class="column is-half">
       <div class="content">
-        <h3 class="title">Ingredients</h3>
+        <h3>Ingredients</h3>
         <ul>
           @for (ingredient: recipe.ingredients()) {
           <li>@ingredient</li>
           }
         </ul>
-        <h3 class="title">Instructions</h3>
+        <h3>Instructions</h3>
         <ol>
           @for (instruction: recipe.instructions()) {
           <li>@instruction</li>

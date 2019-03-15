@@ -72,3 +72,9 @@ nav.navbar div.navbar-item p a.author:hover {
 .box:not(:last-child) {
   margin-bottom: 0.25rem;
 }
+
+.content pre {
+  margin-left: 2rem;
+  padding-left: 0.5rem;
+  border-left: 0.5rem solid $purple;
+}

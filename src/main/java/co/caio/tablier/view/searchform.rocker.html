@@ -11,7 +11,7 @@
 <form action="/search?#results" method="get">
   <div class="field has-addons has-addons-centered">
     <div class="control">
-      <input class="input" @if (site.isUnstable()) { disabled } type="search" name="q" @if (site.searchIsAutoFocus()) { autofocus } placeholder="Ingredients, diets, brands, etc." value="@site.searchValue()">
+      <input class="input" @if (site.isUnstable()) { disabled } type="search" name="q" @if (site.searchIsAutoFocus()) { autofocus } placeholder="Ingredients, diets, etc." value="@site.searchValue()">
     </div>
     <div class="control">
       <button class="button is-primary" @if (site.isUnstable()) { disabled }>Search</button>

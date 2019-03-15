@@ -316,6 +316,8 @@ public class Generator {
 
   public static void main(String[] args) throws Exception {
 
+    Files.createDirectories(MARKDOWN_OUTPUT_PATH);
+
     System.out.println("Generating all possible template variations");
     generate();
 

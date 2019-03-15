@@ -27,7 +27,7 @@
         @if (recipe.totalTime().isPresent()) {
         <p>Total Time: @recipe.totalTime().getAsInt() minutes</p>
         }
-      <p>Source: @recipe.siteName()</p>
+      <p>Source: @recipe.crawlUrl()</p>
       <br>
       <!-- <p class="subtitle mb&#45;050">@recipe.siteName()</p> -->
       <div class="content">

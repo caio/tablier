@@ -19,6 +19,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fizzed.rocker.runtime.ArrayOfByteArraysOutput;
 import com.fizzed.rocker.runtime.RockerRuntime;
+import com.vladsch.flexmark.ext.toc.TocExtension;
 import com.vladsch.flexmark.ext.typographic.TypographicExtension;
 import com.vladsch.flexmark.ext.yaml.front.matter.AbstractYamlFrontMatterVisitor;
 import com.vladsch.flexmark.ext.yaml.front.matter.YamlFrontMatterExtension;
@@ -278,8 +279,12 @@ public class Generator {
 
     options.set(
         Parser.EXTENSIONS,
-        List.of(YamlFrontMatterExtension.create(), TypographicExtension.create()));
+        List.of(YamlFrontMatterExtension.create(),
+            TypographicExtension.create(),
+            TocExtension.create()));
+
     options.set(HtmlRenderer.RENDER_HEADER_ID, true);
+    options.set(TocExtension.LIST_CLASS,"toc");
 
     var parser = Parser.builder(options).build();
     var renderer = HtmlRenderer.builder(options).build();

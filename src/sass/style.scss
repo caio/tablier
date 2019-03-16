@@ -86,3 +86,10 @@ nav.navbar div.navbar-item p a.author:hover {
 .content ul.toc li ul {
   margin-top: 0;
 }
+
+.svgdefinition {
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    position: absolute;
+}

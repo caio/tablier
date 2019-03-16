@@ -279,12 +279,13 @@ public class Generator {
 
     options.set(
         Parser.EXTENSIONS,
-        List.of(YamlFrontMatterExtension.create(),
+        List.of(
+            YamlFrontMatterExtension.create(),
             TypographicExtension.create(),
             TocExtension.create()));
 
     options.set(HtmlRenderer.RENDER_HEADER_ID, true);
-    options.set(TocExtension.LIST_CLASS,"toc");
+    options.set(TocExtension.LIST_CLASS, "toc");
 
     var parser = Parser.builder(options).build();
     var renderer = HtmlRenderer.builder(options).build();

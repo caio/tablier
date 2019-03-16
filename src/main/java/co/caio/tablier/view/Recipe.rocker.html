@@ -21,15 +21,14 @@
 
     <div class="column is-half">
       <p class="title">@recipe.name()</p>
-        @if (recipe.calories().isPresent()) {
-        <p>Calories: @recipe.calories().getAsInt() kcal</p>
-        }
-        @if (recipe.totalTime().isPresent()) {
-        <p>Total Time: @recipe.totalTime().getAsInt() minutes</p>
-        }
       <p>Source: @recipe.crawlUrl()</p>
+      @if (recipe.calories().isPresent()) {
+      <p>Calories: @recipe.calories().getAsInt() kcal</p>
+      }
+      @if (recipe.totalTime().isPresent()) {
+      <p>Total Time: @recipe.totalTime().getAsInt() minutes</p>
+      }
       <br>
-      <!-- <p class="subtitle mb&#45;050">@recipe.siteName()</p> -->
       <div class="content">
         <h3>Ingredients <small>(@recipe.numIngredients())</small></h3>
         <ul>

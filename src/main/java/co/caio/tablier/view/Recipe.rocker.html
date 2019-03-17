@@ -21,29 +21,7 @@
 
     <div class="column is-half">
       <p class="title">@recipe.name()</p>
-      <p>Source: @recipe.crawlUrl()</p>
-      @if (recipe.calories().isPresent()) {
-      <p>Calories: @recipe.calories().getAsInt() kcal</p>
-      }
-      @if (recipe.fatContent().isPresent()) {
-      <p>Fat: @recipe.fatContent().getAsDouble() g</p>
-      }
-      @if (recipe.carbohydrateContent().isPresent()) {
-      <p>Carbs: @recipe.carbohydrateContent().getAsDouble() g</p>
-      }
-      @if (recipe.proteinContent().isPresent()) {
-      <p>Protein: @recipe.proteinContent().getAsDouble() g</p>
-      }
-      @if (recipe.prepTime().isPresent()) {
-      <p>Prep Time: @recipe.prepTime().getAsInt() minutes</p>
-      }
-      @if (recipe.cookTime().isPresent()) {
-      <p>Cook Time: @recipe.cookTime().getAsInt() minutes</p>
-      }
-      @if (recipe.totalTime().isPresent()) {
-      <p>Total Time: @recipe.totalTime().getAsInt() minutes</p>
-      }
-      <br>
+      <p class="subtitle">@recipe.siteName()</p>
       <div class="content">
         <h3>Ingredients <small>(@recipe.numIngredients())</small></h3>
         <ul>
@@ -51,6 +29,71 @@
           <li>@ingredient</li>
           }
         </ul>
+
+        <h3>Metadata</h3>
+        <p><strong>Source</strong>: @recipe.crawlUrl()</p>
+
+        @if (recipe.hasNutritionData()) {
+        <h4>Nutrition Facts</h4>
+        <table>
+          <tbody>
+            @if (recipe.calories().isPresent()) {
+            <tr>
+              <th>Calories</th>
+              <td>@recipe.calories().getAsInt() kcal</td>
+            </tr>
+            }
+            @if (recipe.proteinContent().isPresent()) {
+            <tr>
+              <th>Protein</th>
+              <td>@recipe.proteinContent().getAsDouble() g</td>
+            </tr>
+            }
+            @if (recipe.fatContent().isPresent()) {
+            <tr>
+              <th>Fat</th>
+              <td>@recipe.fatContent().getAsDouble() g</td>
+            </tr>
+            }
+            @if (recipe.carbohydrateContent().isPresent()) {
+            <tr>
+              <th>Carbohydrate</th>
+              <td>@recipe.carbohydrateContent().getAsDouble() g</td>
+            </tr>
+            }
+          </tbody>
+        </table>
+        <br>
+        }
+
+        @if (recipe.hasDurationData()) {
+        <h4>Duration</h4>
+        <table>
+          <tbody>
+            @if (recipe.prepTime().isPresent()) {
+            <tr>
+              <th>Preparation Time</th>
+              <td>@recipe.prepTime().getAsInt() minutes</td>
+            </tr>
+            }
+            @if (recipe.cookTime().isPresent()) {
+            <tr>
+              <th>Cook Time</th>
+              <td>@recipe.cookTime().getAsInt() minutes</td>
+            </tr>
+            }
+            @if (recipe.totalTime().isPresent()) {
+            <tr>
+              <th>Total Time</th>
+              <td>@recipe.totalTime().getAsInt() minutes</td>
+            </tr>
+            }
+          </tbody>
+        </table>
+        <br>
+        }
+
+
       </div>
     </div>
 

@@ -37,5 +37,18 @@ public interface RecipeInfo {
 
   List<String> ingredients();
 
+  default boolean hasDurationData() {
+    // Only need to check totalTime by default since without it
+    // the other *Time() metadata would sound weird
+    return totalTime().isPresent();
+  }
+
+  default boolean hasNutritionData() {
+    return calories().isPresent()
+        || fatContent().isPresent()
+        || proteinContent().isPresent()
+        || carbohydrateContent().isPresent();
+  }
+
   class Builder extends ImmutableRecipeInfo.Builder {}
 }

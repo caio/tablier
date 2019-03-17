@@ -14,15 +14,20 @@ to you by [Caio Romão][me] and the [code is open source][code].
 
 ## Contribute
 
-Using the service and spreading the word around if you like it is the
-best way to help right now.
-
-If you'd like to contribute to this project's sustainability and can
-spare a little money, donations are more than welcome:
+Using the service and spreading the word around is the best way to help
+right now. If you'd like to contribute to this project's sustainability
+and can spare a little money, donations are more than welcome!
 
 <center>
-<a href="#fixme" class="button is-primary">Help Make Us Sustainable</a>
+<a href="https://www.paypal.me/caioromao/3" class="button is-primary">Donate via PayPal</a>
 </center>
+<br>
+
+PayPal is far from ideal, so if monetary contributions become a thing
+I'll set up a transparent organization (on [OpenCollective][oc], likely)
+so that you always know what your money is being used for.
+
+[oc]: https://opencollective.com/
 
 ## Not a Product, Not a Business
 
@@ -84,3 +89,5 @@ to say there hasn't been help from tools and third parties:
 * The [Bulma CSS Framework](https://bulma.io/) made my life a lot easier
 * [Lucene](https://lucene.apache.org/core/) powers the search
   functionality and reading its code always teaches me a _lot_.
+* Every open source library and tool used by the subprojects in the
+  [gula.recipes organization][code].

@@ -46,19 +46,19 @@
             @if (recipe.proteinContent().isPresent()) {
             <tr>
               <th>Protein</th>
-              <td>@recipe.proteinContent().getAsDouble() g</td>
+              <td>@String.format("%.2f", recipe.proteinContent().getAsDouble()) g</td>
             </tr>
             }
             @if (recipe.fatContent().isPresent()) {
             <tr>
               <th>Fat</th>
-              <td>@recipe.fatContent().getAsDouble() g</td>
+              <td>@String.format("%.2f", recipe.fatContent().getAsDouble()) g</td>
             </tr>
             }
             @if (recipe.carbohydrateContent().isPresent()) {
             <tr>
               <th>Carbohydrate</th>
-              <td>@recipe.carbohydrateContent().getAsDouble() g</td>
+              <td>@String.format("%.2f", recipe.carbohydrateContent().getAsDouble()) g</td>
             </tr>
             }
           </tbody>

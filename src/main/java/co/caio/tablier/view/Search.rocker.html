@@ -1,10 +1,14 @@
 @import co.caio.tablier.model.*
+@import co.caio.tablier.view.svg
 @import co.caio.tablier.view.layout
 @import co.caio.tablier.view.recipecard
 
 @args (SiteInfo site, SearchResultsInfo sr)
 
 @layout.template(site) -> {
+
+@svg.template()
+
 <section class="section" id="results">
   <div class="columns is-multiline is-centered">
     <div class="column is-5">

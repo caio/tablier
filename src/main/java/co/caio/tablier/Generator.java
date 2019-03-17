@@ -38,6 +38,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.OptionalDouble;
 import java.util.OptionalInt;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -186,12 +187,26 @@ public class Generator {
             .infoUrl(node.get("slug").asText())
             .numIngredients(node.withArray("ingredients").size())
             .calories(readInt(node, "calories"))
+            .proteinContent(readDouble(node, "proteinContent"))
+            .carbohydrateContent(readDouble(node, "carbohydrateContent"))
+            .fatContent(readDouble(node, "fatContent"))
+            .prepTime(readInt(node, "prepTime"))
+            .cookTime(readInt(node, "cookTime"))
             .totalTime(readInt(node, "totalTime"));
 
     node.withArray("ingredients").forEach(i -> builder.addIngredients(i.asText()));
-    node.withArray("instructions").forEach(i -> builder.addInstructions(i.asText()));
 
     return builder.build();
+  }
+
+  private static OptionalDouble readDouble(JsonNode node, String key) {
+    if (node.has(key)) {
+      double value = node.get(key).doubleValue();
+      if (value != -1) {
+        return OptionalDouble.of(value);
+      }
+    }
+    return OptionalDouble.empty();
   }
 
   private static OptionalInt readInt(JsonNode node, String key) {
@@ -247,7 +262,7 @@ public class Generator {
 
           writeResult(
               recipeName,
-              Recipe.template(site, samples(5).get(4)).render(ArrayOfByteArraysOutput.FACTORY));
+              Recipe.template(site, samples(7).get(6)).render(ArrayOfByteArraysOutput.FACTORY));
 
           searchResultsVariations.forEach(
               (srPrefix, sr) -> {

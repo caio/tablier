@@ -25,6 +25,21 @@
       @if (recipe.calories().isPresent()) {
       <p>Calories: @recipe.calories().getAsInt() kcal</p>
       }
+      @if (recipe.fatContent().isPresent()) {
+      <p>Fat: @recipe.fatContent().getAsDouble() g</p>
+      }
+      @if (recipe.carbohydrateContent().isPresent()) {
+      <p>Carbs: @recipe.carbohydrateContent().getAsDouble() g</p>
+      }
+      @if (recipe.proteinContent().isPresent()) {
+      <p>Protein: @recipe.proteinContent().getAsDouble() g</p>
+      }
+      @if (recipe.prepTime().isPresent()) {
+      <p>Prep Time: @recipe.prepTime().getAsInt() minutes</p>
+      }
+      @if (recipe.cookTime().isPresent()) {
+      <p>Cook Time: @recipe.cookTime().getAsInt() minutes</p>
+      }
       @if (recipe.totalTime().isPresent()) {
       <p>Total Time: @recipe.totalTime().getAsInt() minutes</p>
       }
@@ -36,12 +51,6 @@
           <li>@ingredient</li>
           }
         </ul>
-        <h3>Instructions</h3>
-        <ol>
-          @for (instruction: recipe.instructions()) {
-          <li>@instruction</li>
-          }
-        </ol>
       </div>
     </div>
 

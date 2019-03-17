@@ -3,6 +3,7 @@
 $purple: hsl(268, 45%, 34%);
 $dark-purple: hsl(269, 49%, 21%);
 $orange: hsl(13, 87%, 61%);
+$dark-orange: hsl(13, 87%, 30%);
 $pink: hsl(321, 60%, 52%);
 $gray: hsl(0, 0%, 86%);
 $dark-gray: hsl(0, 0%, 29%);
@@ -10,9 +11,11 @@ $white: hsl(0, 0%, 98%);
 
 $info: $purple;
 $primary: $orange;
-$link: $orange;
 $danger: $pink;
 $dark: $dark-purple;
+
+$link: $orange;
+$link-hover: $dark-orange;
 
 $navbar-background-color: $dark-purple;
 $navbar-item-color: $gray;

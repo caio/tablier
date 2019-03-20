@@ -43,10 +43,11 @@ just so that I can show you a lot of ads.
 
 ## History
 
-Autumn 2017, obese [me][me] decides to fix some of my bad habits and
-engages in cooking mostly low-carb meals daily and using
-[r/progresspics](https://www.reddit.com/r/progresspics/) and similar as
-the main motivation driver.
+Autumn 2017, I decide to fix some of my bad habits and engage in
+cooking mostly low-carb meals daily and using [r/progresspics][pp]
+and similar as the main motivation driver.
+
+[pp]: https://www.reddit.com/r/progresspics/
 
 While the weight was going down, a series of frustrations with the
 status-quo of searching for recipes started building up: pervasive

@@ -121,3 +121,34 @@ by gula.recipe's AI][science] (Using a threshold of 0.85), you'll see
 a few new perfectly matching recipes.
 
 [science]: /search?q=almond+-%22almond+butter%22+-milk&ni=0,5&tt=0,15&n_k=0,200&diet=keto&science=0.85
+
+## How to Report a Bug or Request a Feature
+
+Thanks a lot for your interest! You may simply shoot an e-mail to:
+
+    contact |AT| gula |DOT| recipes
+
+The more details you can provide the better.
+
+## What Does "Privacy Respecting" Mean
+
+By design, [gula.recipes][gula] doesn't show ads, doesn't set
+cookies (or any other technique to persist data in your browser) and
+doesn't execute any JavaScript. All served content is encrypted and
+you can audit the [source code][code] at any time.
+
+All of these don't really guarantee privacy (there's no way that I know
+that an individual can verify with 100% certainty that what's running
+on the servers is what I claim without introducing serious security
+issues, so there'll always be a "trust" component), but hopefully
+it all serves as a sign of my good intentions.
+
+[code]: https://github.com/gula-recipes
+
+### What Kind of Data Gets Logged?
+
+The only information that gets logged to our servers is [access
+logs][clf]. It's being used to detect abuse and to improve the search
+results.
+
+[clf]: https://en.wikipedia.org/wiki/Common_Log_Format

@@ -19,7 +19,7 @@
         } else if (sr.numAppliedFilters() > 1) {
         with <em>@sr.numAppliedFilters()</em> filters applied
         }
-        has matched @sr.numMatching() @if (sr.numMatching() > 1) { recipes. } else { recipe. } @if (sr.numMatching() > 0) { Displaying results from @sr.paginationStart() to @sr.paginationEnd(). } else if (sr.numAppliedFilters() > 0) { Try deselecting filters and/or changing your query. } else { Try changing your query. }
+        has matched @sr.numMatching() @if (sr.numMatching() > 1) { recipes } else { recipe } (Out of @sr.numRecipes()). @if (sr.numMatching() > 0) { Displaying results from @sr.paginationStart() to @sr.paginationEnd(). } else if (sr.numAppliedFilters() > 0) { Try deselecting filters and/or changing your query. } else { Try changing your query. }
       </div>
     </div>
     <div class="column is-full"></div>

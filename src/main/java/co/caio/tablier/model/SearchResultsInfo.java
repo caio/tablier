@@ -13,6 +13,8 @@ public interface SearchResultsInfo {
 
   long numMatching();
 
+  int numRecipes();
+
   @Value.Default
   default int numAppliedFilters() {
     return 0;

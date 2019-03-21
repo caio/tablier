@@ -4,6 +4,7 @@ src/css
 src/vendor
 src/*.html
 src/pages/*.html
+src/pages/*.html.gz
 target/
 release.properties
 pom.xml.*

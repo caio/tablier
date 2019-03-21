@@ -34,7 +34,13 @@ gulp.task('css', gulp.series('sass', function () {
             .pipe(gulp.dest(dirs.src + '/css/'));
 }));
 
-gulp.task('build', gulp.series('css', function () {
+gulp.task('compress_pages', function() {
+    return gulp.src(dirs.src + '/pages/*.html')
+            .pipe(gzip())
+            .pipe(gulp.dest(dirs.src + '/pages/'))
+});
+
+gulp.task('build', gulp.series('css', 'compress_pages', function () {
     return gulp.src(dirs.src + '/css/main.css')
             .pipe(gzip())
             .pipe(rename('main.css.gz'))

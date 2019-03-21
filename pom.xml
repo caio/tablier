@@ -144,6 +144,7 @@
                                     <directory>src</directory>
                                     <includes>
                                         <include>pages/*.html</include>
+                                        <include>pages/*.html.gz</include>
                                     </includes>
                                 </resource>
                             </resources>

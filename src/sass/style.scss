@@ -6,6 +6,7 @@ $orange: hsl(13, 87%, 61%);
 $dark-orange: hsl(13, 87%, 30%);
 $pink: hsl(321, 60%, 52%);
 $gray: hsl(0, 0%, 86%);
+$light-gray: hsl(0, 0%, 40%);
 $dark-gray: hsl(0, 0%, 29%);
 $white: hsl(0, 0%, 98%);
 
@@ -99,5 +100,10 @@ nav.navbar div.navbar-item p a.author:hover {
 
 ul.menu-list a[disabled] {
     cursor: not-allowed;
-    color: hsl(0, 0%, 40%);
+    color: $light-gray;
+}
+
+span.menu-item-count {
+    float: right;
+    color: $light-gray;
 }

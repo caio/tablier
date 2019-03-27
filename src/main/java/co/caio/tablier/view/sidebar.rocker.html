@@ -16,9 +16,9 @@
       } else if (option.isActive()) {
       <a class="is-active">@option.name()</a>
       } else if (filter.showCounts() && option.count() == 0) {
-      <a disabled>@option.name() (0)</a>
+      <a disabled>@option.name()</a>
       } else {
-      <a href="@option.href()#results">@option.name() @if (filter.showCounts()) { (@option.count()) }</a>
+      <a href="@option.href()#results">@option.name() @if (filter.showCounts()) { <span class="menu-item-count">@option.count()<span> }</a>
       }
     </li>
     }

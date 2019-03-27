@@ -96,3 +96,8 @@ nav.navbar div.navbar-item p a.author:hover {
   overflow: hidden;
   position: absolute;
 }
+
+ul.menu-list a[disabled] {
+    cursor: not-allowed;
+    color: hsl(0, 0%, 40%);
+}

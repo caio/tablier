@@ -62,8 +62,8 @@ public class Generator {
     var filters =
         List.of(
             new FilterInfo.Builder()
-                .isRemovable(false)
                 .name("Sort recipes by")
+                .isRemovable(false)
                 .addOption("Relevance", "#", true)
                 .addOption("Fastest to cook", "#", 22)
                 .addOption("Least ingredients", "#", 4)
@@ -71,27 +71,32 @@ public class Generator {
                 .build(),
             new FilterInfo.Builder()
                 .name("Restrict by diet")
-                .addOption("Low carb", "#", true)
+                // XXX if a filter is active we dont show counts
+                .showCounts(false)
+                .addOption("Low carb", "#", 12)
                 .addOption("Vegan", "#", 22)
-                .addOption("Keto", "#", 4)
+                .addOption("Keto", "#", true)
                 .addOption("Paleo", "#", 4)
                 .build(),
             new FilterInfo.Builder()
                 .name("Limit Ingredients")
-                .addOption("Up to 5", "#", true)
+                .showCounts(true)
+                .addOption("Up to 5", "#", 1)
                 .addOption("From 6 to 10", "#", 22)
                 .addOption("More than 10", "#", 4)
                 .build(),
             new FilterInfo.Builder()
                 .name("Limit Total Time")
+                .showCounts(true)
                 .addOption("Up to 15 minutes", "#", 7)
-                .addOption("From 15 to 30 minutes", "#", 29, true)
+                .addOption("From 15 to 30 minutes", "#", 29)
                 .addOption("From 30 to 60 minutes", "#", 11)
-                .addOption("One hour or more", "#", 2)
+                .addOption("One hour or more", "#", 0)
                 .build(),
             new FilterInfo.Builder()
                 .name("Limit Nutrition (per serving)")
-                .addOption("Up to 200 kcal", "#", 2)
+                .showCounts(true)
+                .addOption("Up to 200 kcal", "#", 0)
                 .addOption("Up to 500 kcal", "#", 29)
                 .addOption("Up to 10g of Fat", "#", 11)
                 .addOption("Up to 30g of Carbs", "#", 23)

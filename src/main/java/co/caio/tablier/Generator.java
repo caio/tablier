@@ -196,6 +196,7 @@ public class Generator {
             .siteName(node.get("siteName").asText())
             .goUrl(node.get("crawlUrl").asText())
             .crawlUrl(node.get("crawlUrl").asText())
+            .similarUrl("#")
             .infoUrl(node.get("slug").asText())
             .numIngredients(node.withArray("ingredients").size())
             .calories(readInt(node, "calories"))

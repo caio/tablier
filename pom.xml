@@ -19,7 +19,7 @@
 
     <properties>
         <rocker.version>1.2.1</rocker.version>
-        <flexmark.version>0.40.20</flexmark.version>
+        <flexmark.version>0.40.34</flexmark.version>
     </properties>
 
     <dependencies>

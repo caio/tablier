@@ -4,20 +4,6 @@
 @args (SiteInfo site, RecipeInfo recipe, int position)
 <div class="box">
 
-  <div class="dropdown is-hoverable is-right is-pulled-right">
-    <div class="dropdown-trigger">
-      <svg class="icon has-valign-middle">
-        <use xlink:href="#icon-circle-down"></use>
-      </svg>
-    </div>
-    <div class="dropdown-menu">
-      <div class="dropdown-content">
-        <a class="dropdown-item" href="@recipe.infoUrl()">More Info</a>
-        <a class="dropdown-item" href="@recipe.similarUrl()">Show Similar Recipes</a>
-      </div>
-    </div>
-  </div>
-
   <article class="media">
     <div class="media-content" id="recipe-@position">
       <div class="content">
@@ -51,5 +37,23 @@
         </ul>
       </div>
     </div>
+
+    <div class="media-right">
+      <div class="dropdown is-hoverable is-right">
+        <div class="dropdown-trigger has-text-grey-light">
+          <svg class="icon has-valign-middle">
+            <use xlink:href="#icon-circle-down"></use>
+          </svg>
+        </div>
+        <div class="dropdown-menu">
+          <div class="dropdown-content">
+            <a class="dropdown-item" href="@recipe.infoUrl()">More Info</a>
+            <a class="dropdown-item" href="@recipe.similarUrl()">Show Similar Recipes</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
   </article>
 </div>

@@ -26,6 +26,10 @@ $menu-item-active-background-color: $gray;
 $box-padding: 0.75rem;
 $box-shadow: 0;
 
+// Disable unused breakpoints
+$widescreen-enabled: false
+$fullhd-enabled: false
+
 @import "../node_modules/bulma/bulma.sass";
 
 .icon {

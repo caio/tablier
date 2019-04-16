@@ -9,11 +9,13 @@ import co.caio.tablier.model.FilterInfo;
 import co.caio.tablier.model.RecipeInfo;
 import co.caio.tablier.model.SearchResultsInfo;
 import co.caio.tablier.model.SidebarInfo;
+import co.caio.tablier.model.SimilarityInfo;
 import co.caio.tablier.model.SiteInfo;
 import co.caio.tablier.view.Error;
 import co.caio.tablier.view.Index;
 import co.caio.tablier.view.Recipe;
 import co.caio.tablier.view.Search;
+import co.caio.tablier.view.Similarity;
 import co.caio.tablier.view.Static;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -265,8 +267,8 @@ public class Generator {
         (sitePrefix, site) -> {
           var indexName = String.format("index%s.html", sitePrefix);
           var errorName = String.format("error%s.html", sitePrefix);
-
           var recipeName = String.format("recipe%s.html", sitePrefix);
+          var similarityName = String.format("similarity%s.html", sitePrefix);
 
           writeResult(indexName, Index.template(site).render(ArrayOfByteArraysOutput.FACTORY));
 
@@ -276,6 +278,16 @@ public class Generator {
           writeResult(
               recipeName,
               Recipe.template(site, samples(7).get(6)).render(ArrayOfByteArraysOutput.FACTORY));
+
+          writeResult(
+              similarityName,
+              Similarity.template(
+                      site,
+                      new SimilarityInfo.Builder()
+                          .recipe(samples(20).get(19))
+                          .similar(samples(19))
+                          .build())
+                  .render(ArrayOfByteArraysOutput.FACTORY));
 
           searchResultsVariations.forEach(
               (srPrefix, sr) -> {

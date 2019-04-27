@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.OptionalDouble;
 import java.util.OptionalInt;
 import org.immutables.value.Value;
+import org.immutables.value.Value.Derived;
 
 @ImmutableStyle
 @Value.Immutable
@@ -48,6 +49,11 @@ public interface RecipeInfo {
         || fatContent().isPresent()
         || proteinContent().isPresent()
         || carbohydrateContent().isPresent();
+  }
+
+  @Value.Derived
+  default boolean hasSimilarRecipes() {
+    return similarRecipes().size() > 0;
   }
 
   List<SimilarInfo> similarRecipes();

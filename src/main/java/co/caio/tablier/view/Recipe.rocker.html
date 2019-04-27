@@ -91,7 +91,7 @@
         </table>
         }
 
-        @if (!recipe.similarRecipes().isEmpty()) {
+        @if (recipe.hasSimilarRecipes()) {
         <h3>Similar Recipes</h3>
         <ul>
           @for (sim: recipe.similarRecipes()) {

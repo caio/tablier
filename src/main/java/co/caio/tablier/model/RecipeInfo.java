@@ -13,8 +13,6 @@ public interface RecipeInfo {
 
   String siteName();
 
-  String goUrl();
-
   String crawlUrl();
 
   String infoUrl();

@@ -196,7 +196,6 @@ public class Generator {
         new RecipeInfo.Builder()
             .name(node.get("name").asText())
             .siteName(node.get("siteName").asText())
-            .goUrl(node.get("crawlUrl").asText())
             .crawlUrl(node.get("crawlUrl").asText())
             .similarUrl("/similar.html")
             .infoUrl("/recipe.html")

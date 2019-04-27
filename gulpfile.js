@@ -8,13 +8,18 @@ var cssnano = require('cssnano')
 var rename = require('gulp-rename');
 var sass = require('gulp-sass');
 var fs = require('fs');
+const PluginError = require('plugin-error');
 
 var pkg = require('./package.json');
 var dirs = pkg['configuration'].directories;
 
 gulp.task('sass', function() {
     return gulp.src(dirs.src + '/sass/style.scss')
-        .pipe(sass().on('error', sass.logError))
+        .pipe(sass.sync().on('error', function(err) {
+            const message = new PluginError('sass', err.messageFormatted).toString();
+            process.stderr.write(`${message}\n`);
+            process.exit(1);
+        }))
         .pipe(gulp.dest(dirs.src + '/css/'));
 });
 

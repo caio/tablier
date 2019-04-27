@@ -58,7 +58,12 @@ public class Generator {
             .map(Generator::parse)
             .flatMap(Optional::stream)
             .limit(10)
-            .map(node -> SimilarInfo.of(node.get("name").asText(), node.get("crawlUrl").asText()))
+            .map(
+                node ->
+                    SimilarInfo.of(
+                        node.get("name").asText(),
+                        node.get("siteName").asText(),
+                        node.get("crawlUrl").asText()))
             .collect(Collectors.toList());
 
     siteVariations =

@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.OptionalDouble;
 import java.util.OptionalInt;
 import org.immutables.value.Value;
-import org.immutables.value.Value.Derived;
 
 @ImmutableStyle
 @Value.Immutable
@@ -65,10 +64,13 @@ public interface RecipeInfo {
     public abstract String name();
 
     @Value.Parameter
+    public abstract String siteName();
+
+    @Value.Parameter
     public abstract String infoUrl();
 
-    public static SimilarInfo of(String name, String infoUrl) {
-      return ImmutableSimilarInfo.of(name, infoUrl);
+    public static SimilarInfo of(String name, String siteName, String infoUrl) {
+      return ImmutableSimilarInfo.of(name, siteName, infoUrl);
     }
   }
 

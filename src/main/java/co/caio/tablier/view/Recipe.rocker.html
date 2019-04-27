@@ -95,7 +95,7 @@
         <h3>Similar Recipes</h3>
         <ul>
           @for (sim: recipe.similarRecipes()) {
-          <li><a href="@sim.infoUrl()" rel="noopener noreferrer">@sim.name()</a></li>
+          <li><a href="@sim.infoUrl()" rel="noopener noreferrer">@sim.name()</a> <small>from @sim.siteName()</small></li>
           }
         </ul>
         }

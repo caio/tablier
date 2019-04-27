@@ -17,8 +17,6 @@ public interface RecipeInfo {
 
   String infoUrl();
 
-  String similarUrl();
-
   int numIngredients();
 
   OptionalInt calories();

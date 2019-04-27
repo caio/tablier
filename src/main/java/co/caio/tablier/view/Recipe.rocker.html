@@ -30,11 +30,11 @@
           }
         </ul>
 
-        <h3>Metadata</h3>
-        <p class="is-clipped"><strong>Source</strong>: @recipe.crawlUrl()</p>
+        <h3>Instructions</h3>
+        <p>View instructions at <a href="@recipe.crawlUrl()" rel="noopener noreferrer">the source</a>
 
         @if (recipe.hasNutritionData()) {
-        <h4>Nutrition Facts</h4>
+        <h3>Nutrition Facts</h3>
         <table>
           <tbody>
             @if (recipe.calories().isPresent()) {
@@ -63,11 +63,10 @@
             }
           </tbody>
         </table>
-        <br>
         }
 
         @if (recipe.hasDurationData()) {
-        <h4>Duration</h4>
+        <h3>Duration</h3>
         <table>
           <tbody>
             @if (recipe.prepTime().isPresent()) {
@@ -90,10 +89,18 @@
             }
           </tbody>
         </table>
-        <br>
         }
 
+        @if (!recipe.similarRecipes().isEmpty()) {
+        <h3>Similar Recipes</h3>
+        <ul>
+          @for (sim: recipe.similarRecipes()) {
+          <li><a href="@sim.infoUrl()" rel="noopener noreferrer">@sim.name()</a></li>
+          }
+        </ul>
+        }
 
+        <br>
       </div>
     </div>
 

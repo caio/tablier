@@ -39,19 +39,11 @@
     </div>
 
     <div class="media-right">
-      <div class="dropdown is-hoverable is-right">
-        <div class="dropdown-trigger has-text-grey-light">
-          <svg class="icon has-valign-middle">
-            <use xlink:href="#icon-circle-down"></use>
-          </svg>
-        </div>
-        <div class="dropdown-menu">
-          <div class="dropdown-content">
-            <a class="dropdown-item" href="@recipe.infoUrl()">More Info</a>
-          </div>
-        </div>
-      </div>
-
+      <a href="@recipe.infoUrl()" class="has-text-grey-light">
+      <svg class="icon has-valign-middle">
+        <use xlink:href="#icon-info"></use>
+      </svg>
+      </a>
     </div>
 
   </article>

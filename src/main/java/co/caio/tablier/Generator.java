@@ -7,6 +7,7 @@ import static java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY;
 import co.caio.tablier.model.ErrorInfo;
 import co.caio.tablier.model.FilterInfo;
 import co.caio.tablier.model.RecipeInfo;
+import co.caio.tablier.model.RecipeInfo.SimilarInfo;
 import co.caio.tablier.model.SearchResultsInfo;
 import co.caio.tablier.model.SidebarInfo;
 import co.caio.tablier.model.SiteInfo;
@@ -49,7 +50,17 @@ public class Generator {
   private static final Map<String, SearchResultsInfo> searchResultsVariations;
   private static final ObjectMapper mapper = new ObjectMapper();
 
+  private static final List<SimilarInfo> similarRecipes;
+
   static {
+    similarRecipes =
+        lines(Path.of("src/sample_recipes.jsonlines"))
+            .map(Generator::parse)
+            .flatMap(Optional::stream)
+            .limit(10)
+            .map(node -> SimilarInfo.of(node.get("name").asText(), node.get("crawlUrl").asText()))
+            .collect(Collectors.toList());
+
     siteVariations =
         Map.of(
             "",
@@ -196,6 +207,7 @@ public class Generator {
             .siteName(node.get("siteName").asText())
             .crawlUrl(node.get("crawlUrl").asText())
             .infoUrl("/recipe.html")
+            .similarRecipes(similarRecipes)
             .numIngredients(node.withArray("ingredients").size())
             .calories(readInt(node, "calories"))
             .proteinContent(readDouble(node, "proteinContent"))

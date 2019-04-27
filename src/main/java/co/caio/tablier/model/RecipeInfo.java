@@ -35,17 +35,35 @@ public interface RecipeInfo {
 
   List<String> ingredients();
 
+  @Value.Derived
   default boolean hasDurationData() {
     // Only need to check totalTime by default since without it
     // the other *Time() metadata would sound weird
     return totalTime().isPresent();
   }
 
+  @Value.Derived
   default boolean hasNutritionData() {
     return calories().isPresent()
         || fatContent().isPresent()
         || proteinContent().isPresent()
         || carbohydrateContent().isPresent();
+  }
+
+  List<SimilarInfo> similarRecipes();
+
+  @ImmutableStyle
+  @Value.Immutable
+  abstract class SimilarInfo {
+    @Value.Parameter
+    public abstract String name();
+
+    @Value.Parameter
+    public abstract String infoUrl();
+
+    public static SimilarInfo of(String name, String infoUrl) {
+      return ImmutableSimilarInfo.of(name, infoUrl);
+    }
   }
 
   class Builder extends ImmutableRecipeInfo.Builder {}

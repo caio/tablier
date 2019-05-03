@@ -13,7 +13,8 @@
   <div class="columns is-multiline is-centered">
     <div class="column is-5">
       <div class="notification content @if (sr.numMatching() == 0) { is-danger }">
-        Your search for <strong>@site.searchValue()</strong>
+        Your search
+        @if (!site.searchValue().isBlank()) { for <strong>@site.searchValue()</strong> }
         @if (sr.numAppliedFilters() == 1) {
         with <em>one</em> filter applied
         } else if (sr.numAppliedFilters() > 1) {

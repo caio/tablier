@@ -1,6 +1,6 @@
 @charset "utf-8";
 
-$purple: hsl(268, 45%, 34%);
+$purple: hsl(268, 45%, 30%);
 $dark-purple: hsl(269, 49%, 21%);
 $orange: hsl(13, 87%, 61%);
 $dark-orange: hsl(13, 87%, 30%);
@@ -26,6 +26,10 @@ $menu-item-active-background-color: $gray;
 $box-padding: 0.75rem;
 $box-shadow: 0;
 
+// Disable unused breakpoints
+$widescreen-enabled: false;
+$fullhd-enabled: false;
+
 @import "../node_modules/bulma/bulma.sass";
 
 .icon {
@@ -36,12 +40,6 @@ $box-shadow: 0;
   stroke: currentColor;
   fill: currentColor;
   vertical-align: text-top;
-}
-
-.icon-subtitle {
-  width: 1.25rem;
-  height: 1.25rem;
-  vertical-align: center;
 }
 
 .recipe-meta-item {
@@ -107,4 +105,8 @@ span.menu-item-count {
     float: right;
     color: $light-gray;
     margin-left: 1rem;
+}
+
+.has-valign-middle {
+    vertical-align: middle;
 }

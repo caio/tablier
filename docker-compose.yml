@@ -1,9 +1,0 @@
-version: '3'
-services:
-    css:
-        build: .
-        volumes:
-            - ./:/app/
-        ports:
-            - 1313:1313
-            - 3001:3001

@@ -7,6 +7,7 @@ import static java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY;
 import co.caio.tablier.model.ErrorInfo;
 import co.caio.tablier.model.FilterInfo;
 import co.caio.tablier.model.RecipeInfo;
+import co.caio.tablier.model.RecipeInfo.SimilarInfo;
 import co.caio.tablier.model.SearchResultsInfo;
 import co.caio.tablier.model.SidebarInfo;
 import co.caio.tablier.model.SiteInfo;
@@ -25,7 +26,7 @@ import com.vladsch.flexmark.ext.yaml.front.matter.AbstractYamlFrontMatterVisitor
 import com.vladsch.flexmark.ext.yaml.front.matter.YamlFrontMatterExtension;
 import com.vladsch.flexmark.html.HtmlRenderer;
 import com.vladsch.flexmark.parser.Parser;
-import com.vladsch.flexmark.util.options.MutableDataSet;
+import com.vladsch.flexmark.util.data.MutableDataSet;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.FileSystems;
@@ -49,7 +50,22 @@ public class Generator {
   private static final Map<String, SearchResultsInfo> searchResultsVariations;
   private static final ObjectMapper mapper = new ObjectMapper();
 
+  private static final List<SimilarInfo> similarRecipes;
+
   static {
+    similarRecipes =
+        lines(Path.of("src/sample_recipes.jsonlines"))
+            .map(Generator::parse)
+            .flatMap(Optional::stream)
+            .limit(10)
+            .map(
+                node ->
+                    SimilarInfo.of(
+                        node.get("name").asText(),
+                        node.get("siteName").asText(),
+                        node.get("crawlUrl").asText()))
+            .collect(Collectors.toList());
+
     siteVariations =
         Map.of(
             "",
@@ -194,9 +210,9 @@ public class Generator {
         new RecipeInfo.Builder()
             .name(node.get("name").asText())
             .siteName(node.get("siteName").asText())
-            .goUrl(node.get("crawlUrl").asText())
             .crawlUrl(node.get("crawlUrl").asText())
-            .infoUrl(node.get("slug").asText())
+            .infoUrl("/recipe.html")
+            .similarRecipes(similarRecipes)
             .numIngredients(node.withArray("ingredients").size())
             .calories(readInt(node, "calories"))
             .proteinContent(readDouble(node, "proteinContent"))

@@ -19,7 +19,7 @@
 
     <properties>
         <rocker.version>1.2.1</rocker.version>
-        <flexmark.version>0.40.20</flexmark.version>
+        <flexmark.version>0.50.4</flexmark.version>
     </properties>
 
     <dependencies>
@@ -96,13 +96,13 @@
                             <goal>exec</goal>
                         </goals>
                             <configuration>
-                                <executable>docker-compose</executable>
+                                <executable>docker</executable>
                                 <arguments>
                                     <argument>run</argument>
-                                    <argument>--rm</argument>
-                                    <argument>css</argument>
+                                    <argument>-v</argument>
+                                    <argument>${project.basedir}:/app/</argument>
+                                    <argument>tablier_css</argument>
                                     <argument>gulp</argument>
-                                    <argument>build</argument>
                                 </arguments>
                             </configuration>
                     </execution>

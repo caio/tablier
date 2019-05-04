@@ -14,7 +14,7 @@
       </div>
       }
       <div class="notification">
-        The following information is cached and possibly outdated. Please <a href="@recipe.goUrl()">check the source</a> for pictures, author's notes and maybe better formatting.
+        The following information is cached and possibly outdated. Please <a href="@recipe.crawlUrl()" rel="noopener noreferrer">check the source</a> for pictures, author's notes and maybe better formatting.
       </div>
     </div>
     <div class="column is-full"></div>
@@ -30,11 +30,11 @@
           }
         </ul>
 
-        <h3>Metadata</h3>
-        <p class="is-clipped"><strong>Source</strong>: @recipe.crawlUrl()</p>
+        <h3>Instructions</h3>
+        <p>View instructions at <a href="@recipe.crawlUrl()" rel="noopener noreferrer">the source</a>
 
         @if (recipe.hasNutritionData()) {
-        <h4>Nutrition Facts</h4>
+        <h3>Nutrition Facts</h3>
         <table>
           <tbody>
             @if (recipe.calories().isPresent()) {
@@ -63,11 +63,10 @@
             }
           </tbody>
         </table>
-        <br>
         }
 
         @if (recipe.hasDurationData()) {
-        <h4>Duration</h4>
+        <h3>Duration</h3>
         <table>
           <tbody>
             @if (recipe.prepTime().isPresent()) {
@@ -90,15 +89,23 @@
             }
           </tbody>
         </table>
-        <br>
         }
 
+        @if (recipe.hasSimilarRecipes()) {
+        <h3>Similar Recipes</h3>
+        <ul>
+          @for (sim: recipe.similarRecipes()) {
+          <li><a href="@sim.infoUrl()" rel="noopener noreferrer">@sim.name()</a> <small>from @sim.siteName()</small></li>
+          }
+        </ul>
+        }
 
+        <br>
       </div>
     </div>
 
     <div class="column is-full has-text-centered">
-      <a class="button is-primary" href="@recipe.goUrl()">Visit Original</a>
+      <a class="button is-primary" href="@recipe.crawlUrl()" rel="noopener noreferrer">Visit Original</a>
     </div>
 
   </div>

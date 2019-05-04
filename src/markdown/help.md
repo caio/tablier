@@ -148,7 +148,8 @@ it all serves as a sign of my good intentions.
 ### What Kind of Data Gets Logged?
 
 The only information that gets logged to our servers is [access
-logs][clf]. It's being used to detect abuse and to improve the search
-results.
+logs][clf], with the IP addresses anonimyzed (via a simple mask). It's
+being used to detect abuse and will soon be used to improve the search
+results as well.
 
 [clf]: https://en.wikipedia.org/wiki/Common_Log_Format

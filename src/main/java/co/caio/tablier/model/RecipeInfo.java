@@ -13,8 +13,6 @@ public interface RecipeInfo {
 
   String siteName();
 
-  String goUrl();
-
   String crawlUrl();
 
   String infoUrl();
@@ -37,17 +35,43 @@ public interface RecipeInfo {
 
   List<String> ingredients();
 
+  @Value.Derived
   default boolean hasDurationData() {
     // Only need to check totalTime by default since without it
     // the other *Time() metadata would sound weird
     return totalTime().isPresent();
   }
 
+  @Value.Derived
   default boolean hasNutritionData() {
     return calories().isPresent()
         || fatContent().isPresent()
         || proteinContent().isPresent()
         || carbohydrateContent().isPresent();
+  }
+
+  @Value.Derived
+  default boolean hasSimilarRecipes() {
+    return similarRecipes().size() > 0;
+  }
+
+  List<SimilarInfo> similarRecipes();
+
+  @ImmutableStyle
+  @Value.Immutable
+  abstract class SimilarInfo {
+    @Value.Parameter
+    public abstract String name();
+
+    @Value.Parameter
+    public abstract String siteName();
+
+    @Value.Parameter
+    public abstract String infoUrl();
+
+    public static SimilarInfo of(String name, String siteName, String infoUrl) {
+      return ImmutableSimilarInfo.of(name, siteName, infoUrl);
+    }
   }
 
   class Builder extends ImmutableRecipeInfo.Builder {}

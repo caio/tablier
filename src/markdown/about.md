@@ -35,11 +35,11 @@ This was created and is still developed as a hobby project, meaning
 that in here there's a lot of perceived value in having fun, pacing
 myself, keeping things lean and sticking to my ideals.
 
-Sustainability is a goal, profitability isn't. Traditional ads will
-never have a place here, which means there's no incentive to making
-things inefficient: I want you to be able to find a recipe and get to
-cooking as quickly as possible, not keep you using this site for long
-just so that I can show you a lot of ads.
+Sustainability is a goal, profit isn't. Traditional ads will never have
+a place here, which means there's no incentive to making things
+inefficient: I want you to be able to find a recipe and get to cooking
+as quickly as possible, not keep you using this site for long just so
+that I can show you a lot of ads.
 
 ## History
 
@@ -81,9 +81,8 @@ annoying things we all have to deal with in today's web.
 
 # Acknowledgments
 
-This project is a one-man show: [Caio][me] takes care of everything
-from the firewalls to what you are reading right now, but that's not
-to say there hasn't been help from tools and third parties:
+This project is a one-man show, but that's not to say there hasn't been
+help from tools and third parties:
 
 * SVG Icons come from the [IcoMoon](https://icomoon.io/) free icon pack,
   licensed as [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)

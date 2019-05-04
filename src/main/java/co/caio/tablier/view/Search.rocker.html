@@ -12,7 +12,7 @@
 <section class="section" id="results">
   <div class="columns is-multiline is-centered">
     <div class="column is-5">
-      <div class="notification content @if (sr.numMatching() == 0) { is-danger }">
+      <div class="notification content @if (sr.numMatching() == 0) { is-warning }">
         Your search
         @if (!site.searchValue().isBlank()) { for <strong>@site.searchValue()</strong> }
         @if (sr.numAppliedFilters() == 1) {

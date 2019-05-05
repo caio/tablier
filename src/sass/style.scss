@@ -97,16 +97,16 @@ nav.navbar div.navbar-item p a.author:hover {
 }
 
 ul.menu-list a[disabled] {
-    cursor: not-allowed;
-    color: $light-gray;
+  cursor: not-allowed;
+  color: $light-gray;
 }
 
 span.menu-item-count {
-    float: right;
-    color: $light-gray;
-    margin-left: 1rem;
+  float: right;
+  color: $light-gray;
+  margin-left: 1rem;
 }
 
 .has-valign-middle {
-    vertical-align: middle;
+  vertical-align: middle;
 }

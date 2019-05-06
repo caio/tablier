@@ -12,24 +12,7 @@ to you by [Caio Romão][me] and the [code is open source][code].
 [me]: https://caio.co
 [code]: https://github.com/gula-recipes
 
-## Contribute
-
-Using the service and spreading the word around is the best way to help
-right now. If you'd like to contribute to this project's sustainability
-and can spare a little money, donations are more than welcome!
-
-<center>
-<a href="https://www.paypal.me/caioromao/3" class="button is-primary">Donate via PayPal</a>
-</center>
-<br>
-
-PayPal is far from ideal, so if monetary contributions become a thing
-I'll set up a transparent organization (on [OpenCollective][oc], likely)
-so that you always know what your money is being used for.
-
-[oc]: https://opencollective.com/
-
-## Not a Product, Not a Business
+## Not a Business
 
 This was created and is still developed as a hobby project, meaning
 that in here there's a lot of perceived value in having fun, pacing
@@ -41,11 +24,22 @@ inefficient: I want you to be able to find a recipe and get to cooking
 as quickly as possible, not keep you using this site for long just so
 that I can show you a lot of ads.
 
+## Contribute
+
+Using the service and spreading the word around is the best way to help
+right now. If you'd like to contribute to this project's sustainability
+and can spare a little money, donations are more than welcome!
+
+<center>
+<a href="https://www.paypal.me/caioromao/3" class="button is-primary">Donate via PayPal</a>
+</center>
+<br>
+
 ## History
 
-Autumn 2017, I decide to fix some of my bad habits and engage in
+Autumn 2017, I decide to fix some of my bad habits and engaged in
 cooking mostly low-carb meals daily and using [r/progresspics][pp]
-and similar as the main motivation driver.
+and similar as the main weight loss motivation driver.
 
 [pp]: https://www.reddit.com/r/progresspics/
 
@@ -63,7 +57,7 @@ Meanwhile, I started writing a simple tool to help me manage the
 somewhat big list of recipe links I had collected over time:
 A plain-text file wasn't good enough anymore, the existing websites
 offering a similar thing hadn't improved on my gripes over time (quite
-the opposite, actually).
+the opposite).
 
 I quickly found myself writing scrapers for my favorite sites to make
 it easier to extract the recipes out of the wall of text that usually
@@ -81,13 +75,17 @@ annoying things we all have to deal with in today's web.
 
 # Acknowledgments
 
-This project is a one-man show, but that's not to say there hasn't been
-help from tools and third parties:
+This project couldn't have been made at a reasonable pace without
+the help of open source and/or freely distributed packages. Some
+highlights are:
 
-* SVG Icons come from the [IcoMoon](https://icomoon.io/) free icon pack,
-  licensed as [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
+* The SVG icons come from the [IcoMoon](https://icomoon.io/) free icon
+  pack, licensed as [CC BY 4.0][cc]
 * The [Bulma CSS Framework](https://bulma.io/) made my life a lot easier
+  since front-end technologies are not my forte
 * [Lucene](https://lucene.apache.org/core/) powers the search
   functionality and reading its code always teaches me a _lot_.
 * Every open source library and tool used by the subprojects in the
   [gula.recipes organization][code].
+
+[cc]: https://creativecommons.org/licenses/by/4.0/

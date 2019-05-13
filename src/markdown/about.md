@@ -4,9 +4,9 @@ title: About
 
 # About
 
-[gula.recipes][gula]'s mission is to provide a distraction-free,
-privacy respecting and fast recipe search experience. It's brought
-to you by [Caio Romão][me] and the [code is open source][code].
+*Gula* is the Portuguese name for gluttony; [gula.recipes][gula] is the
+Private, Ad-Free Recipe Search Experience. It's brought to you by
+[Caio Romão][me] and the [code is open source][code].
 
 [gula]: https://gula.recipes
 [me]: https://caio.co
@@ -23,17 +23,6 @@ a place here, which means there's no incentive to making things
 inefficient: I want you to be able to find a recipe and get to cooking
 as quickly as possible, not keep you using this site for long just so
 that I can show you a lot of ads.
-
-## Contribute
-
-Using the service and spreading the word around is the best way to help
-right now. If you'd like to contribute to this project's sustainability
-and can spare a little money, donations are more than welcome!
-
-<center>
-<a href="https://www.paypal.me/caioromao/3" class="button is-primary">Donate via PayPal</a>
-</center>
-<br>
 
 ## History
 

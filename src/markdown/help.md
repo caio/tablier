@@ -111,9 +111,9 @@ a few new perfectly matching recipes.
 
 ## What Kind of Data Gets Logged?
 
-The only information that gets logged to our servers is [access
-logs][clf], with the IP addresses anonimyzed (via a simple mask). It's
-being used to detect abuse and will soon be used to improve the search
-results as well.
+Only [telemetry data][metrics] is logged. The highest granularity
+is *per page* metrics, meaning that I know how often a page is visited,
+but have no information about where my traffic is coming from nor what
+it is searching for.
 
-[clf]: https://en.wikipedia.org/wiki/Common_Log_Format
+[metrics]: https://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-metrics.html#production-ready-metrics-meter

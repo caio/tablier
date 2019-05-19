@@ -32,6 +32,10 @@ $fullhd-enabled: false;
 
 @import "../node_modules/bulma/bulma.sass";
 
+.hero.is-info h1.title a {
+  color: $white;
+}
+
 .icon {
   display: inline-block;
   width: 1rem;

@@ -24,6 +24,12 @@ inefficient: I want you to be able to find a recipe and get to cooking
 as quickly as possible, not keep you using this site for long just so
 that I can show you a lot of ads.
 
+## Contact
+
+Feel free to contact me about bugs, feature requests, etc via e-mail:
+
+    contact |AT| gula |DOT| recipes
+
 ## History
 
 Autumn 2017, I decide to fix some of my bad habits and engaged in

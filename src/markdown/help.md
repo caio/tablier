@@ -117,11 +117,3 @@ being used to detect abuse and will soon be used to improve the search
 results as well.
 
 [clf]: https://en.wikipedia.org/wiki/Common_Log_Format
-
-## How to Report a Bug or Request a Feature
-
-Thanks a lot for your interest! You may simply shoot an e-mail to:
-
-    contact |AT| gula |DOT| recipes
-
-The more details you can provide the better.

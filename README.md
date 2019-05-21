@@ -8,6 +8,23 @@ via [rocker][] and the CSS framework is [Bulma][bulma].
 [rocker]: https://github.com/fizzed/rocker
 [bulma]: https://bulma.io
 
+This repository is a mess, but what it does is:
+
+1. Generate static page versions of templates (via Generator.java)
+   using the Rocker views and the `.model` package classes
+
+2. Compile markdown files into html documents
+
+3. Use docker to compile bulma with variable customizations and
+   extra classes via gulp (`gulfile.js`, `sass` task)
+
+4. Use the generated static pages to clean up (`uncss`) and minify
+   (`cssnano`) the generated css so that we end up with a somewhat
+   small stylesheet (again via gulp: `gulpfile.js`, `css` task)
+
+5. Package it all inside a jar
+
+
 ## Build
 
     mvn install

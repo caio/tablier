@@ -8,7 +8,7 @@
 <h2 class="subtitle">
   Over a million recipes, zero ads.
 </h2>
-<form action="/search?#results" method="get">
+<form action="@site.searchAction()" method="get">
   <div class="field has-addons has-addons-centered">
     <div class="control">
       <input class="input" @if (site.isUnstable()) { disabled } type="search" name="q" @if (site.searchIsAutoFocus()) { autofocus } placeholder="Ingredients, diets, etc." value="@site.searchValue()">

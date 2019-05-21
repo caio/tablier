@@ -19,11 +19,6 @@ public interface SiteInfo {
   }
 
   @Value.Default
-  default String searchAction() {
-    return "/search";
-  }
-
-  @Value.Default
   default String searchValue() {
     return "";
   }

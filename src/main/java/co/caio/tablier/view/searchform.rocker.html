@@ -12,6 +12,9 @@
   <div class="field has-addons has-addons-centered">
     <div class="control">
       <input class="input" @if (site.isUnstable()) { disabled } type="search" name="q" @if (site.searchIsAutoFocus()) { autofocus } placeholder="Ingredients, diets, etc." value="@site.searchValue()">
+      @for ((name, value): site.extraSearchParams()) {
+      <input type="hidden" name="@name" value="@value">
+      }
     </div>
     <div class="control">
       <button class="button is-primary" @if (site.isUnstable()) { disabled }>Search</button>

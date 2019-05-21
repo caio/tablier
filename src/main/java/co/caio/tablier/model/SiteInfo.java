@@ -1,5 +1,6 @@
 package co.caio.tablier.model;
 
+import java.util.Map;
 import org.immutables.value.Value;
 
 @ImmutableStyle
@@ -7,6 +8,8 @@ import org.immutables.value.Value;
 public interface SiteInfo {
 
   String title();
+
+  Map<String, String> extraSearchParams();
 
   @Value.Default
   default String description() {

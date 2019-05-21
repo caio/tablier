@@ -39,8 +39,8 @@
         <p>Nothing to show here :(</p>
         } else {
         <nav class="pagination mt-150" role="navigation">
-          <a class="pagination-previous" @if (site.isUnstable() || sr.previousPageHref().isEmpty()) { disabled } else { href="@sr.previousPageHref()#results" }>Previous page</a>
-          <a class="pagination-next" @if (site.isUnstable() || sr.nextPageHref().isEmpty()) { disabled } else { href="@sr.nextPageHref()#results" }>Next page</a>
+          <a class="pagination-previous" @if (site.isUnstable() || sr.previousPageHref().isEmpty()) { disabled } else { href="@sr.previousPageHref()" }>Previous page</a>
+          <a class="pagination-next" @if (site.isUnstable() || sr.nextPageHref().isEmpty()) { disabled } else { href="@sr.nextPageHref()" }>Next page</a>
           <ul class="pagination-list"></ul>
         </nav>
         }

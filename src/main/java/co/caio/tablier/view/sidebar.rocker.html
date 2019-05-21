@@ -12,13 +12,13 @@
     @for (option : filter.options()) {
     <li>
       @if (filter.isRemovable() && option.isActive()) {
-      <a class="is-active" href="@option.href()#results">@option.name() <button class="delete is-pulled-right"></button></a>
+      <a class="is-active" href="@option.href()">@option.name() <button class="delete is-pulled-right"></button></a>
       } else if (option.isActive()) {
       <a class="is-active">@option.name()</a>
       } else if (filter.showCounts() && option.count() == 0) {
       <a disabled>@option.name()</a>
       } else {
-      <a href="@option.href()#results">@option.name() @if (filter.showCounts()) { <span class="menu-item-count">@option.count()<span> }</a>
+      <a href="@option.href()">@option.name() @if (filter.showCounts()) { <span class="menu-item-count">@option.count()<span> }</a>
       }
     </li>
     }

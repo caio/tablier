@@ -132,6 +132,8 @@ public class Generator {
             .numRecipes(numRecipes)
             .previousPageHref("/previous")
             .nextPageHref("/next")
+            .numAppliedFilters(2)
+            .clearFiltersUrl("#cleared")
             .addAllRecipes(samples(10))
             .sidebar(sidebar)
             .build();

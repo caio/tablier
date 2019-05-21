@@ -21,6 +21,11 @@ public interface SearchResultsInfo {
   }
 
   @Value.Default
+  default String clearFiltersUrl() {
+    return "";
+  }
+
+  @Value.Default
   default String previousPageHref() {
     return "";
   }

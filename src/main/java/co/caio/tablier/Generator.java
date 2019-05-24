@@ -122,14 +122,11 @@ public class Generator {
 
     var srs = new HashMap<String, SearchResultsInfo>();
 
-    int numRecipes = 1_000_001;
-
     var srHasBoth =
         new SearchResultsInfo.Builder()
             .paginationStart(1)
             .paginationEnd(10)
             .numMatching(31409)
-            .numRecipes(numRecipes)
             .previousPageHref("/previous")
             .nextPageHref("/next")
             .numAppliedFilters(2)
@@ -144,7 +141,6 @@ public class Generator {
             .paginationStart(1)
             .paginationEnd(20)
             .numMatching(21)
-            .numRecipes(numRecipes)
             .numAppliedFilters(1)
             .nextPageHref("/next")
             .addAllRecipes(samples(20))
@@ -157,7 +153,6 @@ public class Generator {
             .paginationStart(21)
             .paginationEnd(21)
             .numMatching(21)
-            .numRecipes(numRecipes)
             .previousPageHref("/previous")
             .addAllRecipes(samples(1))
             .sidebar(sidebar)
@@ -169,7 +164,6 @@ public class Generator {
             .paginationStart(41)
             .paginationEnd(60)
             .numMatching(99)
-            .numRecipes(numRecipes)
             .numAppliedFilters(4)
             .addAllRecipes(samples(20))
             .sidebar(sidebar)
@@ -181,7 +175,6 @@ public class Generator {
             .paginationStart(0)
             .paginationEnd(0)
             .numMatching(0)
-            .numRecipes(numRecipes)
             .numAppliedFilters(4)
             .sidebar(sidebar)
             .build();

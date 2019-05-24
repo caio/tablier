@@ -89,15 +89,16 @@ show recipes for the Keto diet, we'll get [very few results][keto].
 
 [keto]: /search?q=almond+-%22almond+butter%22+-milk&ni=0,5&tt=0,15&n_k=0,200&diet=keto
 
-That happens a bit too often, so in order to try to give more recipe
-options you can activate our AI by appending the `science` parameter
-to the URL query parameter. The parameter takes a number between 0.5
-and 1, where this number means the confidence in our diet guessing
-AI.
+That happens a bit too often, so in order to try to find more options,
+we can modify the `&diet=keto` query parameter a bit. When we find just
+a valid diet name (such as "keto"), we interpret it as "search for
+recipes that *report* being part of the keto diet", but we can tweak
+this to mean "search for recipes that might fit the keto diet with a
+certain confidence threshold":
 
-So a parameter like `&science=0.85` means "show me recipes that match
-my selected diet **and** recipes that you think could match this diet
-with 85% confidence".
+If, instead of using `&diet=keto` we use `&diet=keto:0.85` we're saying
+that we want to include results that our AI _thinks_ it belongs to
+the category with a confidence level of at least 85%.
 
 Empirically, we see that higher confidence (`0.8` or more) tends to
 return recipes that either match perfectly with the selected diet or
@@ -107,7 +108,7 @@ If you compare the [previous results][keto] with the results [augmented
 by gula.recipe's AI][science] (Using a threshold of 0.85), you'll see
 a few new perfectly matching recipes.
 
-[science]: /search?q=almond+-%22almond+butter%22+-milk&ni=0,5&tt=0,15&n_k=0,200&diet=keto&science=0.85
+[science]: /search?q=almond+-%22almond+butter%22+-milk&ni=0,5&tt=0,15&n_k=0,200&diet=keto:0.85
 
 ## What Kind of Data Gets Logged?
 

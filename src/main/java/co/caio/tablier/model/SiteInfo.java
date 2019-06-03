@@ -13,7 +13,7 @@ public interface SiteInfo {
 
   @Value.Default
   default String description() {
-    return "";
+    return "Search over a million recipes. Filter by ingredients, nutritional value, diet (Low-Carb, Vegetarian, Vegan, Keto, Paleo) and more!";
   }
 
   @Value.Default

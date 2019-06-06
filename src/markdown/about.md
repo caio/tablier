@@ -6,7 +6,7 @@ title: About
 
 [gula.recipes][gula] is the Private, Ad-Free Recipe Search Experience;
 *Gula* is the Portuguese name for gluttony. The service is brought to
-you by [Caio Romão][me] and the [code is open source][code].
+you by [Caio][me] and the [code is open source][code].
 
 [gula]: https://gula.recipes
 [me]: https://caio.co

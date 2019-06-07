@@ -10,7 +10,7 @@
 
     <groupId>co.caio.tablier</groupId>
     <artifactId>tablier</artifactId>
-    <version>0.6.3-SNAPSHOT</version>
+    <version>0.6.3</version>
     <url>https://caio.co</url>
     <packaging>jar</packaging>
 
@@ -224,4 +224,8 @@
             </build>
         </profile>
     </profiles>
+
+  <scm>
+    <tag>0.6.3</tag>
+  </scm>
 </project>
